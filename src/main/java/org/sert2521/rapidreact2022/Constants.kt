@@ -3,9 +3,8 @@ package org.sert2521.rapidreact2022
 import edu.wpi.first.wpilibj.CounterBase
 import edu.wpi.first.wpilibj.SPI
 
-const val TICKS_PER_ROTATION = 256
+const val THROUGH_BORE_PULSES_PER_ROTATION = 2048
 
-const val MOTOR_SPINS_PER_WHEEL_SPIN = 10.71
 //6 inches is 0.1524 meters
 const val WHEEL_CIRCUMFERENCE = 0.1524
 
@@ -23,6 +22,6 @@ enum class Motors(val id: Int, val reversed: Boolean) {
 }
 
 enum class Encoders(val idA: Int, val idB: Int, val reversed: Boolean, val encodingType: CounterBase.EncodingType, val encoderDistancePerPulse: Double, val maxPeriod: Double, val minRate: Double, val samples: Int) {
-    RIGHT_DRIVE(0, 0, false, CounterBase.EncodingType.k2X, (WHEEL_CIRCUMFERENCE / MOTOR_SPINS_PER_WHEEL_SPIN) / TICKS_PER_ROTATION, 0.1, 10.0, 5),
-    LEFT_DRIVE(0, 0, false, CounterBase.EncodingType.k2X, (WHEEL_CIRCUMFERENCE / MOTOR_SPINS_PER_WHEEL_SPIN) / TICKS_PER_ROTATION, 0.1, 10.0, 5)
+    RIGHT_DRIVE(0, 0, false, CounterBase.EncodingType.k2X, WHEEL_CIRCUMFERENCE / THROUGH_BORE_PULSES_PER_ROTATION, 0.1, 10.0, 5),
+    LEFT_DRIVE(0, 0, false, CounterBase.EncodingType.k2X, WHEEL_CIRCUMFERENCE / THROUGH_BORE_PULSES_PER_ROTATION, 0.1, 10.0, 5)
 }
