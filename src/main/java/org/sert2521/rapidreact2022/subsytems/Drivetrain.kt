@@ -4,16 +4,12 @@ import com.ctre.phoenix.motorcontrol.ControlMode
 import com.ctre.phoenix.motorcontrol.FeedbackDevice
 import com.ctre.phoenix.motorcontrol.can.TalonSRX
 import com.kauailabs.navx.frc.AHRS
-import edu.wpi.first.math.geometry.Pose2d
 import edu.wpi.first.math.geometry.Rotation2d
 import edu.wpi.first.math.kinematics.DifferentialDriveOdometry
 import edu.wpi.first.wpilibj2.command.SubsystemBase
 import org.sert2521.rapidreact2022.Motors
 import org.sert2521.rapidreact2022.commands.JoystickDrive
 import edu.wpi.first.wpilibj.SPI
-
-
-
 
 object Drivetrain : SubsystemBase() {
     private val frontLeft = TalonSRX(Motors.FRONT_LEFT.id)
@@ -36,10 +32,10 @@ object Drivetrain : SubsystemBase() {
 
         defaultCommand = JoystickDrive()
 
-        resetDistanecTraveled()
+        resetDistanceTraveled()
     }
 
-    fun resetDistanecTraveled() {
+    fun resetDistanceTraveled() {
         frontLeft.selectedSensorPosition = 0.0
         frontRight.selectedSensorPosition = 0.0
     }
