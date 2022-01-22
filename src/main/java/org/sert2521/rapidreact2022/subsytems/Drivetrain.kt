@@ -5,6 +5,7 @@ import com.ctre.phoenix.motorcontrol.FeedbackDevice
 import com.ctre.phoenix.motorcontrol.can.TalonSRX
 import edu.wpi.first.wpilibj2.command.SubsystemBase
 import org.sert2521.rapidreact2022.Motors
+import org.sert2521.rapidreact2022.commands.JoystickDrive
 
 object Drivetrain : SubsystemBase() {
     private val frontLeft = TalonSRX(Motors.FRONT_LEFT.id)
@@ -19,6 +20,8 @@ object Drivetrain : SubsystemBase() {
 
         frontLeft.configSelectedFeedbackSensor(FeedbackDevice.CTRE_MagEncoder_Relative)
         frontRight.configSelectedFeedbackSensor(FeedbackDevice.CTRE_MagEncoder_Relative)
+
+        defaultCommand = JoystickDrive()
     }
 
     private fun spinLeft(amount: Double) {
@@ -63,5 +66,9 @@ object Drivetrain : SubsystemBase() {
     fun arcadeDrive(speed: Double, turn: Double) {
         spinLeft(speed + turn)
         spinRight(speed - turn)
+    }
+
+    fun stop() {
+        tankDrive(0.0, 0.0)
     }
 }
