@@ -15,6 +15,7 @@ object Drivetrain : SubsystemBase() {
     private val backRight = TalonSRX(Motors.BACK_RIGHT.id)
 
     init {
+        //Right motors are built the other way on the drivetrain
         frontRight.inverted = true
         backRight.inverted = true
 
