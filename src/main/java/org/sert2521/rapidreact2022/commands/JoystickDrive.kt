@@ -11,7 +11,7 @@ class JoystickDrive : CommandBase() {
     }
 
     override fun initialize() {
-        Drivetrain.resetEncoders()
+        Drivetrain.resetDistanecTraveled()
     }
 
     override fun execute() {

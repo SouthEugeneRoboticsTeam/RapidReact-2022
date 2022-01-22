@@ -36,13 +36,35 @@ object Drivetrain : SubsystemBase() {
 
         defaultCommand = JoystickDrive()
 
-        resetEncoders()
+        resetDistanecTraveled()
     }
 
-    fun resetEncoders() {
+    fun resetDistanecTraveled() {
         frontLeft.selectedSensorPosition = 0.0
         frontRight.selectedSensorPosition = 0.0
     }
+
+    val leftDistanceTraveled
+        get() = frontLeft.selectedSensorPosition * Motors.FRONT_LEFT.encoderDistancePerPulse
+
+    val rightDistanceTraveled
+        get() = frontLeft.selectedSensorPosition * Motors.FRONT_LEFT.encoderDistancePerPulse
+
+    override fun periodic() {
+        odometry.update(gyro.rotation2d, leftDistanceTraveled, rightDistanceTraveled)
+    }
+
+    val pose
+        get() = odometry.poseMeters
+
+    val leftVelocity
+        get() = frontLeft.selectedSensorVelocity * Motors.FRONT_LEFT.encoderDistancePerPulse
+
+    val rightVelocity
+        get() = frontLeft.selectedSensorVelocity * Motors.FRONT_RIGHT.encoderDistancePerPulse
+
+    val averageVelocity
+        get() = (rightVelocity + leftVelocity) / 2.0
 
     private fun spinLeft(amount: Double) {
         frontLeft.set(ControlMode.PercentOutput, amount)
@@ -52,34 +74,6 @@ object Drivetrain : SubsystemBase() {
     private fun spinRight(amount: Double) {
         frontRight.set(ControlMode.PercentOutput, amount)
         backRight.set(ControlMode.PercentOutput, amount)
-    }
-
-    fun leftDistanceTraveled(): Double {
-        return frontLeft.selectedSensorPosition * Motors.FRONT_LEFT.encoderDistancePerPulse
-    }
-
-    fun rightDistanceTraveled(): Double {
-        return frontRight.selectedSensorPosition * Motors.FRONT_RIGHT.encoderDistancePerPulse
-    }
-
-    override fun periodic() {
-        odometry.update(gyro.rotation2d, leftDistanceTraveled(), rightDistanceTraveled())
-    }
-
-    fun getPose(): Pose2d {
-        return odometry.poseMeters
-    }
-
-    fun leftVelocity(): Double {
-        return frontLeft.selectedSensorVelocity * Motors.FRONT_LEFT.encoderDistancePerPulse
-    }
-
-    fun rightVelocity(): Double {
-        return frontLeft.selectedSensorVelocity * Motors.FRONT_RIGHT.encoderDistancePerPulse
-    }
-
-    fun velocityAverage(): Double {
-        return (rightVelocity() + leftVelocity()) / 2.0
     }
 
     fun tankDrive(leftSpeed: Double, rightSpeed: Double) {
