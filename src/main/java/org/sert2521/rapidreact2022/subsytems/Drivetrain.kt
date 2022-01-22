@@ -6,6 +6,7 @@ import com.ctre.phoenix.motorcontrol.can.TalonSRX
 import com.kauailabs.navx.frc.AHRS
 import edu.wpi.first.math.geometry.Rotation2d
 import edu.wpi.first.math.kinematics.DifferentialDriveOdometry
+import edu.wpi.first.math.kinematics.DifferentialDriveWheelSpeeds
 import edu.wpi.first.wpilibj2.command.SubsystemBase
 import org.sert2521.rapidreact2022.Motors
 import org.sert2521.rapidreact2022.commands.JoystickDrive
@@ -51,7 +52,7 @@ object Drivetrain : SubsystemBase() {
     }
 
     val pose
-        get() = odometry.poseMeters
+        get() = odometry.poseMeters!!
 
     val leftVelocity
         get() = frontLeft.selectedSensorVelocity * Motors.FRONT_LEFT.encoderDistancePerPulse
@@ -62,24 +63,30 @@ object Drivetrain : SubsystemBase() {
     val averageVelocity
         get() = (rightVelocity + leftVelocity) / 2.0
 
-    private fun spinLeft(amount: Double) {
-        frontLeft.set(ControlMode.PercentOutput, amount)
-        backLeft.set(ControlMode.PercentOutput, amount)
+    private fun spinLeft(mode: ControlMode, amount: Double) {
+        frontLeft.set(mode, amount)
+        backLeft.set(mode, amount)
     }
 
-    private fun spinRight(amount: Double) {
-        frontRight.set(ControlMode.PercentOutput, amount)
-        backRight.set(ControlMode.PercentOutput, amount)
+    private fun spinRight(mode: ControlMode, amount: Double) {
+        frontRight.set(mode, amount)
+        backRight.set(mode, amount)
+    }
+
+    //Check to make sure works
+    fun driveWheelSpeeds(wheelSpeeds: DifferentialDriveWheelSpeeds) {
+        spinLeft(ControlMode.Velocity, wheelSpeeds.leftMetersPerSecond)
+        spinRight(ControlMode.Velocity, wheelSpeeds.rightMetersPerSecond)
     }
 
     fun tankDrive(leftSpeed: Double, rightSpeed: Double) {
-        spinLeft(leftSpeed)
-        spinRight(rightSpeed)
+        spinLeft(ControlMode.PercentOutput, leftSpeed)
+        spinRight(ControlMode.PercentOutput, rightSpeed)
     }
 
     fun arcadeDrive(speed: Double, turn: Double) {
-        spinLeft(speed + turn)
-        spinRight(speed - turn)
+        spinLeft(ControlMode.PercentOutput, speed + turn)
+        spinRight(ControlMode.PercentOutput, speed - turn)
     }
 
     fun stop() {
