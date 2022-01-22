@@ -1,19 +1,25 @@
 package org.sert2521.rapidreact2022
 
-const val TICKS_PER_ROTATION = 4096
+import edu.wpi.first.wpilibj.CounterBase
+
+const val TICKS_PER_ROTATION = 256
 
 const val MOTOR_SPINS_PER_WHEEL_SPIN = 10.71
 //6 inches is 0.1524 meters
 const val WHEEL_CIRCUMFERENCE = 0.1524
-const val WHEEL_DISTANCE_PER_PULSE = (WHEEL_CIRCUMFERENCE / MOTOR_SPINS_PER_WHEEL_SPIN) / TICKS_PER_ROTATION
 
 const val TRACK_WIDTH = 0.0
 
 const val PRIMARY_CONTROLLER_ID = 0
 
-enum class Motors(val id: Int, val encoderDistancePerPulse: Double) {
-    FRONT_LEFT(0, WHEEL_DISTANCE_PER_PULSE),
-    BACK_LEFT(0, WHEEL_DISTANCE_PER_PULSE),
-    FRONT_RIGHT(0, WHEEL_DISTANCE_PER_PULSE),
-    BACK_RIGHT(0, WHEEL_DISTANCE_PER_PULSE)
+enum class Motors(val id: Int, val reversed: Boolean) {
+    FRONT_LEFT_DRIVE(0, false),
+    BACK_LEFT_DRIVE(0, false),
+    FRONT_RIGHT_DRIVE(0, true),
+    BACK_RIGHT_DRIVE(0, true)
+}
+
+enum class Encoders(val idA: Int, val idB: Int, val reversed: Boolean, val encodingType: CounterBase.EncodingType, val encoderDistancePerPulse: Double, val maxPeriod: Double, val minRate: Double, val samples: Int) {
+    RIGHT_DRIVE(0, 0, false, CounterBase.EncodingType.k2X, (WHEEL_CIRCUMFERENCE / MOTOR_SPINS_PER_WHEEL_SPIN) / TICKS_PER_ROTATION, 0.1, 10.0, 5),
+    LEFT_DRIVE(0, 0, false, CounterBase.EncodingType.k2X, (WHEEL_CIRCUMFERENCE / MOTOR_SPINS_PER_WHEEL_SPIN) / TICKS_PER_ROTATION, 0.1, 10.0, 5)
 }

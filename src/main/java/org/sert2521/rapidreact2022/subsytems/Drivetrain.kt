@@ -1,24 +1,28 @@
 package org.sert2521.rapidreact2022.subsytems
 
 import com.ctre.phoenix.motorcontrol.ControlMode
-import com.ctre.phoenix.motorcontrol.FeedbackDevice
 import com.ctre.phoenix.motorcontrol.can.TalonSRX
 import com.kauailabs.navx.frc.AHRS
 import edu.wpi.first.math.geometry.Rotation2d
 import edu.wpi.first.math.kinematics.DifferentialDriveOdometry
 import edu.wpi.first.math.kinematics.DifferentialDriveWheelSpeeds
+import edu.wpi.first.wpilibj.Encoder
 import edu.wpi.first.wpilibj2.command.SubsystemBase
 import org.sert2521.rapidreact2022.Motors
 import org.sert2521.rapidreact2022.commands.JoystickDrive
 import edu.wpi.first.wpilibj.SPI
+import org.sert2521.rapidreact2022.Encoders
 
 //Add PID
 object Drivetrain : SubsystemBase() {
-    private val frontLeft = TalonSRX(Motors.FRONT_LEFT.id)
-    private val backLeft = TalonSRX(Motors.BACK_LEFT.id)
+    private val frontLeftMotor = TalonSRX(Motors.FRONT_LEFT_DRIVE.id)
+    private val backLeftMotor = TalonSRX(Motors.BACK_LEFT_DRIVE.id)
 
-    private val frontRight = TalonSRX(Motors.FRONT_RIGHT.id)
-    private val backRight = TalonSRX(Motors.BACK_RIGHT.id)
+    private val frontRightMotor = TalonSRX(Motors.FRONT_RIGHT_DRIVE.id)
+    private val backRightMotor = TalonSRX(Motors.BACK_RIGHT_DRIVE.id)
+
+    private val leftEncoder = Encoder(Encoders.LEFT_DRIVE.idA, Encoders.LEFT_DRIVE.idB, Encoders.LEFT_DRIVE.reversed, Encoders.LEFT_DRIVE.encodingType)
+    private val rightEncoder = Encoder(Encoders.RIGHT_DRIVE.idA, Encoders.RIGHT_DRIVE.idB, Encoders.RIGHT_DRIVE.reversed, Encoders.RIGHT_DRIVE.encodingType)
 
     private val gyro = AHRS(SPI.Port.kMXP)
 
@@ -26,28 +30,39 @@ object Drivetrain : SubsystemBase() {
     private val odometry = DifferentialDriveOdometry(Rotation2d.fromDegrees(0.0))
 
     init {
-        //Right motors are built the other way on the drivetrain
-        frontRight.inverted = true
-        backRight.inverted = true
+        frontLeftMotor.inverted = Motors.FRONT_LEFT_DRIVE.reversed
+        backLeftMotor.inverted = Motors.BACK_LEFT_DRIVE.reversed
 
-        frontLeft.configSelectedFeedbackSensor(FeedbackDevice.CTRE_MagEncoder_Relative)
-        frontRight.configSelectedFeedbackSensor(FeedbackDevice.CTRE_MagEncoder_Relative)
+        frontRightMotor.inverted = Motors.FRONT_RIGHT_DRIVE.reversed
+        backRightMotor.inverted = Motors.BACK_RIGHT_DRIVE.reversed
 
-        defaultCommand = JoystickDrive()
+        leftEncoder.distancePerPulse = Encoders.LEFT_DRIVE.encoderDistancePerPulse
+        rightEncoder.distancePerPulse = Encoders.RIGHT_DRIVE.encoderDistancePerPulse
+
+        leftEncoder.setMaxPeriod(Encoders.LEFT_DRIVE.maxPeriod)
+        rightEncoder.setMaxPeriod(Encoders.RIGHT_DRIVE.maxPeriod)
+
+        leftEncoder.setMinRate(Encoders.LEFT_DRIVE.minRate)
+        rightEncoder.setMinRate(Encoders.RIGHT_DRIVE.minRate)
+
+        leftEncoder.samplesToAverage = Encoders.LEFT_DRIVE.samples
+        rightEncoder.samplesToAverage = Encoders.RIGHT_DRIVE.samples
 
         resetDistanceTraveled()
+
+        defaultCommand = JoystickDrive()
     }
 
     fun resetDistanceTraveled() {
-        frontLeft.selectedSensorPosition = 0.0
-        frontRight.selectedSensorPosition = 0.0
+        leftEncoder.reset()
+        rightEncoder.reset()
     }
 
     val leftDistanceTraveled
-        get() = frontLeft.selectedSensorPosition * Motors.FRONT_LEFT.encoderDistancePerPulse
+        get() = leftEncoder.distance
 
     val rightDistanceTraveled
-        get() = frontLeft.selectedSensorPosition * Motors.FRONT_LEFT.encoderDistancePerPulse
+        get() = leftEncoder.distance
 
     override fun periodic() {
         odometry.update(gyro.rotation2d, leftDistanceTraveled, rightDistanceTraveled)
@@ -57,22 +72,22 @@ object Drivetrain : SubsystemBase() {
         get() = odometry.poseMeters!!
 
     val leftVelocity
-        get() = frontLeft.selectedSensorVelocity * Motors.FRONT_LEFT.encoderDistancePerPulse
+        get() = leftEncoder.rate
 
     val rightVelocity
-        get() = frontLeft.selectedSensorVelocity * Motors.FRONT_RIGHT.encoderDistancePerPulse
+        get() = leftEncoder.rate
 
     val averageVelocity
         get() = (rightVelocity + leftVelocity) / 2.0
 
     private fun spinLeft(mode: ControlMode, amount: Double) {
-        frontLeft.set(mode, amount)
-        backLeft.set(mode, amount)
+        frontLeftMotor.set(mode, amount)
+        backLeftMotor.set(mode, amount)
     }
 
     private fun spinRight(mode: ControlMode, amount: Double) {
-        frontRight.set(mode, amount)
-        backRight.set(mode, amount)
+        frontRightMotor.set(mode, amount)
+        backRightMotor.set(mode, amount)
     }
 
     //Check to make sure works
