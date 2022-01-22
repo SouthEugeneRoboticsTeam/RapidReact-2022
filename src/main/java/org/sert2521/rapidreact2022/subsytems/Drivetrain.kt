@@ -3,9 +3,17 @@ package org.sert2521.rapidreact2022.subsytems
 import com.ctre.phoenix.motorcontrol.ControlMode
 import com.ctre.phoenix.motorcontrol.FeedbackDevice
 import com.ctre.phoenix.motorcontrol.can.TalonSRX
+import com.kauailabs.navx.frc.AHRS
+import edu.wpi.first.math.geometry.Pose2d
+import edu.wpi.first.math.geometry.Rotation2d
+import edu.wpi.first.math.kinematics.DifferentialDriveOdometry
 import edu.wpi.first.wpilibj2.command.SubsystemBase
 import org.sert2521.rapidreact2022.Motors
 import org.sert2521.rapidreact2022.commands.JoystickDrive
+import edu.wpi.first.wpilibj.SPI
+
+
+
 
 object Drivetrain : SubsystemBase() {
     private val frontLeft = TalonSRX(Motors.FRONT_LEFT.id)
@@ -13,6 +21,10 @@ object Drivetrain : SubsystemBase() {
 
     private val frontRight = TalonSRX(Motors.FRONT_RIGHT.id)
     private val backRight = TalonSRX(Motors.BACK_RIGHT.id)
+
+    private val gyro = AHRS(SPI.Port.kMXP)
+
+    private val odometry = DifferentialDriveOdometry(Rotation2d.fromDegrees(0.0))
 
     init {
         //Right motors are built the other way on the drivetrain
@@ -23,6 +35,13 @@ object Drivetrain : SubsystemBase() {
         frontRight.configSelectedFeedbackSensor(FeedbackDevice.CTRE_MagEncoder_Relative)
 
         defaultCommand = JoystickDrive()
+
+        resetEncoders()
+    }
+
+    fun resetEncoders() {
+        frontLeft.selectedSensorPosition = 0.0
+        frontRight.selectedSensorPosition = 0.0
     }
 
     private fun spinLeft(amount: Double) {
@@ -43,8 +62,12 @@ object Drivetrain : SubsystemBase() {
         return frontRight.selectedSensorPosition * Motors.FRONT_RIGHT.encoderDistancePerPulse
     }
 
-    fun distanceTraveledAverage(): Double {
-        return (leftDistanceTraveled() + rightDistanceTraveled()) / 2.0
+    override fun periodic() {
+        odometry.update(gyro.rotation2d, leftDistanceTraveled(), rightDistanceTraveled())
+    }
+
+    fun getPose(): Pose2d {
+        return odometry.poseMeters
     }
 
     fun leftVelocity(): Double {
