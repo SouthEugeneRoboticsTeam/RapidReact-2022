@@ -15,14 +15,34 @@ const val PRIMARY_CONTROLLER_ID = 0
 
 val GYRO_PORT = SPI.Port.kMXP
 
+const val climbSpeed = 0.5
+
 enum class Motors(val id: Int, val reversed: Boolean) {
     FRONT_LEFT_DRIVE(0, false),
     BACK_LEFT_DRIVE(0, false),
     FRONT_RIGHT_DRIVE(0, true),
-    BACK_RIGHT_DRIVE(0, true)
+    BACK_RIGHT_DRIVE(0, true),
+
+    LEFT_STATIC_CLIMBER(0, false),
+    RIGHT_STATIC_CLIMBER(0, false),
+    LEFT_VARIABLE_CLIMBER(0, false),
+    RIGHT_VARIABLE_CLIMBER(0, false),
+    LEFT_VARIABLE_ACTUATOR(0, false),
+    RIGHT_VARIABLE_ACTUATOR(0, false),
 }
 
 enum class Encoders(val idA: Int, val idB: Int, val reversed: Boolean, val encodingType: CounterBase.EncodingType, val encoderDistancePerPulse: Double, val maxPeriod: Double, val minRate: Double, val samples: Int) {
-    RIGHT_DRIVE(0, 0, false, CounterBase.EncodingType.k2X, (WHEEL_CIRCUMFERENCE / MOTOR_SPINS_PER_WHEEL_SPIN) / TICKS_PER_ROTATION, 0.1, 10.0, 5),
-    LEFT_DRIVE(0, 0, false, CounterBase.EncodingType.k2X, (WHEEL_CIRCUMFERENCE / MOTOR_SPINS_PER_WHEEL_SPIN) / TICKS_PER_ROTATION, 0.1, 10.0, 5)
+    LEFT_DRIVE(0, 0, false, CounterBase.EncodingType.k2X, (WHEEL_CIRCUMFERENCE / MOTOR_SPINS_PER_WHEEL_SPIN) / TICKS_PER_ROTATION, 0.1, 10.0, 5),
+    RIGHT_DRIVE(0, 0, false, CounterBase.EncodingType.k2X, (WHEEL_CIRCUMFERENCE / MOTOR_SPINS_PER_WHEEL_SPIN) / TICKS_PER_ROTATION, 0.1, 10.0, 5)
+}
+
+enum class LimitSwitches(val id: Int) {
+    LEFT_STATIC_CLIMBER_DOWN(0),
+    LEFT_STATIC_CLIMBER_UP(0),
+    RIGHT_STATIC_CLIMBER_DOWN(0),
+    RIGHT_STATIC_CLIMBER_UP(0),
+    LEFT_VARIABLE_CLIMBER_DOWN(0),
+    LEFT_VARIABLE_CLIMBER_UP(0),
+    RIGHT_VARIABLE_CLIMBER_DOWN(0),
+    RIGHT_VARIABLE_CLIMBER_UP(0)
 }
