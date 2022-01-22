@@ -1,6 +1,7 @@
 package org.sert2521.rapidreact2022
 
 import edu.wpi.first.wpilibj.CounterBase
+import edu.wpi.first.wpilibj.SPI
 
 const val TICKS_PER_ROTATION = 256
 
@@ -11,6 +12,8 @@ const val WHEEL_CIRCUMFERENCE = 0.1524
 const val TRACK_WIDTH = 0.0
 
 const val PRIMARY_CONTROLLER_ID = 0
+
+val GYRO_PORT = SPI.Port.kMXP
 
 enum class Motors(val id: Int, val reversed: Boolean) {
     FRONT_LEFT_DRIVE(0, false),

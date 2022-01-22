@@ -10,8 +10,8 @@ import edu.wpi.first.wpilibj.Encoder
 import edu.wpi.first.wpilibj2.command.SubsystemBase
 import org.sert2521.rapidreact2022.Motors
 import org.sert2521.rapidreact2022.commands.JoystickDrive
-import edu.wpi.first.wpilibj.SPI
 import org.sert2521.rapidreact2022.Encoders
+import org.sert2521.rapidreact2022.GYRO_PORT
 
 //Add PID
 object Drivetrain : SubsystemBase() {
@@ -24,7 +24,7 @@ object Drivetrain : SubsystemBase() {
     private val leftEncoder = Encoder(Encoders.LEFT_DRIVE.idA, Encoders.LEFT_DRIVE.idB, Encoders.LEFT_DRIVE.reversed, Encoders.LEFT_DRIVE.encodingType)
     private val rightEncoder = Encoder(Encoders.RIGHT_DRIVE.idA, Encoders.RIGHT_DRIVE.idB, Encoders.RIGHT_DRIVE.reversed, Encoders.RIGHT_DRIVE.encodingType)
 
-    private val gyro = AHRS(SPI.Port.kMXP)
+    private val gyro = AHRS(GYRO_PORT)
 
     //Make sure start rotation is correct
     private val odometry = DifferentialDriveOdometry(Rotation2d.fromDegrees(0.0))
