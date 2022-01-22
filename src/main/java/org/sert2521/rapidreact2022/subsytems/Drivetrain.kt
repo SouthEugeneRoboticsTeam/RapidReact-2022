@@ -12,6 +12,7 @@ import org.sert2521.rapidreact2022.Motors
 import org.sert2521.rapidreact2022.commands.JoystickDrive
 import edu.wpi.first.wpilibj.SPI
 
+//Add PID
 object Drivetrain : SubsystemBase() {
     private val frontLeft = TalonSRX(Motors.FRONT_LEFT.id)
     private val backLeft = TalonSRX(Motors.BACK_LEFT.id)
@@ -21,6 +22,7 @@ object Drivetrain : SubsystemBase() {
 
     private val gyro = AHRS(SPI.Port.kMXP)
 
+    //Make sure start rotation is correct
     private val odometry = DifferentialDriveOdometry(Rotation2d.fromDegrees(0.0))
 
     init {
