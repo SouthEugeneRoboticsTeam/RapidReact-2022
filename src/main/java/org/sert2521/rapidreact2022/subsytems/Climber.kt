@@ -1,10 +1,12 @@
 package org.sert2521.rapidreact2022.subsytems
 
+import edu.wpi.first.wpilibj.AnalogPotentiometer
 import edu.wpi.first.wpilibj.DigitalInput
 import edu.wpi.first.wpilibj.motorcontrol.PWMSparkMax
 import edu.wpi.first.wpilibj2.command.SubsystemBase
 import org.sert2521.rapidreact2022.LimitSwitches
 import org.sert2521.rapidreact2022.Motors
+import org.sert2521.rapidreact2022.Potentiometers
 
 //Add encoders
 object Climber : SubsystemBase() {
@@ -16,6 +18,8 @@ object Climber : SubsystemBase() {
     private val staticUpLimitSwitch = DigitalInput(LimitSwitches.STATIC_CLIMBER_UP.id)
     private val variableDownLimitSwitch = DigitalInput(LimitSwitches.VARIABLE_CLIMBER_DOWN.id)
     private val variableUpLimitSwitch = DigitalInput(LimitSwitches.VARIABLE_CLIMBER_UP.id)
+
+    private val potentiometer = AnalogPotentiometer(Potentiometers.VARIABLE_CLIMBER_ANGLE.id, Potentiometers.VARIABLE_CLIMBER_ANGLE.maxAngle, Potentiometers.VARIABLE_CLIMBER_ANGLE.zeroAngle)
 
     init {
         staticClimbMotor.inverted = Motors.STATIC_CLIMBER.reversed
