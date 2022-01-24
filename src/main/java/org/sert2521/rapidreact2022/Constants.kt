@@ -9,9 +9,11 @@ const val MOTOR_SPINS_PER_WHEEL_SPIN = 10.71
 //6 inches is 0.1524 meters
 const val WHEEL_CIRCUMFERENCE = 0.1524
 
+const val TRACK_WIDTH = 0.0
+
 const val CLIMBER_HEIGHT_PER_ROTATION = 0.0
 
-const val TRACK_WIDTH = 0.0
+const val MID_STATIC_HEIGHT = 0.0
 
 const val PRIMARY_CONTROLLER_ID = 0
 

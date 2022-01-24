@@ -1,15 +1,15 @@
 package org.sert2521.rapidreact2022
 
-import edu.wpi.first.wpilibj.Joystick
+import edu.wpi.first.wpilibj.XboxController
+import edu.wpi.first.wpilibj2.command.button.JoystickButton
 
 object OI {
-    private val primaryController = Joystick(PRIMARY_CONTROLLER_ID)
+    private val primaryController = XboxController(PRIMARY_CONTROLLER_ID)
+    private val button = JoystickButton(primaryController, 0)
 
-    fun getYAxis(): Double {
-        return primaryController.y
-    }
+    val yAxis
+        get() = primaryController.leftY
 
-    fun getXAxis(): Double {
-        return primaryController.x
-    }
+    val xAxis
+        get() = primaryController.leftX
 }

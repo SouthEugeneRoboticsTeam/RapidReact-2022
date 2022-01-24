@@ -42,7 +42,19 @@ object Climber : SubsystemBase() {
 
         staticClimberEncoder.samplesToAverage = Encoders.STATIC_CLIMBER.samples
         variableClimberEncoder.samplesToAverage = Encoders.VARIABLE_CLIMBER.samples
+
+        staticClimberEncoder.reset()
+        variableClimberEncoder.reset()
     }
+
+    val staticHeight
+        get() = staticClimberEncoder.distance
+
+    val variableHeight
+        get() = variableClimberEncoder.distance
+
+    val variableAngle
+        get() = potentiometer.get()
 
     fun elevateStatic(speed: Double): Boolean {
         return if(staticDownLimitSwitch.get() or staticUpLimitSwitch.get()) {
@@ -62,5 +74,9 @@ object Climber : SubsystemBase() {
             variableClimberMotor.set(speed)
             false
         }
+    }
+
+    fun rotateArm(speed: Double) {
+        variableActuator.set(speed)
     }
 }

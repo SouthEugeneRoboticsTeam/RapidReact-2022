@@ -16,7 +16,7 @@ class JoystickDrive : CommandBase() {
 
     override fun execute() {
         //Squaring the input allows for finer control at low values and the ability to go max speed
-        Drivetrain.arcadeDrive(OI.getYAxis().pow(2), OI.getXAxis().pow(2))
+        Drivetrain.arcadeDrive(OI.yAxis.pow(2), OI.xAxis.pow(2))
     }
 
     override fun end(interrupted: Boolean) {
