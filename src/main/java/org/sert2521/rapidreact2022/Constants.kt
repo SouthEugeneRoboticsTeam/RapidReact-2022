@@ -3,7 +3,7 @@ package org.sert2521.rapidreact2022
 import edu.wpi.first.wpilibj.CounterBase
 import edu.wpi.first.wpilibj.SPI
 
-const val THROUGH_BORE_PULSES_PER_ROTATION = 2048
+const val THROUGH_BORE_PULSES_PER_ROTATION = 2048.0
 
 //6 inches is 0.1524 meters
 const val WHEEL_CIRCUMFERENCE = 0.1524
