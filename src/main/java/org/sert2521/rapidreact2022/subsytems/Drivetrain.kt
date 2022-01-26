@@ -1,6 +1,7 @@
 package org.sert2521.rapidreact2022.subsytems
 
 import com.ctre.phoenix.motorcontrol.ControlMode
+import com.ctre.phoenix.motorcontrol.FeedbackDevice
 import com.ctre.phoenix.motorcontrol.can.TalonSRX
 import com.kauailabs.navx.frc.AHRS
 import edu.wpi.first.math.geometry.Rotation2d
@@ -8,10 +9,8 @@ import edu.wpi.first.math.kinematics.DifferentialDriveOdometry
 import edu.wpi.first.math.kinematics.DifferentialDriveWheelSpeeds
 import edu.wpi.first.wpilibj.Encoder
 import edu.wpi.first.wpilibj2.command.SubsystemBase
-import org.sert2521.rapidreact2022.Motors
+import org.sert2521.rapidreact2022.*
 import org.sert2521.rapidreact2022.commands.JoystickDrive
-import org.sert2521.rapidreact2022.Encoders
-import org.sert2521.rapidreact2022.GYRO_PORT
 
 //Add PID
 object Drivetrain : SubsystemBase() {
@@ -51,18 +50,24 @@ object Drivetrain : SubsystemBase() {
         resetDistanceTraveled()
 
         defaultCommand = JoystickDrive()
+
+        frontLeftMotor.configSelectedFeedbackSensor(FeedbackDevice.QuadEncoder)
+        frontRightMotor.configSelectedFeedbackSensor(FeedbackDevice.QuadEncoder)
     }
 
     fun resetDistanceTraveled() {
         leftEncoder.reset()
         rightEncoder.reset()
+
+        frontLeftMotor.selectedSensorPosition = 0.0
+        frontRightMotor.selectedSensorPosition = 0.0
     }
 
     val leftDistanceTraveled
-        get() = leftEncoder.distance
+        get() = frontLeftMotor.selectedSensorPosition * (WHEEL_CIRCUMFERENCE / (THROUGH_BORE_PULSES_PER_ROTATION * 2))//leftEncoder.distance
 
     val rightDistanceTraveled
-        get() = leftEncoder.distance
+        get() = frontRightMotor.selectedSensorPosition * (WHEEL_CIRCUMFERENCE / (THROUGH_BORE_PULSES_PER_ROTATION * 2))//rightEncoder.distance
 
     override fun periodic() {
         odometry.update(gyro.rotation2d, leftDistanceTraveled, rightDistanceTraveled)
@@ -90,7 +95,7 @@ object Drivetrain : SubsystemBase() {
         backRightMotor.set(mode, amount)
     }
 
-    //Check to make sure works
+    //Make motors work with ControlMode.Velocity
     fun driveWheelSpeeds(wheelSpeeds: DifferentialDriveWheelSpeeds) {
         spinLeft(ControlMode.Velocity, wheelSpeeds.leftMetersPerSecond)
         spinRight(ControlMode.Velocity, wheelSpeeds.rightMetersPerSecond)

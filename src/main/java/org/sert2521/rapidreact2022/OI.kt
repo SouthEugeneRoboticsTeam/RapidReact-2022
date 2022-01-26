@@ -5,11 +5,9 @@ import edu.wpi.first.wpilibj.Joystick
 object OI {
     private val primaryController = Joystick(PRIMARY_CONTROLLER_ID)
 
-    fun getYAxis(): Double {
-        return primaryController.y
-    }
+    val yAxis
+        get() = -primaryController.y
 
-    fun getXAxis(): Double {
-        return primaryController.x
-    }
+    val xAxis
+        get() = primaryController.x
 }

@@ -6,6 +6,7 @@ import edu.wpi.first.math.trajectory.TrajectoryConfig
 import edu.wpi.first.math.trajectory.TrajectoryGenerator
 import edu.wpi.first.wpilibj.TimedRobot
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard
 import edu.wpi.first.wpilibj2.command.Command
 import edu.wpi.first.wpilibj2.command.CommandScheduler
 import org.sert2521.rapidreact2022.commands.DrivePath
@@ -23,14 +24,16 @@ object Robot : TimedRobot() {
             listOf(),
             Pose2d(1.0, 0.0, Rotation2d.fromDegrees(0.0)),
             TrajectoryConfig(0.5, 0.5))
-        autoChooser.setDefaultOption("Drive Forward", DrivePath(forward))
+        autoChooser.addOption("Drive Forward", DrivePath(forward))
 
         val forwardAndRight = TrajectoryGenerator.generateTrajectory(
             Pose2d(0.0, 0.0, Rotation2d.fromDegrees(0.0)),
             listOf(),
             Pose2d(1.0, 0.0, Rotation2d.fromDegrees(0.0)),
             TrajectoryConfig(0.5, 0.5))
-        autoChooser.setDefaultOption("Drive Forward And Right", DrivePath(forwardAndRight))
+        autoChooser.addOption("Drive Forward And Right", DrivePath(forwardAndRight))
+
+        SmartDashboard.putData(autoChooser)
     }
 
     override fun robotPeriodic() {

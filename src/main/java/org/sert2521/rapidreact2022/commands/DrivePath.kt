@@ -24,13 +24,13 @@ class DrivePath(private val trajectory: Trajectory) : CommandBase() {
 
     override fun execute() {
         //Uses the trajectory, kinematics, and ramseteController to get wheel speeds
-        val wheelSpeeds = kinematics.toWheelSpeeds(ramseteController.calculate(Drivetrain.pose, trajectory.sample((currentTimeMillis() - startTime) * 1000.0)))
+        val wheelSpeeds = kinematics.toWheelSpeeds(ramseteController.calculate(Drivetrain.pose, trajectory.sample((currentTimeMillis() - startTime) / 1000.0)))
         Drivetrain.driveWheelSpeeds(wheelSpeeds)
     }
 
     override fun isFinished(): Boolean {
-        if((currentTimeMillis() - startTime) * 1000.0 > trajectory.totalTimeSeconds) {
-            return true
+        if((currentTimeMillis() - startTime) / 1000.0 > trajectory.totalTimeSeconds) {
+            return false
         }
 
         return false
