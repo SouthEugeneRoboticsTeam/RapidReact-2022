@@ -1,5 +1,6 @@
 package org.sert2521.rapidreact2022
 
+import com.revrobotics.CANSparkMaxLowLevel
 import edu.wpi.first.wpilibj.CounterBase
 import edu.wpi.first.wpilibj.SPI
 
@@ -15,11 +16,19 @@ const val PRIMARY_CONTROLLER_ID = 0
 
 val GYRO_PORT = SPI.Port.kMXP
 
-enum class Motors(val id: Int, val reversed: Boolean) {
+enum class Talons(val id: Int, val reversed: Boolean) {
     FRONT_LEFT_DRIVE(0, false),
     BACK_LEFT_DRIVE(0, false),
     FRONT_RIGHT_DRIVE(0, true),
     BACK_RIGHT_DRIVE(0, true)
+}
+
+enum class Sparks(val id: Int, val type: CANSparkMaxLowLevel.MotorType, val reversed: Boolean) {
+    SHOOTER(0, CANSparkMaxLowLevel.MotorType.kBrushless, false)
+}
+
+enum class PIDControllers(val p: Double, val i: Double, val d: Double) {
+    SHOOTER(0.1, 0.1, 0.1)
 }
 
 enum class Encoders(val idA: Int, val idB: Int, val reversed: Boolean, val encodingType: CounterBase.EncodingType, val encoderDistancePerPulse: Double, val maxPeriod: Double, val minRate: Double, val samples: Int) {
