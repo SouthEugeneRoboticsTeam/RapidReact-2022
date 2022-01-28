@@ -2,7 +2,7 @@ package org.sert2521.rapidreact2022.subsytems
 
 import com.revrobotics.CANSparkMax
 import edu.wpi.first.wpilibj2.command.SubsystemBase
-import org.sert2521.rapidreact2022.PIDControllers
+import org.sert2521.rapidreact2022.PIDs
 import org.sert2521.rapidreact2022.Sparks
 
 object Shooter : SubsystemBase() {
@@ -11,9 +11,9 @@ object Shooter : SubsystemBase() {
     init {
         motor.inverted = Sparks.SHOOTER.reversed
 
-        motor.pidController.p = PIDControllers.SHOOTER.p
-        motor.pidController.i = PIDControllers.SHOOTER.i
-        motor.pidController.d = PIDControllers.SHOOTER.d
+        motor.pidController.p = PIDs.SHOOTER.p
+        motor.pidController.i = PIDs.SHOOTER.i
+        motor.pidController.d = PIDs.SHOOTER.d
 
         setWheelSpeed(0.1)
     }

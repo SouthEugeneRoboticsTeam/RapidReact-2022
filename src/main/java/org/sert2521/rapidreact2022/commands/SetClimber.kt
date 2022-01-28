@@ -8,17 +8,17 @@ import org.sert2521.rapidreact2022.subsytems.Climber
 class SetClimber(
     private val staticHeight: Double,
     private val variableHeight: Double,
-    private val variableActuator: Double,
+    private val variableAngle: Double,
     private val staticToleranceDis: Double = 0.01,
     private val variableToleranceDis: Double = 0.01,
-    private val variableActuatorToleranceDis: Double = 1.0,
+    private val variableAngleToleranceDis: Double = 1.0,
     private val staticToleranceSpeed: Double = 0.01,
     private val variableToleranceSpeed: Double = 0.01,
-    private val variableActuatorToleranceSpeed: Double = 1.0,
+    private val variableAngleToleranceSpeed: Double = 1.0,
 ) : CommandBase() {
-    private val staticPID = PIDController(PIDs.CLIMB.p, PIDs.CLIMB.i, PIDs.CLIMB.d)
-    private val variablePID = PIDController(PIDs.CLIMB.p, PIDs.CLIMB.i, PIDs.CLIMB.d)
-    private val variableActuatorPID = PIDController(PIDs.ACTUATE.p, PIDs.ACTUATE.i, PIDs.ACTUATE.d)
+    private val staticPID = PIDController(PIDs.CLIMBER.p, PIDs.CLIMBER.i, PIDs.CLIMBER.d)
+    private val variablePID = PIDController(PIDs.CLIMBER.p, PIDs.CLIMBER.i, PIDs.CLIMBER.d)
+    private val variableActuatorPID = PIDController(PIDs.ACTUATOR.p, PIDs.ACTUATOR.i, PIDs.ACTUATOR.d)
 
     var atStaticLimit = false
     var atVariableLimit = false
@@ -36,7 +36,7 @@ class SetClimber(
         variablePID.setTolerance(variableToleranceDis, variableToleranceSpeed)
 
         variableActuatorPID.reset()
-        variableActuatorPID.setTolerance(variableActuatorToleranceDis, variableActuatorToleranceSpeed)
+        variableActuatorPID.setTolerance(variableAngleToleranceDis, variableAngleToleranceSpeed)
 
         atStaticLimit = false
         atVariableLimit = false
@@ -45,8 +45,8 @@ class SetClimber(
 
     override fun execute() {
         atStaticLimit = Climber.elevateStatic(staticPID.calculate(staticHeight - Climber.staticHeight))
-        atVariableLimit = Climber.elevateStatic(variablePID.calculate(variableHeight - Climber.staticHeight))
-        atVariableActuatorLimit = Climber.elevateStatic(variableActuatorPID.calculate(variableActuator - Climber.staticHeight))
+        atVariableLimit = Climber.elevateStatic(variablePID.calculate(variableHeight - Climber.variableHeight))
+        atVariableActuatorLimit = Climber.elevateStatic(variableActuatorPID.calculate(variableAngle - Climber.variableAngle))
     }
 
     override fun isFinished(): Boolean {

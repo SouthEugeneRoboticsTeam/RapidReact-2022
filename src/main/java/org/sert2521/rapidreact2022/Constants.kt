@@ -53,8 +53,6 @@ enum class AutoPaths(val shuffleBoardName: String, val trajectory: Trajectory) {
 }
 
 enum class Buttons(val id: Int) {
-    INTAKE(0),
-    SHOOT(0),
     CLIMB_NEXT(0)
 }
 
@@ -67,7 +65,6 @@ enum class Talons(val id: Int, val reversed: Boolean) {
     BACK_RIGHT_DRIVE(0, true),
     INTAKE(0, false),
     INDEXER(0, false),
-    SHOOTER(0, false),
     STATIC_CLIMBER(0, false),
     VARIABLE_CLIMBER(0, false),
     VARIABLE_ACTUATOR(0, false)
@@ -91,13 +88,18 @@ enum class Potentiometers(val id: Int, val maxAngle: Double, val zeroAngle: Doub
 
 enum class Encoders(val idA: Int, val idB: Int, val reversed: Boolean, val encodingType: CounterBase.EncodingType, val encoderDistancePerPulse: Double, val maxPeriod: Double, val minRate: Double, val samples: Int) {
     RIGHT_DRIVE(0, 0, false, CounterBase.EncodingType.k2X, (WHEEL_CIRCUMFERENCE / MOTOR_SPINS_PER_WHEEL_SPIN) / THROUGH_BORE_PULSES_PER_ROTATION, 0.1, 10.0, 5),
-    LEFT_DRIVE(0, 0, false, CounterBase.EncodingType.k2X, (WHEEL_CIRCUMFERENCE / MOTOR_SPINS_PER_WHEEL_SPIN) / THROUGH_BORE_PULSES_PER_ROTATION, 0.1, 10.0, 5)
+    LEFT_DRIVE(0, 0, false, CounterBase.EncodingType.k2X, (WHEEL_CIRCUMFERENCE / MOTOR_SPINS_PER_WHEEL_SPIN) / THROUGH_BORE_PULSES_PER_ROTATION, 0.1, 10.0, 5),
+    STATIC_CLIMBER(0, 0, false, CounterBase.EncodingType.k2X, CLIMBER_HEIGHT_PER_ROTATION, 0.1, 10.0, 5),
+    VARIABLE_CLIMBER(0, 0, false, CounterBase.EncodingType.k2X, CLIMBER_HEIGHT_PER_ROTATION, 0.1, 10.0, 5)
 }
 
-enum class ArmFeedForwards(val s: Double, val cos: Double, val v: Double, val a: Double) {
+enum class SimpleFeedForwards(val s: Double, val v: Double, val a: Double) {
+    DRIVE(0.0, 0.0, 0.0)
 }
 
 enum class PIDs(val p: Double, val i: Double, val d: Double) {
-    CLIMB(0.0, 0.0, 0.0),
-    ACTUATE(0.0, 0.0, 0.0)
+    CLIMBER(0.0, 0.0, 0.0),
+    ACTUATOR(0.0, 0.0, 0.0),
+    SHOOTER(0.0, 0.0, 0.0),
+    DRIVE(0.0, 0.0, 0.0)
 }

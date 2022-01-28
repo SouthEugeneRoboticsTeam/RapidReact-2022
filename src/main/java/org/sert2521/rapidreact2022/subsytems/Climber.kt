@@ -8,14 +8,14 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase
 import org.sert2521.rapidreact2022.*
 
 object Climber : SubsystemBase() {
-    private val staticClimberMotor = WPI_TalonSRX(Motors.STATIC_CLIMBER.id)
-    private val variableClimberMotor = WPI_TalonSRX(Motors.VARIABLE_CLIMBER.id)
-    private val variableActuator = WPI_TalonSRX(Motors.VARIABLE_ACTUATOR.id)
+    private val staticClimberMotor = WPI_TalonSRX(Talons.STATIC_CLIMBER.id)
+    private val variableClimberMotor = WPI_TalonSRX(Talons.VARIABLE_CLIMBER.id)
+    private val variableActuator = WPI_TalonSRX(Talons.VARIABLE_ACTUATOR.id)
 
-    private val staticDownLimitSwitch = DigitalInput(LimitSwitches.STATIC_CLIMBER_DOWN.id)
-    private val staticUpLimitSwitch = DigitalInput(LimitSwitches.STATIC_CLIMBER_UP.id)
-    private val variableDownLimitSwitch = DigitalInput(LimitSwitches.VARIABLE_CLIMBER_DOWN.id)
-    private val variableUpLimitSwitch = DigitalInput(LimitSwitches.VARIABLE_CLIMBER_UP.id)
+    private val staticDownLimitSwitch = DigitalInput(OnOffs.STATIC_CLIMBER_DOWN.id)
+    private val staticUpLimitSwitch = DigitalInput(OnOffs.STATIC_CLIMBER_UP.id)
+    private val variableDownLimitSwitch = DigitalInput(OnOffs.VARIABLE_CLIMBER_DOWN.id)
+    private val variableUpLimitSwitch = DigitalInput(OnOffs.VARIABLE_CLIMBER_UP.id)
 
     private val staticClimberEncoder = Encoder(Encoders.STATIC_CLIMBER.idA, Encoders.STATIC_CLIMBER.idA, Encoders.STATIC_CLIMBER.reversed, Encoders.STATIC_CLIMBER.encodingType)
     private val variableClimberEncoder = Encoder(Encoders.VARIABLE_CLIMBER.idA, Encoders.VARIABLE_CLIMBER.idA, Encoders.VARIABLE_CLIMBER.reversed, Encoders.VARIABLE_CLIMBER.encodingType)
@@ -23,9 +23,9 @@ object Climber : SubsystemBase() {
     private val potentiometer = AnalogPotentiometer(Potentiometers.VARIABLE_CLIMBER_ANGLE.id, Potentiometers.VARIABLE_CLIMBER_ANGLE.maxAngle, Potentiometers.VARIABLE_CLIMBER_ANGLE.zeroAngle)
 
     init {
-        staticClimberMotor.inverted = Motors.STATIC_CLIMBER.reversed
-        variableClimberMotor.inverted = Motors.VARIABLE_CLIMBER.reversed
-        variableActuator.inverted = Motors.VARIABLE_ACTUATOR.reversed
+        staticClimberMotor.inverted = Talons.STATIC_CLIMBER.reversed
+        variableClimberMotor.inverted = Talons.VARIABLE_CLIMBER.reversed
+        variableActuator.inverted = Talons.VARIABLE_ACTUATOR.reversed
 
         staticClimberEncoder.distancePerPulse = Encoders.STATIC_CLIMBER.encoderDistancePerPulse
         variableClimberEncoder.distancePerPulse = Encoders.VARIABLE_CLIMBER.encoderDistancePerPulse

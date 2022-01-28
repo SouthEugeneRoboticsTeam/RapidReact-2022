@@ -12,12 +12,12 @@ import org.sert2521.rapidreact2022.*
 import org.sert2521.rapidreact2022.commands.JoystickDrive
 
 object Drivetrain : SubsystemBase() {
-    private val frontLeftMotor = WPI_TalonSRX(Motors.FRONT_LEFT_DRIVE.id)
-    private val backLeftMotor = WPI_TalonSRX(Motors.BACK_LEFT_DRIVE.id)
+    private val frontLeftMotor = WPI_TalonSRX(Talons.FRONT_LEFT_DRIVE.id)
+    private val backLeftMotor = WPI_TalonSRX(Talons.BACK_LEFT_DRIVE.id)
     private val leftMotors = MotorControllerGroup(frontLeftMotor, backLeftMotor)
 
-    private val frontRightMotor = WPI_TalonSRX(Motors.FRONT_RIGHT_DRIVE.id)
-    private val backRightMotor = WPI_TalonSRX(Motors.BACK_RIGHT_DRIVE.id)
+    private val frontRightMotor = WPI_TalonSRX(Talons.FRONT_RIGHT_DRIVE.id)
+    private val backRightMotor = WPI_TalonSRX(Talons.BACK_RIGHT_DRIVE.id)
     private val rightMotors = MotorControllerGroup(frontRightMotor, backRightMotor)
 
     private val drive = DifferentialDrive(leftMotors, rightMotors)
@@ -31,11 +31,11 @@ object Drivetrain : SubsystemBase() {
     private val odometry = DifferentialDriveOdometry(Rotation2d.fromDegrees(0.0))
 
     init {
-        frontLeftMotor.inverted = Motors.FRONT_LEFT_DRIVE.reversed
-        backLeftMotor.inverted = Motors.BACK_LEFT_DRIVE.reversed
+        frontLeftMotor.inverted = Talons.FRONT_LEFT_DRIVE.reversed
+        backLeftMotor.inverted = Talons.BACK_LEFT_DRIVE.reversed
 
-        frontRightMotor.inverted = Motors.FRONT_RIGHT_DRIVE.reversed
-        backRightMotor.inverted = Motors.BACK_RIGHT_DRIVE.reversed
+        frontRightMotor.inverted = Talons.FRONT_RIGHT_DRIVE.reversed
+        backRightMotor.inverted = Talons.BACK_RIGHT_DRIVE.reversed
 
         leftEncoder.distancePerPulse = Encoders.LEFT_DRIVE.encoderDistancePerPulse
         rightEncoder.distancePerPulse = Encoders.RIGHT_DRIVE.encoderDistancePerPulse
