@@ -6,7 +6,7 @@ object OI {
     private val primaryController = Joystick(PRIMARY_CONTROLLER_ID)
 
     val yAxis
-        get() = -primaryController.y
+        get() = primaryController.y
 
     val xAxis
         get() = primaryController.x

@@ -5,6 +5,7 @@ import edu.wpi.first.wpilibj.SPI
 import kotlin.math.PI
 
 const val THROUGH_BORE_PULSES_PER_ROTATION = 2048.0
+const val MAG_PULSES_PER_ROTATION = 4096.0
 
 //6 inches is 0.1524 meters
 const val WHEEL_CIRCUMFERENCE = 0.1524 * PI
@@ -23,6 +24,6 @@ enum class Motors(val id: Int, val reversed: Boolean) {
 }
 
 enum class Encoders(val idA: Int, val idB: Int, val reversed: Boolean, val encodingType: CounterBase.EncodingType, val encoderDistancePerPulse: Double, val maxPeriod: Double, val minRate: Double, val samples: Int) {
-    LEFT_DRIVE(4, 5, false, CounterBase.EncodingType.k2X, WHEEL_CIRCUMFERENCE / THROUGH_BORE_PULSES_PER_ROTATION, 0.1, 10.0, 5),
-    RIGHT_DRIVE(2, 3, false, CounterBase.EncodingType.k2X, WHEEL_CIRCUMFERENCE / THROUGH_BORE_PULSES_PER_ROTATION, 0.1, 10.0, 5)
+    LEFT_DRIVE(4, 5, true, CounterBase.EncodingType.k2X, WHEEL_CIRCUMFERENCE / THROUGH_BORE_PULSES_PER_ROTATION, 0.1, 10.0, 5),
+    RIGHT_DRIVE(2, 3, true, CounterBase.EncodingType.k2X, WHEEL_CIRCUMFERENCE / THROUGH_BORE_PULSES_PER_ROTATION, 0.1, 10.0, 5)
 }

@@ -12,7 +12,8 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase
 import org.sert2521.rapidreact2022.*
 import org.sert2521.rapidreact2022.commands.JoystickDrive
 
-//Add PID
+//Weird encoder code due too encoders going to be different on the real robot
+//PID will need to be fixed
 object Drivetrain : SubsystemBase() {
     private val frontLeftMotor = TalonSRX(Motors.FRONT_LEFT_DRIVE.id)
     private val backLeftMotor = TalonSRX(Motors.BACK_LEFT_DRIVE.id)
@@ -53,6 +54,10 @@ object Drivetrain : SubsystemBase() {
 
         frontLeftMotor.configSelectedFeedbackSensor(FeedbackDevice.QuadEncoder)
         frontRightMotor.configSelectedFeedbackSensor(FeedbackDevice.QuadEncoder)
+
+        frontLeftMotor.config_kP(0, 0.1)
+        frontLeftMotor.config_kI(0, 0.1)
+        frontLeftMotor.config_kD(0, 0.1)
     }
 
     fun resetDistanceTraveled() {
@@ -64,10 +69,10 @@ object Drivetrain : SubsystemBase() {
     }
 
     val leftDistanceTraveled
-        get() = frontLeftMotor.selectedSensorPosition * (WHEEL_CIRCUMFERENCE / (THROUGH_BORE_PULSES_PER_ROTATION * 2))//leftEncoder.distance
+        get() = frontLeftMotor.selectedSensorPosition * (WHEEL_CIRCUMFERENCE / (MAG_PULSES_PER_ROTATION))//leftEncoder.distance
 
     val rightDistanceTraveled
-        get() = frontRightMotor.selectedSensorPosition * (WHEEL_CIRCUMFERENCE / (THROUGH_BORE_PULSES_PER_ROTATION * 2))//rightEncoder.distance
+        get() = frontRightMotor.selectedSensorPosition * (WHEEL_CIRCUMFERENCE / (MAG_PULSES_PER_ROTATION))//rightEncoder.distance
 
     override fun periodic() {
         odometry.update(gyro.rotation2d, leftDistanceTraveled, rightDistanceTraveled)
@@ -97,8 +102,8 @@ object Drivetrain : SubsystemBase() {
 
     //Make motors work with ControlMode.Velocity
     fun driveWheelSpeeds(wheelSpeeds: DifferentialDriveWheelSpeeds) {
-        spinLeft(ControlMode.Velocity, wheelSpeeds.leftMetersPerSecond)
-        spinRight(ControlMode.Velocity, wheelSpeeds.rightMetersPerSecond)
+        spinLeft(ControlMode.Velocity, wheelSpeeds.leftMetersPerSecond / (WHEEL_CIRCUMFERENCE / MAG_PULSES_PER_ROTATION))
+        spinRight(ControlMode.Velocity, wheelSpeeds.rightMetersPerSecond / (WHEEL_CIRCUMFERENCE / MAG_PULSES_PER_ROTATION))
     }
 
     fun tankDrive(leftSpeed: Double, rightSpeed: Double) {
