@@ -17,6 +17,9 @@ const val MOTOR_SPINS_PER_WHEEL_SPIN = 8.25
 
 const val TRACK_WIDTH = 0.5816473
 
+const val INTAKE_SPEED = 0.5
+const val INDEXER_SPEED = 0.5
+
 const val PRIMARY_CONTROLLER_ID = 0
 
 val GYRO_PORT = SPI.Port.kMXP
@@ -60,7 +63,8 @@ enum class Motors(val id: Int, val reversed: Boolean) {
     VARIABLE_ACTUATOR(0, false)
 }
 
-enum class LimitSwitches(val id: Int) {
+enum class OnOffs(val id: Int) {
+    INDEXER(0)
 }
 
 enum class Potentiometers(val min: Double, val max: Double, val zero: Double) {
