@@ -40,23 +40,36 @@ const val INDEXER_SPEED = 0.5
 val GYRO_PORT = SPI.Port.kMXP
 
 enum class AutoPaths(val shuffleBoardName: String, val trajectory: Trajectory) {
+    DRIVE_FORWARD("Forward", TrajectoryGenerator.generateTrajectory(
+        Pose2d(0.0, 0.0, Rotation2d.fromDegrees(0.0)),
+        listOf(),
+        Pose2d(1.0, 0.0, Rotation2d.fromDegrees(0.0)),
+        TrajectoryConfig(0.5, 0.5))),
     NOTHING("Nothing", TrajectoryGenerator.generateTrajectory(
             Pose2d(0.0, 0.0, Rotation2d.fromDegrees(0.0)),
             listOf(),
             Pose2d(0.0, 0.0, Rotation2d.fromDegrees(0.0)),
-            TrajectoryConfig(0.5, 0.5))),
-    DRIVE_FORWARD("Forward", TrajectoryGenerator.generateTrajectory(
-            Pose2d(0.0, 0.0, Rotation2d.fromDegrees(0.0)),
-            listOf(),
-            Pose2d(1.0, 0.0, Rotation2d.fromDegrees(0.0)),
-            TrajectoryConfig(0.5, 0.5))),
-}
-
-enum class Buttons(val id: Int) {
-    CLIMB_NEXT(0)
+            TrajectoryConfig(0.5, 0.5)))
 }
 
 const val PRIMARY_CONTROLLER_ID = 0
+const val SECONDARY_CONTROLLER_ID = 0
+
+enum class PrimaryButtons(val id: Int) {
+    INTAKE(0),
+    SHOOT(0)
+}
+
+enum class SecondaryButtons(val id: Int) {
+    CLIMB_NEXT(0),
+    STATIC_LOWER(0),
+    STATIC_RAISE(0),
+    VARIABLE_LOWER(0),
+    VARIABLE_RAISE(0),
+    VARIABLE_ANGLE_DOWN(0),
+    VARIABLE_ANGLE_UP(0),
+    START_CLIMB(0)
+}
 
 enum class Talons(val id: Int, val reversed: Boolean) {
     FRONT_LEFT_DRIVE(0, false),
