@@ -13,11 +13,27 @@ const val TRACK_WIDTH = 0.0
 
 const val CLIMBER_HEIGHT_PER_ROTATION = 0.0
 
-const val MID_STATIC_HEIGHT = 0.0
+const val MAX_CLIMBER_ANGLE = 0.0
+const val MIN_CLIMBER_ANGLE = 0.0
+
+const val MID_HEIGHT = 0.0
+const val NEXT_BAR_HEIGHT = 0.0
+const val FORWARD_ACTUATOR_ANGLE = 0.0
+const val DEFAULT_ACTUATOR_ANGLE = 0.0
+const val BACKWARD_ACTUATOR_ANGLE = 0.0
+const val HANG_HEIGHT = 0.0
+const val LET_GO_HEIGHT = 0.0
+
+const val CLIMB_ADJUST_SPEED = 0.1
+const val ACTUATE_ADJUST_SPEED = 0.1
+
+val GYRO_PORT = SPI.Port.kMXP
 
 const val PRIMARY_CONTROLLER_ID = 0
 
-val GYRO_PORT = SPI.Port.kMXP
+enum class Buttons(val id: Int) {
+    CLIMB_NEXT(0)
+}
 
 enum class Motors(val id: Int, val reversed: Boolean) {
     FRONT_LEFT_DRIVE(0, false),
@@ -46,4 +62,9 @@ enum class LimitSwitches(val id: Int) {
 
 enum class Potentiometers(val id: Int, val maxAngle: Double, val zeroAngle: Double) {
     VARIABLE_CLIMBER_ANGLE(0, 0.0, 0.0)
+}
+
+enum class PIDs(val p: Double, val i: Double, val d: Double) {
+    CLIMB(0.0, 0.0, 0.0),
+    ACTUATE(0.0, 0.0, 0.0)
 }

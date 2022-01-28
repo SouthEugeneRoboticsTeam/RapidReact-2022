@@ -1,20 +1,16 @@
 package org.sert2521.rapidreact2022.subsytems
 
+import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX
 import edu.wpi.first.wpilibj.AnalogPotentiometer
 import edu.wpi.first.wpilibj.DigitalInput
 import edu.wpi.first.wpilibj.Encoder
-import edu.wpi.first.wpilibj.motorcontrol.PWMSparkMax
 import edu.wpi.first.wpilibj2.command.SubsystemBase
-import org.sert2521.rapidreact2022.Encoders
-import org.sert2521.rapidreact2022.LimitSwitches
-import org.sert2521.rapidreact2022.Motors
-import org.sert2521.rapidreact2022.Potentiometers
+import org.sert2521.rapidreact2022.*
 
-//Add encoders
 object Climber : SubsystemBase() {
-    private val staticClimberMotor = PWMSparkMax(Motors.STATIC_CLIMBER.id)
-    private val variableClimberMotor = PWMSparkMax(Motors.VARIABLE_CLIMBER.id)
-    private val variableActuator = PWMSparkMax(Motors.VARIABLE_ACTUATOR.id)
+    private val staticClimberMotor = WPI_TalonSRX(Motors.STATIC_CLIMBER.id)
+    private val variableClimberMotor = WPI_TalonSRX(Motors.VARIABLE_CLIMBER.id)
+    private val variableActuator = WPI_TalonSRX(Motors.VARIABLE_ACTUATOR.id)
 
     private val staticDownLimitSwitch = DigitalInput(LimitSwitches.STATIC_CLIMBER_DOWN.id)
     private val staticUpLimitSwitch = DigitalInput(LimitSwitches.STATIC_CLIMBER_UP.id)
@@ -56,9 +52,35 @@ object Climber : SubsystemBase() {
     val variableAngle
         get() = potentiometer.get()
 
+    fun isAtBottomStatic(): Boolean {
+        return staticDownLimitSwitch.get()
+    }
+
+    fun isAtTopStatic(): Boolean {
+        return staticUpLimitSwitch.get()
+    }
+
+    fun isAtBottomVariable(): Boolean {
+        return variableDownLimitSwitch.get()
+    }
+
+    fun isAtTopVariable(): Boolean {
+        return variableUpLimitSwitch.get()
+    }
+
+    override fun periodic() {
+        if(isAtBottomStatic()) {
+            staticClimberEncoder.reset()
+        }
+
+        if(isAtBottomVariable()) {
+            variableClimberEncoder.reset()
+        }
+    }
+
     fun elevateStatic(speed: Double): Boolean {
-        return if(staticDownLimitSwitch.get() or staticUpLimitSwitch.get()) {
-            staticClimberMotor.set(0.0)
+        return if((isAtBottomStatic() && speed > 0) || (isAtTopStatic() && speed < 0)) {
+            staticClimberMotor.stopMotor()
             true
         }else{
             staticClimberMotor.set(speed)
@@ -67,8 +89,8 @@ object Climber : SubsystemBase() {
     }
 
     fun elevateVariable(speed: Double): Boolean {
-        return if(variableDownLimitSwitch.get() or variableUpLimitSwitch.get()) {
-            variableClimberMotor.set(0.0)
+        return if((isAtBottomVariable() && speed > 0) || (isAtTopVariable() && speed < 0)) {
+            variableClimberMotor.stopMotor()
             true
         }else{
             variableClimberMotor.set(speed)
@@ -76,7 +98,19 @@ object Climber : SubsystemBase() {
         }
     }
 
-    fun rotateArm(speed: Double) {
-        variableActuator.set(speed)
+    fun actuateVariable(speed: Double): Boolean {
+        return if((MIN_CLIMBER_ANGLE < variableAngle && speed < 0) || (MAX_CLIMBER_ANGLE > variableAngle && speed > 0)) {
+            variableActuator.set(speed)
+            true
+        }else{
+            variableActuator.stopMotor()
+            false
+        }
+    }
+
+    fun stop() {
+        staticClimberMotor.stopMotor()
+        variableClimberMotor.stopMotor()
+        variableActuator.stopMotor()
     }
 }
