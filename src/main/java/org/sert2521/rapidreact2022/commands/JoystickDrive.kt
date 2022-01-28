@@ -15,7 +15,7 @@ class JoystickDrive : CommandBase() {
     }
 
     //Squaring(while persevering sign) the input allows for finer control at low values and the ability to go max speed
-    fun joystickToWheelPercent(amount: Double): Double {
+    private fun joystickToWheelPercent(amount: Double): Double {
         return amount * abs(amount)
     }
 

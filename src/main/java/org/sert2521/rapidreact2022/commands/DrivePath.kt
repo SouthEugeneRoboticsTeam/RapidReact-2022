@@ -1,44 +1,32 @@
 package org.sert2521.rapidreact2022.commands
 
+import edu.wpi.first.math.controller.PIDController
 import edu.wpi.first.math.controller.RamseteController
+import edu.wpi.first.math.controller.SimpleMotorFeedforward
 import edu.wpi.first.math.kinematics.DifferentialDriveKinematics
+import edu.wpi.first.math.kinematics.DifferentialDriveWheelSpeeds
 import edu.wpi.first.math.trajectory.Trajectory
-import edu.wpi.first.wpilibj2.command.CommandBase
+import edu.wpi.first.wpilibj2.command.RamseteCommand
+import edu.wpi.first.wpilibj2.command.SequentialCommandGroup
+import org.sert2521.rapidreact2022.PIDs
+import org.sert2521.rapidreact2022.SimpleFeedForwards
 import org.sert2521.rapidreact2022.TRACK_WIDTH
 import org.sert2521.rapidreact2022.subsytems.Drivetrain
-import java.lang.System.currentTimeMillis
 
-class DrivePath(private val trajectory: Trajectory) : CommandBase() {
-    private val ramseteController = RamseteController()
-    private val kinematics = DifferentialDriveKinematics(TRACK_WIDTH)
-
-    private var startTime = 0L
-
+class DrivePath(trajectory: Trajectory) : SequentialCommandGroup() {
     init {
         addRequirements(Drivetrain)
-    }
-
-    override fun initialize() {
-        startTime = currentTimeMillis()
-    }
-
-    override fun execute() {
-        //Uses the trajectory, kinematics, and ramseteController to get wheel speeds
-        val wheelSpeeds = kinematics.toWheelSpeeds(ramseteController.calculate(Drivetrain.pose, trajectory.sample((currentTimeMillis() - startTime) / 1000.0)))
-        println(Drivetrain.pose.x)
-        println(Drivetrain.pose.y)
-        Drivetrain.driveWheelSpeeds(wheelSpeeds)
-    }
-
-    override fun isFinished(): Boolean {
-        if((currentTimeMillis() - startTime) / 1000.0 > trajectory.totalTimeSeconds) {
-            return false
-        }
-
-        return false
-    }
-
-    override fun end(interrupted: Boolean) {
-        Drivetrain.stop()
+        addCommands(RamseteCommand(
+            trajectory,
+            { Drivetrain.pose },
+            RamseteController(),
+            SimpleMotorFeedforward(SimpleFeedForwards.DRIVE.s, SimpleFeedForwards.DRIVE.v, SimpleFeedForwards.DRIVE.a),
+            DifferentialDriveKinematics(TRACK_WIDTH),
+            { DifferentialDriveWheelSpeeds(Drivetrain.leftVelocity, Drivetrain.rightVelocity) },
+            PIDController(PIDs.DRIVE.p, PIDs.DRIVE.i, PIDs.DRIVE.d),
+            PIDController(PIDs.DRIVE.p, PIDs.DRIVE.i, PIDs.DRIVE.d),
+            Drivetrain::tankDriveVolts,
+            Drivetrain
+        ).andThen(Drivetrain::stop))
     }
 }
