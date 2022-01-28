@@ -17,7 +17,21 @@ const val MOTOR_SPINS_PER_WHEEL_SPIN = 8.25
 
 const val TRACK_WIDTH = 0.5816473
 
-const val PRIMARY_CONTROLLER_ID = 0
+const val CLIMBER_HEIGHT_PER_ROTATION = 0.0
+
+const val MAX_CLIMBER_ANGLE = 0.0
+const val MIN_CLIMBER_ANGLE = 0.0
+
+const val MID_HEIGHT = 0.0
+const val NEXT_BAR_HEIGHT = 0.0
+const val FORWARD_ACTUATOR_ANGLE = 0.0
+const val DEFAULT_ACTUATOR_ANGLE = 0.0
+const val BACKWARD_ACTUATOR_ANGLE = 0.0
+const val HANG_HEIGHT = 0.0
+const val LET_GO_HEIGHT = 0.0
+
+const val CLIMB_ADJUST_SPEED = 0.1
+const val ACTUATE_ADJUST_SPEED = 0.1
 
 val GYRO_PORT = SPI.Port.kMXP
 
@@ -34,18 +48,13 @@ enum class AutoPaths(val shuffleBoardName: String, val trajectory: Trajectory) {
             TrajectoryConfig(0.5, 0.5))),
 }
 
-enum class ClimbStatuses {
-    FLOOR,
-    MID,
-    HIGH,
-    HIGHEST
-}
-
 enum class Buttons(val id: Int) {
     INTAKE(0),
     SHOOT(0),
     CLIMB_NEXT(0)
 }
+
+const val PRIMARY_CONTROLLER_ID = 0
 
 enum class Motors(val id: Int, val reversed: Boolean) {
     FRONT_LEFT_DRIVE(0, false),
@@ -60,22 +69,23 @@ enum class Motors(val id: Int, val reversed: Boolean) {
     VARIABLE_ACTUATOR(0, false)
 }
 
-enum class LimitSwitches(val id: Int) {
-}
-
-enum class Potentiometers(val min: Double, val max: Double, val zero: Double) {
-}
-
 enum class Encoders(val idA: Int, val idB: Int, val reversed: Boolean, val encodingType: CounterBase.EncodingType, val encoderDistancePerPulse: Double, val maxPeriod: Double, val minRate: Double, val samples: Int) {
     RIGHT_DRIVE(0, 0, false, CounterBase.EncodingType.k2X, (WHEEL_CIRCUMFERENCE / MOTOR_SPINS_PER_WHEEL_SPIN) / THROUGH_BORE_PULSES_PER_ROTATION, 0.1, 10.0, 5),
     LEFT_DRIVE(0, 0, false, CounterBase.EncodingType.k2X, (WHEEL_CIRCUMFERENCE / MOTOR_SPINS_PER_WHEEL_SPIN) / THROUGH_BORE_PULSES_PER_ROTATION, 0.1, 10.0, 5)
 }
 
-enum class SimpleFeedForwards(val s: Double, val v: Double, val a: Double) {
+enum class LimitSwitches(val id: Int) {
+    STATIC_CLIMBER_DOWN(0),
+    STATIC_CLIMBER_UP(0),
+    VARIABLE_CLIMBER_DOWN(0),
+    VARIABLE_CLIMBER_UP(0)
 }
 
-enum class ArmFeedForwards(val s: Double, val cos: Double, val v: Double, val a: Double) {
+enum class Potentiometers(val id: Int, val maxAngle: Double, val zeroAngle: Double) {
+    VARIABLE_CLIMBER_ANGLE(0, 0.0, 0.0)
 }
 
 enum class PIDs(val p: Double, val i: Double, val d: Double) {
+    CLIMB(0.0, 0.0, 0.0),
+    ACTUATE(0.0, 0.0, 0.0)
 }
