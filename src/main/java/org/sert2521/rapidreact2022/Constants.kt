@@ -1,5 +1,6 @@
 package org.sert2521.rapidreact2022
 
+import com.revrobotics.CANSparkMaxLowLevel
 import edu.wpi.first.math.geometry.Pose2d
 import edu.wpi.first.math.geometry.Rotation2d
 import edu.wpi.first.math.trajectory.Trajectory
@@ -59,7 +60,7 @@ enum class Buttons(val id: Int) {
 
 const val PRIMARY_CONTROLLER_ID = 0
 
-enum class Motors(val id: Int, val reversed: Boolean) {
+enum class Talons(val id: Int, val reversed: Boolean) {
     FRONT_LEFT_DRIVE(0, false),
     BACK_LEFT_DRIVE(0, false),
     FRONT_RIGHT_DRIVE(0, true),
@@ -70,6 +71,10 @@ enum class Motors(val id: Int, val reversed: Boolean) {
     STATIC_CLIMBER(0, false),
     VARIABLE_CLIMBER(0, false),
     VARIABLE_ACTUATOR(0, false)
+}
+
+enum class Sparks(val id: Int, val type: CANSparkMaxLowLevel.MotorType, val reversed: Boolean) {
+    SHOOTER(0, CANSparkMaxLowLevel.MotorType.kBrushless, false)
 }
 
 enum class OnOffs(val id: Int) {
