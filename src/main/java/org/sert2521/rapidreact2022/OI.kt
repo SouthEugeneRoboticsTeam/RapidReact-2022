@@ -66,8 +66,6 @@ object OI {
         }
     }
 
-
-
     val yAxis
         get() = primaryController.leftY
 

@@ -17,8 +17,8 @@ object Climber : SubsystemBase() {
     private val variableDownLimitSwitch = DigitalInput(OnOffs.VARIABLE_CLIMBER_DOWN.id)
     private val variableUpLimitSwitch = DigitalInput(OnOffs.VARIABLE_CLIMBER_UP.id)
 
-    private val staticClimberEncoder = Encoder(Encoders.STATIC_CLIMBER.idA, Encoders.STATIC_CLIMBER.idA, Encoders.STATIC_CLIMBER.reversed, Encoders.STATIC_CLIMBER.encodingType)
-    private val variableClimberEncoder = Encoder(Encoders.VARIABLE_CLIMBER.idA, Encoders.VARIABLE_CLIMBER.idA, Encoders.VARIABLE_CLIMBER.reversed, Encoders.VARIABLE_CLIMBER.encodingType)
+    private val staticClimberEncoder = Encoder(Encoders.STATIC_CLIMBER.idA, Encoders.STATIC_CLIMBER.idB, Encoders.STATIC_CLIMBER.reversed, Encoders.STATIC_CLIMBER.encodingType)
+    private val variableClimberEncoder = Encoder(Encoders.VARIABLE_CLIMBER.idA, Encoders.VARIABLE_CLIMBER.idB, Encoders.VARIABLE_CLIMBER.reversed, Encoders.VARIABLE_CLIMBER.encodingType)
 
     private val potentiometer = AnalogPotentiometer(Potentiometers.VARIABLE_CLIMBER_ANGLE.id, Potentiometers.VARIABLE_CLIMBER_ANGLE.maxAngle, Potentiometers.VARIABLE_CLIMBER_ANGLE.zeroAngle)
 
