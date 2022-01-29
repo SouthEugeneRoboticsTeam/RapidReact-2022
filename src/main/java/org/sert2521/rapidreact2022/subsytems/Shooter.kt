@@ -6,7 +6,7 @@ import org.sert2521.rapidreact2022.PIDs
 import org.sert2521.rapidreact2022.Sparks
 
 object Shooter : SubsystemBase() {
-    val motor = CANSparkMax(Sparks.SHOOTER.id, Sparks.SHOOTER.type)
+    private val motor = CANSparkMax(Sparks.SHOOTER.id, Sparks.SHOOTER.type)
 
     init {
         motor.inverted = Sparks.SHOOTER.reversed

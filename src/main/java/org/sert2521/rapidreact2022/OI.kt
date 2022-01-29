@@ -72,7 +72,7 @@ object OI {
     }
 
     val yAxis
-        get() = primaryController.leftY
+        get() = -primaryController.leftY
 
     val xAxis
         get() = primaryController.leftX

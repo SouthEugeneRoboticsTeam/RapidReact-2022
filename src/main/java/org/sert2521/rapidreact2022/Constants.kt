@@ -93,7 +93,7 @@ enum class OnOffs(val id: Int) {
 }
 
 enum class Potentiometers(val id: Int, val maxAngle: Double, val zeroAngle: Double) {
-    VARIABLE_CLIMBER_ANGLE(8, 0.0, 0.0) //Fix id
+    VARIABLE_CLIMBER_ANGLE(0, 0.0, 0.0) //Fix id
 }
 
 enum class Encoders(val idA: Int, val idB: Int, val reversed: Boolean, val encodingType: CounterBase.EncodingType, val encoderDistancePerPulse: Double, val maxPeriod: Double, val minRate: Double, val samples: Int) {
