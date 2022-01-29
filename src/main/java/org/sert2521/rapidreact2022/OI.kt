@@ -11,6 +11,7 @@ object OI {
     private val secondaryController = Joystick(SECONDARY_CONTROLLER_ID)
 
     private val intake = JoystickButton(primaryController, PrimaryButtons.INTAKE.id)
+    private val overrideIndexer = JoystickButton(primaryController, PrimaryButtons.OVERRIDE_INDEXER.id)
     private val shoot = JoystickButton(primaryController, PrimaryButtons.SHOOT.id)
 
     private val startClimb = JoystickButton(secondaryController, SecondaryButtons.START_CLIMB.id)
@@ -30,6 +31,10 @@ object OI {
         intake.and(shoot.negate()).whenActive(ShootBalls())
 
         startClimb.toggleWhenPressed(Robot.getClimb())
+    }
+
+    fun getOverrideIndexer(): Boolean {
+        return overrideIndexer.get()
     }
 
     fun getClimbNext(): Boolean {

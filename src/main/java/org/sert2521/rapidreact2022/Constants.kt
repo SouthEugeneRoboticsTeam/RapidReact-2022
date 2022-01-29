@@ -52,7 +52,8 @@ const val PRIMARY_CONTROLLER_ID = 0
 const val SECONDARY_CONTROLLER_ID = 0
 
 enum class PrimaryButtons(val id: Int) {
-    INTAKE(1), //Fix id
+    INTAKE(1),
+    OVERRIDE_INDEXER(1),//Fix id
     SHOOT(1) //Fix id
 }
 
