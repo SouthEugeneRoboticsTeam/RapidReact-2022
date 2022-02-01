@@ -11,7 +11,7 @@ class JoystickDrive : CommandBase() {
     }
 
     override fun initialize() {
-        Drivetrain.resetDistanceTraveled()
+        Drivetrain.reset()
     }
 
     //Squaring(while persevering sign) the input allows for finer control at low values and the ability to go max speed

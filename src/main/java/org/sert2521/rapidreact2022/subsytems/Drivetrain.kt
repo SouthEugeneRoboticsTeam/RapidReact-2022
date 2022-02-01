@@ -49,12 +49,12 @@ object Drivetrain : SubsystemBase() {
         leftEncoder.samplesToAverage = Encoders.LEFT_DRIVE.samples
         rightEncoder.samplesToAverage = Encoders.RIGHT_DRIVE.samples
 
-        resetDistanceTraveled()
+        reset()
 
         defaultCommand = JoystickDrive()
     }
 
-    fun resetDistanceTraveled() {
+    fun reset() {
         leftEncoder.reset()
         rightEncoder.reset()
 
@@ -90,6 +90,7 @@ object Drivetrain : SubsystemBase() {
     fun tankDrive(leftSpeed: Double, rightSpeed: Double) {
         drive.tankDrive(leftSpeed, rightSpeed)
     }
+
 
     fun arcadeDrive(speed: Double, turn: Double) {
         drive.arcadeDrive(speed, turn)

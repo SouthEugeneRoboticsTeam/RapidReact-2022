@@ -40,12 +40,12 @@ const val INDEXER_SPEED = 0.5
 val GYRO_PORT = SPI.Port.kMXP
 
 enum class AutoPaths(val shuffleBoardName: String, val trajectory: Trajectory?) {
+    NOTHING("Nothing", null),
     DRIVE_FORWARD("Forward", TrajectoryGenerator.generateTrajectory(
         Pose2d(0.0, 0.0, Rotation2d.fromDegrees(0.0)),
         listOf(),
-        Pose2d(1.0, 0.0, Rotation2d.fromDegrees(0.0)),
-        TrajectoryConfig(0.5, 0.5))),
-    NOTHING("Nothing", null)
+        Pose2d(3.0, 0.0, Rotation2d.fromDegrees(0.0)),
+        TrajectoryConfig(1.0, 1.0)))
 }
 
 const val PRIMARY_CONTROLLER_ID = 0
@@ -105,12 +105,12 @@ enum class Encoders(val idA: Int, val idB: Int, val reversed: Boolean, val encod
 
 //Need to do characterization
 enum class SimpleFeedForwards(val s: Double, val v: Double, val a: Double) {
-    DRIVE(0.01, 0.4, 0.2)
+    DRIVE(0.86657, 2.2779, 0.73969)
 }
 
 enum class PIDs(val p: Double, val i: Double, val d: Double) {
     CLIMBER(0.0, 0.0, 0.0),
     ACTUATOR(0.0, 0.0, 0.0),
     SHOOTER(0.0, 0.0, 0.0),
-    DRIVE(3.0, 0.0, 0.0)
+    DRIVE(6.0, 0.0, 0.0)
 }
