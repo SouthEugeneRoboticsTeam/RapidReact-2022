@@ -2,7 +2,7 @@ package org.sert2521.rapidreact2022.commands
 
 import edu.wpi.first.math.controller.PIDController
 import edu.wpi.first.wpilibj2.command.CommandBase
-import org.sert2521.rapidreact2022.PIDs
+import org.sert2521.rapidreact2022.Preferences
 import org.sert2521.rapidreact2022.subsytems.Climber
 
 class SetClimber(
@@ -16,9 +16,18 @@ class SetClimber(
     private val variableToleranceSpeed: Double = 0.01,
     private val variableAngleToleranceSpeed: Double = 1.0,
 ) : CommandBase() {
-    private val staticPID = PIDController(PIDs.CLIMBER.p, PIDs.CLIMBER.i, PIDs.CLIMBER.d)
-    private val variablePID = PIDController(PIDs.CLIMBER.p, PIDs.CLIMBER.i, PIDs.CLIMBER.d)
-    private val variableActuatorPID = PIDController(PIDs.ACTUATOR.p, PIDs.ACTUATOR.i, PIDs.ACTUATOR.d)
+    private val staticPID: PIDController
+    private val variablePID: PIDController
+    private val variableActuatorPID: PIDController
+
+    init {
+        val climberPIDArray = Preferences.getClimberPID()
+        val actuatorPIDArray = Preferences.getActuatorPID()
+
+        staticPID = PIDController(climberPIDArray[0], climberPIDArray[1], climberPIDArray[2])
+        variablePID = PIDController(climberPIDArray[0], climberPIDArray[1], climberPIDArray[2])
+        variableActuatorPID = PIDController(actuatorPIDArray[0], actuatorPIDArray[1], actuatorPIDArray[2])
+    }
 
     var atStaticLimit = false
     var atVariableLimit = false

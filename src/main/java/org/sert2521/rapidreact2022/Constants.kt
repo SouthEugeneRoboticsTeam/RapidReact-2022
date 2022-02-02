@@ -37,6 +37,8 @@ const val ACTUATE_ADJUST_SPEED = 0.1
 const val INTAKE_SPEED = 0.5
 const val INDEXER_SPEED = 0.5
 
+const val SHOOTER_RPM = 3200.0
+
 val GYRO_PORT = SPI.Port.kMXP
 
 enum class AutoPaths(val shuffleBoardName: String, val trajectory: Trajectory?) {
@@ -75,20 +77,24 @@ enum class Talons(val id: Int, val reversed: Boolean) {
     BACK_RIGHT_DRIVE(4, true),
     INTAKE(5, false), //Fix id
     INDEXER(6, false), //Fix id
-    STATIC_CLIMBER(7, false), //Fix id
-    VARIABLE_CLIMBER(8, false), //Fix id
-    VARIABLE_ACTUATOR(9, false) //Fix id
+    VARIABLE_ACTUATOR(7, false) //Fix id
 } 
 
 enum class Sparks(val id: Int, val type: CANSparkMaxLowLevel.MotorType, val reversed: Boolean) {
-    SHOOTER(10, CANSparkMaxLowLevel.MotorType.kBrushless, false) //Fix id
+    STATIC_CLIMBER(8, CANSparkMaxLowLevel.MotorType.kBrushless, false), //Fix id
+    VARIABLE_CLIMBER(9, CANSparkMaxLowLevel.MotorType.kBrushless, false), //Fix id
+    SHOOTER(10, CANSparkMaxLowLevel.MotorType.kBrushless, true) //Fix id
+}
+
+enum class SparkEncoders(val conversionFactor: Double) {
+    SHOOTER(1.0),
+    STATIC_CLIMBER(CLIMBER_HEIGHT_PER_ROTATION),
+    VARIABLE_CLIMBER(CLIMBER_HEIGHT_PER_ROTATION)
 }
 
 enum class OnOffs(val id: Int) {
     STATIC_CLIMBER_DOWN(13), //Fix id
-    STATIC_CLIMBER_UP(12), //Fix id
     VARIABLE_CLIMBER_DOWN(11), //Fix id
-    VARIABLE_CLIMBER_UP(10), //Fix id
     INDEXER(9) //Fix id
 }
 
@@ -99,18 +105,4 @@ enum class Potentiometers(val id: Int, val maxAngle: Double, val zeroAngle: Doub
 enum class Encoders(val idA: Int, val idB: Int, val reversed: Boolean, val encodingType: CounterBase.EncodingType, val encoderDistancePerPulse: Double, val maxPeriod: Double, val minRate: Double, val samples: Int) {
     LEFT_DRIVE(0, 1, true, CounterBase.EncodingType.k2X, WHEEL_CIRCUMFERENCE / THROUGH_BORE_PULSES_PER_ROTATION, 0.1, 10.0, 5),
     RIGHT_DRIVE(2, 3, false, CounterBase.EncodingType.k2X, WHEEL_CIRCUMFERENCE / THROUGH_BORE_PULSES_PER_ROTATION, 0.1, 10.0, 5),
-    STATIC_CLIMBER(4, 5, false, CounterBase.EncodingType.k2X, CLIMBER_HEIGHT_PER_ROTATION, 0.1, 10.0, 5), //Fix id
-    VARIABLE_CLIMBER(6, 7, false, CounterBase.EncodingType.k2X, CLIMBER_HEIGHT_PER_ROTATION, 0.1, 10.0, 5) //Fix id
-}
-
-//Need to do characterization
-enum class SimpleFeedForwards(val s: Double, val v: Double, val a: Double) {
-    DRIVE(0.86657, 2.2779, 0.73969)
-}
-
-enum class PIDs(val p: Double, val i: Double, val d: Double) {
-    CLIMBER(0.0, 0.0, 0.0),
-    ACTUATOR(0.0, 0.0, 0.0),
-    SHOOTER(0.0, 0.0, 0.0),
-    DRIVE(6.0, 0.0, 0.0)
 }

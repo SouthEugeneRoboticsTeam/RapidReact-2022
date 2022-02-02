@@ -1,8 +1,10 @@
 package org.sert2521.rapidreact2022.subsytems
 
 import com.revrobotics.CANSparkMax
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard
 import edu.wpi.first.wpilibj2.command.SubsystemBase
-import org.sert2521.rapidreact2022.PIDs
+import org.sert2521.rapidreact2022.Preferences
+import org.sert2521.rapidreact2022.SparkEncoders
 import org.sert2521.rapidreact2022.Sparks
 
 object Shooter : SubsystemBase() {
@@ -11,15 +13,21 @@ object Shooter : SubsystemBase() {
     init {
         motor.inverted = Sparks.SHOOTER.reversed
 
-        motor.pidController.p = PIDs.SHOOTER.p
-        motor.pidController.i = PIDs.SHOOTER.i
-        motor.pidController.d = PIDs.SHOOTER.d
+        val pidfArray = Preferences.getShooterPIDF()
+        motor.pidController.p = pidfArray[0]
+        motor.pidController.i = pidfArray[1]
+        motor.pidController.d = pidfArray[2]
+        motor.pidController.ff = pidfArray[3]
 
-        setWheelSpeed(0.1)
+        motor.encoder.positionConversionFactor = SparkEncoders.SHOOTER.conversionFactor
     }
 
-    fun setWheelSpeed(speed: Double) {
-        motor.set(speed)
+    override fun periodic() {
+        SmartDashboard.putNumber("Shooter RPM Error", motor.encoder.velocity)
+    }
+
+    fun setWheelSpeed(rpm: Double) {
+        motor.pidController.setReference(rpm, CANSparkMax.ControlType.kVelocity)
     }
 
     fun stop() {
