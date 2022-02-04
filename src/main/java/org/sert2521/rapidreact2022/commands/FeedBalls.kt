@@ -5,7 +5,7 @@ import org.sert2521.rapidreact2022.INDEXER_SPEED
 import org.sert2521.rapidreact2022.INTAKE_SPEED
 import org.sert2521.rapidreact2022.subsytems.Intake
 
-class ShootBalls : CommandBase() {
+class FeedBalls : CommandBase() {
     init {
         addRequirements(Intake)
     }

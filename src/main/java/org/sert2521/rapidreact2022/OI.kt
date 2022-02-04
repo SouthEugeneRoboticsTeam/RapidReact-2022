@@ -4,7 +4,7 @@ import edu.wpi.first.wpilibj.Joystick
 import edu.wpi.first.wpilibj.XboxController
 import edu.wpi.first.wpilibj2.command.button.JoystickButton
 import org.sert2521.rapidreact2022.commands.IntakeBalls
-import org.sert2521.rapidreact2022.commands.ShootBalls
+import org.sert2521.rapidreact2022.commands.FeedBalls
 
 object OI {
     private val primaryController = XboxController(PRIMARY_CONTROLLER_ID)
@@ -28,7 +28,7 @@ object OI {
 
     init {
         shoot.whenActive(IntakeBalls())
-        intake.and(shoot.negate()).whenActive(ShootBalls())
+        intake.and(shoot.negate()).whenActive(FeedBalls())
 
         startClimb.toggleWhenPressed(Robot.getClimb())
     }
