@@ -39,12 +39,26 @@ fun initShuffleboard() {
     climbChooser.addOption("Transversal", ClimbTransversal())
     SmartDashboard.putData(climbChooser)
 
-    SmartDashboard.putNumberArray("Climber PID", arrayOf(0.0, 0.0, 0.0))
-    SmartDashboard.putNumberArray("Actuator PID", arrayOf(0.0, 0.0, 0.0))
-    SmartDashboard.putNumberArray("Shooter PIDF", arrayOf(0.0, 0.0, 0.0, 0.0))
-    SmartDashboard.putNumberArray("Drive PID", arrayOf(0.0, 0.0, 0.0))
+    SmartDashboard.putNumber("Climber PID/Climber PID P", 0.0)
+    SmartDashboard.putNumber("Climber PID/Climber PID I", 0.0)
+    SmartDashboard.putNumber("Climber PID/Climber PID D", 0.0)
 
-    SmartDashboard.putNumberArray("Drive Feed Forward", arrayOf(0.0, 0.0, 0.0))
+    SmartDashboard.putNumber("Actuator PID/Actuator PID P", 0.0)
+    SmartDashboard.putNumber("Actuator PID/Actuator PID I", 0.0)
+    SmartDashboard.putNumber("Actuator PID/Actuator PID D", 0.0)
+
+    SmartDashboard.putNumber("Shooter PID/Shooter PID P", 0.0)
+    SmartDashboard.putNumber("Shooter PID/Shooter PID I", 0.0)
+    SmartDashboard.putNumber("Shooter PID/Shooter PID D", 0.0)
+    SmartDashboard.putNumber("Shooter PID/Shooter PID F", 0.0)
+
+    SmartDashboard.putNumber("Drive PID/Drive PID P", 0.0)
+    SmartDashboard.putNumber("Drive PID/Drive PID I", 0.0)
+    SmartDashboard.putNumber("Drive PID/Drive PID D", 0.0)
+
+    SmartDashboard.putNumber("Drive Feed Forward/Drive Feed Forward S", 0.0)
+    SmartDashboard.putNumber("Drive Feed Forward/Drive Feed Forward V", 0.0)
+    SmartDashboard.putNumber("Drive Feed Forward/Drive Feed Forward A", 0.0)
 }
 
 object CompetitionPreferences {
@@ -58,77 +72,88 @@ object CompetitionPreferences {
 object PracticePreferences {
     val climberPID = arrayOf(0.0, 0.0, 0.0)
     val actuatorPID = arrayOf(0.0, 0.0, 0.0)
-    val shooterPIDF = arrayOf(0.0, 0.0, 0.0, 0.00024)
+    val shooterPIDF = arrayOf(0.0, 0.0, 0.0, 0.0)
     val drivePID = arrayOf(0.0, 0.0, 0.0)
     val driveFeedForward = arrayOf(0.86657, 2.2779, 0.73969)
 }
 
 object Preferences {
     fun getClimberPID(shuffleboard: Boolean = false): Array<Double> {
-        var outArray = if(robotType == RobotPreference.COMPETITION) {
+        val pid = if(robotType == RobotPreference.COMPETITION) {
             CompetitionPreferences.climberPID
         }else{
             PracticePreferences.climberPID
         }
 
         if(shuffleboard) {
-            outArray = SmartDashboard.getNumberArray("Climber PID", outArray)
+            pid[0] = SmartDashboard.getNumber("Climber PID/Climber PID P", 0.0)
+            pid[1] = SmartDashboard.getNumber("Climber PID/Climber PID I", 0.0)
+            pid[2] = SmartDashboard.getNumber("Climber PID/Climber PID D", 0.0)
         }
 
-        return outArray
+        return pid
     }
 
     fun getActuatorPID(shuffleboard: Boolean = false): Array<Double> {
-        var pid = if(robotType == RobotPreference.COMPETITION) {
+        val pid = if(robotType == RobotPreference.COMPETITION) {
             CompetitionPreferences.actuatorPID
         }else{
             PracticePreferences.actuatorPID
         }
 
         if(shuffleboard) {
-            pid = SmartDashboard.getNumberArray("Actuator PID", pid)
+            pid[0] = SmartDashboard.getNumber("Actuator PID/Actuator PID P", 0.0)
+            pid[1] = SmartDashboard.getNumber("Actuator PID/Actuator PID I", 0.0)
+            pid[2] = SmartDashboard.getNumber("Actuator PID/Actuator PID D", 0.0)
         }
 
         return pid
     }
 
     fun getShooterPIDF(shuffleboard: Boolean = false): Array<Double> {
-        var pidf = if(robotType == RobotPreference.COMPETITION) {
+        val pidf = if(robotType == RobotPreference.COMPETITION) {
             CompetitionPreferences.shooterPIDF
         }else{
             PracticePreferences.shooterPIDF
         }
 
         if(shuffleboard) {
-            pidf = SmartDashboard.getNumberArray("Shooter PIDF", pidf)
+            pidf[0] = SmartDashboard.getNumber("Shooter PID/Shooter PID P", 0.0)
+            pidf[1] = SmartDashboard.getNumber("Shooter PID/Shooter PID I", 0.0)
+            pidf[2] = SmartDashboard.getNumber("Shooter PID/Shooter PID D", 0.0)
+            pidf[3] = SmartDashboard.getNumber("Shooter PID/Shooter PID F", 0.0)
         }
 
         return pidf
     }
 
     fun getDrivePID(shuffleboard: Boolean = false): Array<Double> {
-        var pid = if(robotType == RobotPreference.COMPETITION) {
+        val pid = if(robotType == RobotPreference.COMPETITION) {
             CompetitionPreferences.drivePID
         }else{
             PracticePreferences.drivePID
         }
 
         if(shuffleboard) {
-            pid = SmartDashboard.getNumberArray("Drive PID", pid)
+            pid[0] = SmartDashboard.getNumber("Drive PID/Drive PID P", 0.0)
+            pid[1] = SmartDashboard.getNumber("Drive PID/Drive PID I", 0.0)
+            pid[2] = SmartDashboard.getNumber("Drive PID/Drive PID D", 0.0)
         }
 
         return pid
     }
 
     fun getDriveFeedForward(shuffleboard: Boolean = false): Array<Double> {
-        var feedForward = if(robotType == RobotPreference.COMPETITION) {
+        val feedForward = if(robotType == RobotPreference.COMPETITION) {
             CompetitionPreferences.driveFeedForward
         }else{
             PracticePreferences.driveFeedForward
         }
 
         if(shuffleboard) {
-            feedForward = SmartDashboard.getNumberArray("Drive Feed Forward", feedForward)
+            feedForward[0] = SmartDashboard.getNumber("Drive Feed Forward/Drive Feed Forward S", 0.0)
+            feedForward[1] = SmartDashboard.getNumber("Drive Feed Forward/Drive Feed Forward V", 0.0)
+            feedForward[2] = SmartDashboard.getNumber("Drive Feed Forward/Drive Feed Forward A", 0.0)
         }
 
         return feedForward
