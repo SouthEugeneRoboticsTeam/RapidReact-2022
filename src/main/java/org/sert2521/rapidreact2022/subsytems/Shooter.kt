@@ -5,7 +5,6 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard
 import edu.wpi.first.wpilibj2.command.SubsystemBase
 import org.sert2521.rapidreact2022.SparkEncoders
 import org.sert2521.rapidreact2022.Sparks
-import org.sert2521.rapidreact2022.commands.ControlShooter
 
 object Shooter : SubsystemBase() {
     private val motor = CANSparkMax(Sparks.SHOOTER.id, Sparks.SHOOTER.type)
@@ -14,8 +13,6 @@ object Shooter : SubsystemBase() {
         motor.inverted = Sparks.SHOOTER.reversed
 
         motor.encoder.positionConversionFactor = SparkEncoders.SHOOTER.conversionFactor
-
-        defaultCommand = ControlShooter()
     }
 
     override fun periodic() {
