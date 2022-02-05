@@ -64,7 +64,7 @@ fun initShuffleboard() {
 object CompetitionPreferences {
     val climberPID = arrayOf(0.0, 0.0, 0.0)
     val actuatorPID = arrayOf(0.0, 0.0, 0.0)
-    val shooterPIDF = arrayOf(0.0, 0.0, 0.0, 0.00024)
+    val shooterPIDF = arrayOf(0.0003, 0.0, 0.0, 0.000185)
     val drivePID = arrayOf(0.0, 0.0, 0.0)
     val driveFeedForward = arrayOf(0.86657, 2.2779, 0.73969)
 }
@@ -72,7 +72,7 @@ object CompetitionPreferences {
 object PracticePreferences {
     val climberPID = arrayOf(0.0, 0.0, 0.0)
     val actuatorPID = arrayOf(0.0, 0.0, 0.0)
-    val shooterPIDF = arrayOf(0.0, 0.0, 0.0, 0.0)
+    val shooterPIDF = arrayOf(0.0003, 0.0, 0.0, 0.000185)
     val drivePID = arrayOf(0.0, 0.0, 0.0)
     val driveFeedForward = arrayOf(0.86657, 2.2779, 0.73969)
 }

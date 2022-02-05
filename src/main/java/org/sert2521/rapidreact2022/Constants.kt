@@ -37,7 +37,7 @@ const val ACTUATE_ADJUST_SPEED = 0.1
 const val INTAKE_SPEED = 0.5
 const val INDEXER_SPEED = 0.5
 
-const val SHOOTER_RPM = 3600.0
+const val SHOOTER_RPM = 3800.0
 
 val GYRO_PORT = SPI.Port.kMXP
 
@@ -55,19 +55,19 @@ const val SECONDARY_CONTROLLER_ID = 0
 
 enum class PrimaryButtons(val id: Int) {
     INTAKE(1),
-    OVERRIDE_INDEXER(1),//Fix id
-    SHOOT(1) //Fix id
+    OVERRIDE_INDEXER(1),
+    SHOOT(1)
 }
 
 enum class SecondaryButtons(val id: Int) {
-    CLIMB_NEXT(1), //Fix id
-    STATIC_LOWER(1), //Fix id
-    STATIC_RAISE(1), //Fix id
-    VARIABLE_LOWER(1), //Fix id
-    VARIABLE_RAISE(1), //Fix id
-    VARIABLE_ANGLE_DOWN(1), //Fix id
-    VARIABLE_ANGLE_UP(1), //Fix id
-    START_CLIMB(1) //Fix id
+    CLIMB_NEXT(1),
+    STATIC_LOWER(1),
+    STATIC_RAISE(1),
+    VARIABLE_LOWER(1),
+    VARIABLE_RAISE(1),
+    VARIABLE_ANGLE_DOWN(1),
+    VARIABLE_ANGLE_UP(1),
+    START_CLIMB(1)
 }
 
 enum class Talons(val id: Int, val reversed: Boolean) {
@@ -75,15 +75,15 @@ enum class Talons(val id: Int, val reversed: Boolean) {
     BACK_LEFT_DRIVE(3, false),
     FRONT_RIGHT_DRIVE(2, true),
     BACK_RIGHT_DRIVE(4, true),
-    INTAKE(5, false), //Fix id
-    INDEXER(6, false), //Fix id
-    VARIABLE_ACTUATOR(7, false) //Fix id
+    INTAKE(5, false),
+    INDEXER(6, false),
+    VARIABLE_ACTUATOR(7, false)
 } 
 
 enum class Sparks(val id: Int, val type: CANSparkMaxLowLevel.MotorType, val reversed: Boolean) {
-    STATIC_CLIMBER(8, CANSparkMaxLowLevel.MotorType.kBrushless, false), //Fix id
-    VARIABLE_CLIMBER(9, CANSparkMaxLowLevel.MotorType.kBrushless, false), //Fix id
-    SHOOTER(10, CANSparkMaxLowLevel.MotorType.kBrushless, true) //Fix id
+    STATIC_CLIMBER(8, CANSparkMaxLowLevel.MotorType.kBrushless, false),
+    VARIABLE_CLIMBER(9, CANSparkMaxLowLevel.MotorType.kBrushless, false),
+    SHOOTER(10, CANSparkMaxLowLevel.MotorType.kBrushless, true)
 }
 
 enum class SparkEncoders(val conversionFactor: Double) {
@@ -93,13 +93,13 @@ enum class SparkEncoders(val conversionFactor: Double) {
 }
 
 enum class OnOffs(val id: Int) {
-    STATIC_CLIMBER_DOWN(13), //Fix id
-    VARIABLE_CLIMBER_DOWN(11), //Fix id
-    INDEXER(9) //Fix id
+    STATIC_CLIMBER_DOWN(13),
+    VARIABLE_CLIMBER_DOWN(11),
+    INDEXER(9)
 }
 
 enum class Potentiometers(val id: Int, val maxAngle: Double, val zeroAngle: Double) {
-    VARIABLE_CLIMBER_ANGLE(0, 0.0, 0.0) //Fix id
+    VARIABLE_CLIMBER_ANGLE(0, 0.0, 0.0)
 }
 
 enum class Encoders(val idA: Int, val idB: Int, val reversed: Boolean, val encodingType: CounterBase.EncodingType, val encoderDistancePerPulse: Double, val maxPeriod: Double, val minRate: Double, val samples: Int) {

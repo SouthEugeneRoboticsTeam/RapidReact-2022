@@ -11,7 +11,7 @@ class ControlShooter : CommandBase() {
     }
 
     override fun initialize() {
-        Shooter.setPIDF(Preferences.getShooterPIDF())
+        Shooter.setPIDF(Preferences.getShooterPIDF(true))
         Shooter.setWheelSpeed(SHOOTER_RPM)
     }
 
