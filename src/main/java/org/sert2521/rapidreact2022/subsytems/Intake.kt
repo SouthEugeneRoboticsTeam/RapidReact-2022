@@ -21,9 +21,8 @@ object Intake : SubsystemBase() {
         intake.set(speed)
     }
 
-    fun isIndexerFull(): Boolean {
-        return indexerBeamBreak.get()
-    }
+    val indexerFull
+        get() = indexerBeamBreak.get()
 
     fun setIndexerSpeed(speed: Double) {
         indexer.set(speed)
