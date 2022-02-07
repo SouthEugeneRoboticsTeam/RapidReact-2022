@@ -11,7 +11,7 @@ import org.sert2521.rapidreact2022.subsytems.Drivetrain
 import org.sert2521.rapidreact2022.subsytems.Intake
 import org.sert2521.rapidreact2022.subsytems.Shooter
 
-object DriverStation {
+object SmartDashboardManager {
     private val autoChooser = SendableChooser<Command?>()
     val climbChooser = SendableChooser<Command>()
 
@@ -123,10 +123,10 @@ object DriverStation {
         SmartDashboard.putNumber("Tuning/Drivetrain Left Distance", Drivetrain.leftDistanceTraveled)
         SmartDashboard.putNumber("Tuning/Drivetrain Right Distance", Drivetrain.rightDistanceTraveled)
 
-        SmartDashboard.putNumber("Tuning/Climber Static Height" , Climber.staticHeight)
-        SmartDashboard.putNumber("Tuning/Climber Variable Height" , Climber.variableHeight)
-        SmartDashboard.putNumber("Tuning/Climber Variable Angle" , Climber.variableAngle)
+        SmartDashboard.putNumber("Tuning/Climber Static Height", Climber.staticHeight)
+        SmartDashboard.putNumber("Tuning/Climber Variable Height", Climber.variableHeight)
+        SmartDashboard.putNumber("Tuning/Climber Variable Angle", Climber.variableAngle)
 
-        SmartDashboard.putBoolean("Tuning/Intake Beam" , Intake.indexerFull)
+        SmartDashboard.putBoolean("Tuning/Intake Beam", Intake.indexerFull)
     }
 }

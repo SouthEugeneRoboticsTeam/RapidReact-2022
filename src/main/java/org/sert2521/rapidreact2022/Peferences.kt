@@ -35,7 +35,7 @@ object Preferences {
         }
 
         if(shuffleboard) {
-            pid = DriverStation.getClimberPID()
+            pid = SmartDashboardManager.getClimberPID()
         }
 
         return pid
@@ -49,7 +49,7 @@ object Preferences {
         }
 
         if(shuffleboard) {
-            pid = DriverStation.getActuatorPID()
+            pid = SmartDashboardManager.getActuatorPID()
         }
 
         return pid
@@ -63,7 +63,7 @@ object Preferences {
         }
 
         if(shuffleboard) {
-            pidf = DriverStation.getShooterPIDF()
+            pidf = SmartDashboardManager.getShooterPIDF()
         }
 
         return pidf
@@ -77,7 +77,7 @@ object Preferences {
         }
 
         if(shuffleboard) {
-            pid = DriverStation.getDrivePID()
+            pid = SmartDashboardManager.getDrivePID()
         }
 
         return pid
@@ -91,17 +91,17 @@ object Preferences {
         }
 
         if(shuffleboard) {
-            feedForward = DriverStation.getDriveFeedForward()
+            feedForward = SmartDashboardManager.getDriveFeedForward()
         }
 
         return feedForward
     }
 
     fun getAuto(): Command {
-        return DriverStation.getAuto() ?: WaitCommand(0.0)
+        return SmartDashboardManager.getAuto() ?: WaitCommand(0.0)
     }
 
     fun getClimb(): Command {
-        return DriverStation.getClimb() ?: WaitCommand(0.0)
+        return SmartDashboardManager.getClimb() ?: WaitCommand(0.0)
     }
 }
