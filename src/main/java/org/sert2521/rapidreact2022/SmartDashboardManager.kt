@@ -13,7 +13,7 @@ import org.sert2521.rapidreact2022.subsytems.Shooter
 
 object SmartDashboardManager {
     private val autoChooser = SendableChooser<Command?>()
-    val climbChooser = SendableChooser<Command>()
+    private val climbChooser = SendableChooser<Command>()
 
     init {
         val autos = AutoPaths.values()
