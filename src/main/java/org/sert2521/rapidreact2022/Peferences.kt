@@ -1,11 +1,7 @@
 package org.sert2521.rapidreact2022
 
-import edu.wpi.first.wpilibj.smartdashboard.SendableChooser
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard
 import edu.wpi.first.wpilibj2.command.Command
-import org.sert2521.rapidreact2022.commands.ClimbMid
-import org.sert2521.rapidreact2022.commands.ClimbTransversal
-import org.sert2521.rapidreact2022.commands.DrivePath
+import edu.wpi.first.wpilibj2.command.WaitCommand
 
 enum class RobotPreference {
     COMPETITION,
@@ -13,53 +9,6 @@ enum class RobotPreference {
 }
 
 val robotType = RobotPreference.PRACTICE
-
-val autoChooser = SendableChooser<Command?>()
-val climbChooser = SendableChooser<Command>()
-
-fun initShuffleboard() {
-    val autos = AutoPaths.values()
-
-    if(autos[0].trajectory != null) {
-        autoChooser.setDefaultOption(autos[0].shuffleBoardName, DrivePath(autos[0].trajectory!!))
-    }else{
-        autoChooser.setDefaultOption(autos[0].shuffleBoardName, null)
-    }
-    for(i in 1 until autos.size) {
-        if(autos[i].trajectory != null) {
-            autoChooser.addOption(autos[i].shuffleBoardName, DrivePath(autos[i].trajectory!!))
-        }else{
-            autoChooser.setDefaultOption(autos[i].shuffleBoardName, null)
-        }
-    }
-
-    SmartDashboard.putData(autoChooser)
-
-    climbChooser.setDefaultOption("Mid", ClimbMid())
-    climbChooser.addOption("Transversal", ClimbTransversal())
-    SmartDashboard.putData(climbChooser)
-
-    SmartDashboard.putNumber("Climber PID/Climber PID P", 0.0)
-    SmartDashboard.putNumber("Climber PID/Climber PID I", 0.0)
-    SmartDashboard.putNumber("Climber PID/Climber PID D", 0.0)
-
-    SmartDashboard.putNumber("Actuator PID/Actuator PID P", 0.0)
-    SmartDashboard.putNumber("Actuator PID/Actuator PID I", 0.0)
-    SmartDashboard.putNumber("Actuator PID/Actuator PID D", 0.0)
-
-    SmartDashboard.putNumber("Shooter PID/Shooter PID P", 0.0)
-    SmartDashboard.putNumber("Shooter PID/Shooter PID I", 0.0)
-    SmartDashboard.putNumber("Shooter PID/Shooter PID D", 0.0)
-    SmartDashboard.putNumber("Shooter PID/Shooter PID F", 0.0)
-
-    SmartDashboard.putNumber("Drive PID/Drive PID P", 0.0)
-    SmartDashboard.putNumber("Drive PID/Drive PID I", 0.0)
-    SmartDashboard.putNumber("Drive PID/Drive PID D", 0.0)
-
-    SmartDashboard.putNumber("Drive Feed Forward/Drive Feed Forward S", 0.0)
-    SmartDashboard.putNumber("Drive Feed Forward/Drive Feed Forward V", 0.0)
-    SmartDashboard.putNumber("Drive Feed Forward/Drive Feed Forward A", 0.0)
-}
 
 object CompetitionPreferences {
     val climberPID = arrayOf(0.0, 0.0, 0.0)
@@ -79,83 +28,80 @@ object PracticePreferences {
 
 object Preferences {
     fun getClimberPID(shuffleboard: Boolean = false): Array<Double> {
-        val pid = if(robotType == RobotPreference.COMPETITION) {
+        var pid = if(robotType == RobotPreference.COMPETITION) {
             CompetitionPreferences.climberPID
         }else{
             PracticePreferences.climberPID
         }
 
         if(shuffleboard) {
-            pid[0] = SmartDashboard.getNumber("Climber PID/Climber PID P", 0.0)
-            pid[1] = SmartDashboard.getNumber("Climber PID/Climber PID I", 0.0)
-            pid[2] = SmartDashboard.getNumber("Climber PID/Climber PID D", 0.0)
+            pid = DriverStation.getClimberPID()
         }
 
         return pid
     }
 
     fun getActuatorPID(shuffleboard: Boolean = false): Array<Double> {
-        val pid = if(robotType == RobotPreference.COMPETITION) {
+        var pid = if(robotType == RobotPreference.COMPETITION) {
             CompetitionPreferences.actuatorPID
         }else{
             PracticePreferences.actuatorPID
         }
 
         if(shuffleboard) {
-            pid[0] = SmartDashboard.getNumber("Actuator PID/Actuator PID P", 0.0)
-            pid[1] = SmartDashboard.getNumber("Actuator PID/Actuator PID I", 0.0)
-            pid[2] = SmartDashboard.getNumber("Actuator PID/Actuator PID D", 0.0)
+            pid = DriverStation.getActuatorPID()
         }
 
         return pid
     }
 
     fun getShooterPIDF(shuffleboard: Boolean = false): Array<Double> {
-        val pidf = if(robotType == RobotPreference.COMPETITION) {
+        var pidf = if(robotType == RobotPreference.COMPETITION) {
             CompetitionPreferences.shooterPIDF
         }else{
             PracticePreferences.shooterPIDF
         }
 
         if(shuffleboard) {
-            pidf[0] = SmartDashboard.getNumber("Shooter PID/Shooter PID P", 0.0)
-            pidf[1] = SmartDashboard.getNumber("Shooter PID/Shooter PID I", 0.0)
-            pidf[2] = SmartDashboard.getNumber("Shooter PID/Shooter PID D", 0.0)
-            pidf[3] = SmartDashboard.getNumber("Shooter PID/Shooter PID F", 0.0)
+            pidf = DriverStation.getShooterPIDF()
         }
 
         return pidf
     }
 
     fun getDrivePID(shuffleboard: Boolean = false): Array<Double> {
-        val pid = if(robotType == RobotPreference.COMPETITION) {
+        var pid = if(robotType == RobotPreference.COMPETITION) {
             CompetitionPreferences.drivePID
         }else{
             PracticePreferences.drivePID
         }
 
         if(shuffleboard) {
-            pid[0] = SmartDashboard.getNumber("Drive PID/Drive PID P", 0.0)
-            pid[1] = SmartDashboard.getNumber("Drive PID/Drive PID I", 0.0)
-            pid[2] = SmartDashboard.getNumber("Drive PID/Drive PID D", 0.0)
+            pid = DriverStation.getDrivePID()
         }
 
         return pid
     }
 
     fun getDriveFeedForward(shuffleboard: Boolean = false): Array<Double> {
-        val feedForward = if(robotType == RobotPreference.COMPETITION) {
+        var feedForward = if(robotType == RobotPreference.COMPETITION) {
             CompetitionPreferences.driveFeedForward
         }else{
             PracticePreferences.driveFeedForward
         }
 
         if(shuffleboard) {
-            feedForward[0] = SmartDashboard.getNumber("Drive Feed Forward/Drive Feed Forward S", 0.0)
-            feedForward[1] = SmartDashboard.getNumber("Drive Feed Forward/Drive Feed Forward V", 0.0)
-            feedForward[2] = SmartDashboard.getNumber("Drive Feed Forward/Drive Feed Forward A", 0.0)
+            feedForward = DriverStation.getDriveFeedForward()
         }
 
         return feedForward
+    }
+
+    fun getAuto(): Command {
+        return DriverStation.getAuto() ?: WaitCommand(0.0)
+    }
+
+    fun getClimb(): Command {
+        return DriverStation.getClimb() ?: WaitCommand(0.0)
     }
 }

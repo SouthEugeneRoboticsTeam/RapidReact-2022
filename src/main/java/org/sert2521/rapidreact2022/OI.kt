@@ -30,7 +30,7 @@ object OI {
         shoot.whenActive(IntakeBalls())
         intake.and(shoot.negate()).whenActive(FeedBalls())
 
-        startClimb.toggleWhenPressed(Robot.getClimb())
+        startClimb.toggleWhenPressed(Preferences.getClimb())
     }
 
     fun getOverrideIndexer(): Boolean {

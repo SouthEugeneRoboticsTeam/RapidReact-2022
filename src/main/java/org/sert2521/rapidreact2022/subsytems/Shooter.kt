@@ -1,7 +1,6 @@
 package org.sert2521.rapidreact2022.subsytems
 
 import com.revrobotics.CANSparkMax
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard
 import edu.wpi.first.wpilibj2.command.SubsystemBase
 import org.sert2521.rapidreact2022.SparkEncoders
 import org.sert2521.rapidreact2022.Sparks
@@ -15,9 +14,8 @@ object Shooter : SubsystemBase() {
         motor.encoder.positionConversionFactor = SparkEncoders.SHOOTER.conversionFactor
     }
 
-    override fun periodic() {
-        SmartDashboard.putNumber("Shooter RPM Error", motor.encoder.velocity)
-    }
+    val wheelSpeed
+        get() = motor.encoder.velocity
 
     fun setPIDF(pidfArray: Array<Double>) {
         motor.pidController.p = pidfArray[0]
