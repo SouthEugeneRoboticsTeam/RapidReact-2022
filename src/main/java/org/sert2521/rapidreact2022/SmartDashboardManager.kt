@@ -30,26 +30,30 @@ object SmartDashboardManager {
 
         SmartDashboard.putData(autoChooser)
 
-        SmartDashboard.putNumber("Tuning/Climber PID/Climber PID P", 0.0)
-        SmartDashboard.putNumber("Tuning/Climber PID/Climber PID I", 0.0)
-        SmartDashboard.putNumber("Tuning/Climber PID/Climber PID D", 0.0)
+        putNumberWithoutOverride("Tuning/Climber PID/Climber PID P", 0.0)
+        putNumberWithoutOverride("Tuning/Climber PID/Climber PID I", 0.0)
+        putNumberWithoutOverride("Tuning/Climber PID/Climber PID D", 0.0)
 
-        SmartDashboard.putNumber("Tuning/Actuator PID/Actuator PID P", 0.0)
-        SmartDashboard.putNumber("Tuning/Actuator PID/Actuator PID I", 0.0)
-        SmartDashboard.putNumber("Tuning/Actuator PID/Actuator PID D", 0.0)
+        putNumberWithoutOverride("Tuning/Actuator PID/Actuator PID P", 0.0)
+        putNumberWithoutOverride("Tuning/Actuator PID/Actuator PID I", 0.0)
+        putNumberWithoutOverride("Tuning/Actuator PID/Actuator PID D", 0.0)
 
-        SmartDashboard.putNumber("Tuning/Shooter PID/Shooter PID P", 0.0)
-        SmartDashboard.putNumber("Tuning/Shooter PID/Shooter PID I", 0.0)
-        SmartDashboard.putNumber("Tuning/Shooter PID/Shooter PID D", 0.0)
-        SmartDashboard.putNumber("Tuning/Shooter PID/Shooter PID F", 0.0)
+        putNumberWithoutOverride("Tuning/Shooter PID/Shooter PID P", 0.0)
+        putNumberWithoutOverride("Tuning/Shooter PID/Shooter PID I", 0.0)
+        putNumberWithoutOverride("Tuning/Shooter PID/Shooter PID D", 0.0)
+        putNumberWithoutOverride("Tuning/Shooter PID/Shooter PID F", 0.0)
 
-        SmartDashboard.putNumber("Tuning/Drive PID/Drive PID P", 0.0)
-        SmartDashboard.putNumber("Tuning/Drive PID/Drive PID I", 0.0)
-        SmartDashboard.putNumber("Tuning/Drive PID/Drive PID D", 0.0)
+        putNumberWithoutOverride("Tuning/Drive PID/Drive PID P", 0.0)
+        putNumberWithoutOverride("Tuning/Drive PID/Drive PID I", 0.0)
+        putNumberWithoutOverride("Tuning/Drive PID/Drive PID D", 0.0)
 
-        SmartDashboard.putNumber("Tuning/Drive Feed Forward/Drive Feed Forward S", 0.0)
-        SmartDashboard.putNumber("Tuning/Drive Feed Forward/Drive Feed Forward V", 0.0)
-        SmartDashboard.putNumber("Tuning/Drive Feed Forward/Drive Feed Forward A", 0.0)
+        putNumberWithoutOverride("Tuning/Drive Feed Forward/Drive Feed Forward S", 0.0)
+        putNumberWithoutOverride("Tuning/Drive Feed Forward/Drive Feed Forward V", 0.0)
+        putNumberWithoutOverride("Tuning/Drive Feed Forward/Drive Feed Forward A", 0.0)
+    }
+
+    private fun putNumberWithoutOverride(key: String, value: Double) {
+        SmartDashboard.putNumber(key, SmartDashboard.getNumber(key, value))
     }
 
     fun getClimberPID(): Array<Double> {
