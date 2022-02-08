@@ -23,10 +23,13 @@ const val MAX_CLIMBER_ANGLE = 0.0
 const val MIN_CLIMBER_ANGLE = 0.0
 
 const val MID_HEIGHT = 0.0
-const val NEXT_BAR_HEIGHT = 0.0
-const val FORWARD_ACTUATOR_ANGLE = 0.0
+const val NEXT_HOOKED_BAR_HEIGHT = 0.0
+const val FORWARD_HOOKED_ACTUATOR_ANGLE = 0.0
+const val NEXT_UNHOOKED_BAR_HEIGHT = 0.0
+const val FORWARD_UNHOOKED_ACTUATOR_ANGLE = 0.0
 const val DEFAULT_ACTUATOR_ANGLE = 0.0
-const val BACKWARD_ACTUATOR_ANGLE = 0.0
+const val BACKWARD_HOOKED_ACTUATOR_ANGLE = 0.0
+const val BACKWARD_UNHOOKED_ACTUATOR_ANGLE = 0.0
 const val HANG_HEIGHT = 0.0
 const val LET_GO_HEIGHT = 0.0
 const val DEFAULT_HEIGHT = 0.0
@@ -67,7 +70,8 @@ enum class SecondaryButtons(val id: Int) {
     VARIABLE_RAISE(1),
     VARIABLE_ANGLE_DOWN(1),
     VARIABLE_ANGLE_UP(1),
-    START_CLIMB(1)
+    START_CLIMB_TRANSVERSAL(1),
+    START_CLIMB_MID(1)
 }
 
 enum class Talons(val id: Int, val reversed: Boolean) {

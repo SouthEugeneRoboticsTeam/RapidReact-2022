@@ -3,8 +3,6 @@ package org.sert2521.rapidreact2022
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard
 import edu.wpi.first.wpilibj2.command.Command
-import org.sert2521.rapidreact2022.commands.ClimbMid
-import org.sert2521.rapidreact2022.commands.ClimbTransversal
 import org.sert2521.rapidreact2022.commands.DrivePath
 import org.sert2521.rapidreact2022.subsytems.Climber
 import org.sert2521.rapidreact2022.subsytems.Drivetrain
@@ -13,7 +11,6 @@ import org.sert2521.rapidreact2022.subsytems.Shooter
 
 object SmartDashboardManager {
     private val autoChooser = SendableChooser<Command?>()
-    private val climbChooser = SendableChooser<Command>()
 
     init {
         val autos = AutoPaths.values()
@@ -32,10 +29,6 @@ object SmartDashboardManager {
         }
 
         SmartDashboard.putData(autoChooser)
-
-        climbChooser.setDefaultOption("Mid", ClimbMid())
-        climbChooser.addOption("Transversal", ClimbTransversal())
-        SmartDashboard.putData(climbChooser)
 
         SmartDashboard.putNumber("Tuning/Climber PID/Climber PID P", 0.0)
         SmartDashboard.putNumber("Tuning/Climber PID/Climber PID I", 0.0)
@@ -108,10 +101,6 @@ object SmartDashboardManager {
 
     fun getAuto(): Command? {
         return autoChooser.selected
-    }
-
-    fun getClimb(): Command? {
-        return climbChooser.selected
     }
 
     fun update() {
