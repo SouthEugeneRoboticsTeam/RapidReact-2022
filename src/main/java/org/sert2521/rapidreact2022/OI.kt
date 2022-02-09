@@ -29,12 +29,17 @@ object OI {
     private val climbVariableActuatorDown = JoystickButton(secondaryController, SecondaryButtons.VARIABLE_ANGLE_DOWN.id)
     private val climbVariableActuatorUp = JoystickButton(secondaryController, SecondaryButtons.VARIABLE_ANGLE_UP.id)
 
-    init {
-        shoot.whenActive(IntakeBalls())
-        intake.and(shoot.negate()).whenActive(FeedBalls())
+    private val intakeBalls = IntakeBalls()
+    private val feedBalls = FeedBalls()
+    private val climbTransversal = ClimbTransversal()
+    private val climbMid = ClimbMid()
 
-        startClimbTransversal.toggleWhenPressed(ClimbTransversal())
-        startClimbMid.toggleWhenPressed(ClimbMid())
+    init {
+        shoot.whenActive(intakeBalls)
+        intake.and(shoot.negate()).whenActive(feedBalls)
+
+        startClimbTransversal.toggleWhenPressed(climbTransversal)
+        startClimbMid.toggleWhenPressed(climbMid)
     }
 
     fun getOverrideIndexer(): Boolean {

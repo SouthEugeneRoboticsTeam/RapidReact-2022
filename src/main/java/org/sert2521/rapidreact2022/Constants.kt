@@ -58,20 +58,20 @@ const val SECONDARY_CONTROLLER_ID = 0
 
 enum class PrimaryButtons(val id: Int) {
     INTAKE(1),
-    OVERRIDE_INDEXER(1),
-    SHOOT(1)
+    OVERRIDE_INDEXER(2),
+    SHOOT(3)
 }
 
 enum class SecondaryButtons(val id: Int) {
     CLIMB_NEXT(1),
-    STATIC_LOWER(1),
-    STATIC_RAISE(1),
-    VARIABLE_LOWER(1),
-    VARIABLE_RAISE(1),
-    VARIABLE_ANGLE_DOWN(1),
-    VARIABLE_ANGLE_UP(1),
-    START_CLIMB_TRANSVERSAL(1),
-    START_CLIMB_MID(1)
+    STATIC_LOWER(2),
+    STATIC_RAISE(3),
+    VARIABLE_LOWER(4),
+    VARIABLE_RAISE(5),
+    VARIABLE_ANGLE_DOWN(6),
+    VARIABLE_ANGLE_UP(7),
+    START_CLIMB_TRANSVERSAL(8),
+    START_CLIMB_MID(9   )
 }
 
 enum class Talons(val id: Int, val reversed: Boolean) {
