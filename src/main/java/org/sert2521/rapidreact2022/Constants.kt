@@ -99,7 +99,7 @@ enum class SparkEncoders(val conversionFactor: Double) {
 enum class OnOffs(val id: Int) {
     STATIC_CLIMBER_DOWN(13),
     VARIABLE_CLIMBER_DOWN(11),
-    INDEXER(9)
+    INDEXER(4)
 }
 
 enum class Potentiometers(val id: Int, val maxAngle: Double, val zeroAngle: Double) {
