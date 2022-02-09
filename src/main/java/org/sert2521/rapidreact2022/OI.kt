@@ -3,16 +3,14 @@ package org.sert2521.rapidreact2022
 import edu.wpi.first.wpilibj.Joystick
 import edu.wpi.first.wpilibj.XboxController
 import edu.wpi.first.wpilibj2.command.button.JoystickButton
-import org.sert2521.rapidreact2022.commands.ClimbMid
-import org.sert2521.rapidreact2022.commands.ClimbTransversal
-import org.sert2521.rapidreact2022.commands.IntakeBalls
-import org.sert2521.rapidreact2022.commands.FeedBalls
+import org.sert2521.rapidreact2022.commands.*
 
 object OI {
     private val primaryController = XboxController(PRIMARY_CONTROLLER_ID)
     private val secondaryController = Joystick(SECONDARY_CONTROLLER_ID)
 
     private val intake = JoystickButton(primaryController, PrimaryButtons.INTAKE.id)
+    private val outtake = JoystickButton(primaryController, PrimaryButtons.OUTTAKE.id)
     private val overrideIndexer = JoystickButton(primaryController, PrimaryButtons.OVERRIDE_INDEXER.id)
     private val shoot = JoystickButton(primaryController, PrimaryButtons.SHOOT.id)
 
@@ -30,13 +28,15 @@ object OI {
     private val climbVariableActuatorUp = JoystickButton(secondaryController, SecondaryButtons.VARIABLE_ANGLE_UP.id)
 
     private val intakeBalls = IntakeBalls()
+    private val outtakeBalls = OuttakeBalls()
     private val feedBalls = FeedBalls()
     private val climbTransversal = ClimbTransversal()
     private val climbMid = ClimbMid()
 
     init {
-        shoot.whenActive(intakeBalls)
-        intake.and(shoot.negate()).whenActive(feedBalls)
+        intake.whileHeld(intakeBalls)
+        outtake.whileHeld(outtakeBalls)
+        shoot.whileHeld(feedBalls)
 
         startClimbTransversal.toggleWhenPressed(climbTransversal)
         startClimbMid.toggleWhenPressed(climbMid)

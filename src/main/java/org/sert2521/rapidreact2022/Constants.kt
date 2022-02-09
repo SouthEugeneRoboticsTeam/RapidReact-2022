@@ -37,8 +37,8 @@ const val DEFAULT_HEIGHT = 0.0
 const val CLIMB_ADJUST_SPEED = 0.1
 const val ACTUATE_ADJUST_SPEED = 0.1
 
-const val INTAKE_SPEED = 0.5
-const val INDEXER_SPEED = 0.5
+const val INTAKE_SPEED = 0.4
+const val INDEXER_SPEED = 0.4
 
 const val SHOOTER_RPM = 3800.0
 
@@ -58,8 +58,9 @@ const val SECONDARY_CONTROLLER_ID = 0
 
 enum class PrimaryButtons(val id: Int) {
     INTAKE(1),
-    OVERRIDE_INDEXER(2),
-    SHOOT(3)
+    OUTTAKE(2),
+    OVERRIDE_INDEXER(3),
+    SHOOT(4)
 }
 
 enum class SecondaryButtons(val id: Int) {
@@ -71,7 +72,7 @@ enum class SecondaryButtons(val id: Int) {
     VARIABLE_ANGLE_DOWN(6),
     VARIABLE_ANGLE_UP(7),
     START_CLIMB_TRANSVERSAL(8),
-    START_CLIMB_MID(9   )
+    START_CLIMB_MID(9)
 }
 
 enum class Talons(val id: Int, val reversed: Boolean) {
@@ -80,7 +81,7 @@ enum class Talons(val id: Int, val reversed: Boolean) {
     FRONT_RIGHT_DRIVE(2, true),
     BACK_RIGHT_DRIVE(4, true),
     INTAKE(5, false),
-    INDEXER(6, false),
+    INDEXER(6, true),
     VARIABLE_ACTUATOR(7, false)
 } 
 
