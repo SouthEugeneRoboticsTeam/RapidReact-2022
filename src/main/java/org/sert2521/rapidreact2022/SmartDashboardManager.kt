@@ -120,6 +120,6 @@ object SmartDashboardManager {
         SmartDashboard.putNumber("Tuning/Climber Variable Height", Climber.variableHeight)
         SmartDashboard.putNumber("Tuning/Climber Variable Angle", Climber.variableAngle)
 
-        SmartDashboard.putBoolean("Tuning/Intake Beam", Intake.indexerFull)
+        SmartDashboard.putBoolean("Tuning/Intake Full", Intake.indexerFull)
     }
 }

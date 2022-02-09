@@ -22,10 +22,10 @@ object Robot : TimedRobot() {
     }
 
     override fun autonomousInit() {
-        Preferences.getAuto().schedule()
+        Preferences.getAuto()?.schedule()
     }
 
     override fun autonomousExit() {
-        Preferences.getAuto().cancel()
+        Preferences.getAuto()?.cancel()
     }
 }

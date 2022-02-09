@@ -1,7 +1,6 @@
 package org.sert2521.rapidreact2022
 
 import edu.wpi.first.wpilibj2.command.Command
-import edu.wpi.first.wpilibj2.command.WaitCommand
 
 enum class RobotPreference {
     COMPETITION,
@@ -97,7 +96,7 @@ object Preferences {
         return feedForward
     }
 
-    fun getAuto(): Command {
-        return SmartDashboardManager.getAuto() ?: WaitCommand(0.0)
+    fun getAuto(): Command? {
+        return SmartDashboardManager.getAuto()
     }
 }
