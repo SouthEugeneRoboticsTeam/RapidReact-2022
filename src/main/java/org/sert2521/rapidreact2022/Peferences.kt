@@ -100,8 +100,4 @@ object Preferences {
     fun getAuto(): Command {
         return SmartDashboardManager.getAuto() ?: WaitCommand(0.0)
     }
-
-    fun getClimb(): Command {
-        return SmartDashboardManager.getClimb() ?: WaitCommand(0.0)
-    }
 }
