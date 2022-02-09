@@ -38,7 +38,7 @@ const val CLIMB_ADJUST_SPEED = 0.1
 const val ACTUATE_ADJUST_SPEED = 0.1
 
 const val INTAKE_SPEED = 0.4
-const val INDEXER_SPEED = 0.4
+const val INDEXER_SPEED = 0.7
 
 const val SHOOTER_RPM = 3800.0
 
