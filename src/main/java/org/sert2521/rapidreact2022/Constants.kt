@@ -16,6 +16,7 @@ const val THROUGH_BORE_PULSES_PER_ROTATION = 2048.0
 const val WHEEL_CIRCUMFERENCE = 0.1524 * PI
 
 const val TRACK_WIDTH = 0.5816473
+const val MAX_SPEED = 2.0
 
 const val CLIMBER_HEIGHT_PER_ROTATION = 0.0
 
@@ -40,8 +41,8 @@ const val ACTUATE_ADJUST_SPEED = 0.1
 const val INTAKE_SPEED = 0.4
 const val INDEXER_SPEED = 0.7
 
-const val SHOOTER_SHOOT_RPM = 4800.0
-const val SHOOTER_IDLE_RPM = 4800.0
+const val SHOOTER_SHOOT_RPM = 5000.0
+const val SHOOTER_IDLE_RPM = 0.0
 const val SHOOTER_TOLERANCE = 60.0
 
 val GYRO_PORT = SPI.Port.kMXP

@@ -15,6 +15,7 @@ class ShootBalls : CommandBase() {
 
     override fun initialize() {
         Shooter.setWheelSpeed(SHOOTER_SHOOT_RPM)
+        Intake.setIntakeSpeed(INDEXER_SPEED)
     }
 
     override fun execute() {

@@ -30,7 +30,7 @@ class DrivePath(trajectory: Trajectory) : SequentialCommandGroup() {
                     DifferentialDriveKinematics(TRACK_WIDTH),
                     { DifferentialDriveWheelSpeeds(Drivetrain.leftVelocity, Drivetrain.rightVelocity) },
                     PIDController(drivePIDArray[0], drivePIDArray[1], drivePIDArray[2]),
-                        PIDController(drivePIDArray[0], drivePIDArray[1], drivePIDArray[2]),
+                    PIDController(drivePIDArray[0], drivePIDArray[1], drivePIDArray[2]),
                     Drivetrain::tankDriveVolts,
                     Drivetrain),
                 InstantCommand(Drivetrain::stop))

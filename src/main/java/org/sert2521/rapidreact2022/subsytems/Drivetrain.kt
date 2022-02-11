@@ -91,11 +91,6 @@ object Drivetrain : SubsystemBase() {
         drive.tankDrive(leftSpeed, rightSpeed)
     }
 
-
-    fun arcadeDrive(speed: Double, turn: Double) {
-        drive.arcadeDrive(speed, turn)
-    }
-
     fun stop() {
         tankDrive(0.0, 0.0)
     }
