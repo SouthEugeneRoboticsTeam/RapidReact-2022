@@ -11,7 +11,7 @@ class IdleShooter : CommandBase() {
     }
 
     override fun initialize() {
-        Shooter.setPIDF(Preferences.getShooterPIDF(true))
+        Shooter.setPIDF(Preferences.getShooterPIDF())
         Shooter.setWheelSpeed(SHOOTER_IDLE_RPM)
     }
 

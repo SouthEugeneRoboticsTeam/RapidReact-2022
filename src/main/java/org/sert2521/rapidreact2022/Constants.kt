@@ -40,9 +40,9 @@ const val ACTUATE_ADJUST_SPEED = 0.1
 const val INTAKE_SPEED = 0.4
 const val INDEXER_SPEED = 0.7
 
-const val SHOOTER_SHOOT_RPM = 3800.0
-const val SHOOTER_IDLE_RPM = 3000.0
-const val SHOOTER_TOLERANCE = 30.0
+const val SHOOTER_SHOOT_RPM = 4800.0
+const val SHOOTER_IDLE_RPM = 4800.0
+const val SHOOTER_TOLERANCE = 60.0
 
 val GYRO_PORT = SPI.Port.kMXP
 

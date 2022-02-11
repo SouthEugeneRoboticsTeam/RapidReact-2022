@@ -18,7 +18,7 @@ class ShootBalls : CommandBase() {
     }
 
     override fun execute() {
-        if(SHOOTER_SHOOT_RPM + SHOOTER_TOLERANCE <= Shooter.wheelSpeed && Shooter.wheelSpeed <= SHOOTER_SHOOT_RPM + SHOOTER_TOLERANCE) {
+        if(SHOOTER_SHOOT_RPM - SHOOTER_TOLERANCE <= Shooter.wheelSpeed && Shooter.wheelSpeed <= SHOOTER_SHOOT_RPM + SHOOTER_TOLERANCE) {
             Intake.setIndexerSpeed(INDEXER_SPEED)
         }else{
             Intake.setIndexerSpeed(0.0)

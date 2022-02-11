@@ -29,14 +29,15 @@ object OI {
 
     private val intakeBalls = IntakeBalls()
     private val outtakeBalls = OuttakeBalls()
-    private val feedBalls = ShootBalls()
+    private val shootBalls = ShootBalls()
+
     private val climbTransversal = ClimbTransversal()
     private val climbMid = ClimbMid()
 
     init {
         intake.whileHeld(intakeBalls)
         outtake.whileHeld(outtakeBalls)
-        shoot.whileHeld(feedBalls)
+        shoot.whileHeld(shootBalls)
 
         startClimbTransversal.toggleWhenPressed(climbTransversal)
         startClimbMid.toggleWhenPressed(climbMid)
