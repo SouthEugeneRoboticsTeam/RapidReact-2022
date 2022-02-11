@@ -29,7 +29,7 @@ object OI {
 
     private val intakeBalls = IntakeBalls()
     private val outtakeBalls = OuttakeBalls()
-    private val feedBalls = FeedBalls()
+    private val feedBalls = ShootBalls()
     private val climbTransversal = ClimbTransversal()
     private val climbMid = ClimbMid()
 
