@@ -28,8 +28,8 @@ class JoystickDrive : CommandBase() {
     }
 
     override fun execute() {
-        val leftSpeed = (joystickToWheelPercent(OI.yAxis) - joystickToWheelPercent(OI.xAxis)) * MAX_SPEED
-        val rightSpeed = (joystickToWheelPercent(OI.yAxis) - joystickToWheelPercent(OI.xAxis)) * MAX_SPEED
+        val leftSpeed = (joystickToWheelPercent(OI.yAxis + OI.xAxis)) * MAX_SPEED
+        val rightSpeed = (joystickToWheelPercent(OI.yAxis - OI.xAxis)) * MAX_SPEED
         Drivetrain.tankDriveVolts(feedForward.calculate(leftSpeed), feedForward.calculate(rightSpeed))
     }
 

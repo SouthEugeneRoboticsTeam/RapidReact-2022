@@ -16,7 +16,8 @@ const val THROUGH_BORE_PULSES_PER_ROTATION = 2048.0
 const val WHEEL_CIRCUMFERENCE = 0.1524 * PI
 
 const val TRACK_WIDTH = 0.5816473
-const val MAX_SPEED = 2.0
+const val MAX_SPEED = 4.0
+const val DEADBAND = 0.1
 
 const val CLIMBER_HEIGHT_PER_ROTATION = 0.0
 
@@ -52,7 +53,7 @@ enum class AutoPaths(val shuffleBoardName: String, val trajectory: Trajectory?) 
     DRIVE_FORWARD("Forward", TrajectoryGenerator.generateTrajectory(
         Pose2d(0.0, 0.0, Rotation2d.fromDegrees(0.0)),
         listOf(),
-        Pose2d(3.0, 0.0, Rotation2d.fromDegrees(0.0)),
+        Pose2d(0.0, 1.0, Rotation2d.fromDegrees(90.0)),
         TrajectoryConfig(1.0, 1.0)))
 }
 
@@ -74,7 +75,7 @@ enum class SecondaryButtons(val id: Int) {
     VARIABLE_RAISE(5),
     VARIABLE_ANGLE_DOWN(6),
     VARIABLE_ANGLE_UP(7),
-    START_CLIMB_TRANSVERSAL(8),
+    START_CLIMB_TRAVERSAL(8),
     START_CLIMB_MID(9)
 }
 
@@ -103,7 +104,7 @@ enum class SparkEncoders(val conversionFactor: Double) {
 enum class OnOffs(val id: Int) {
     STATIC_CLIMBER_DOWN(13),
     VARIABLE_CLIMBER_DOWN(11),
-    INDEXER(4)
+    INDEXER(6)
 }
 
 enum class Potentiometers(val id: Int, val maxAngle: Double, val zeroAngle: Double) {

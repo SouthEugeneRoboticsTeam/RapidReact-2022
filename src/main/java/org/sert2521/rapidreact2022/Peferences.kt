@@ -2,6 +2,8 @@ package org.sert2521.rapidreact2022
 
 import edu.wpi.first.wpilibj2.command.Command
 
+const val LOG_DRIVETRAIN = false
+
 enum class RobotPreference {
     COMPETITION,
     PRACTICE
@@ -13,16 +15,16 @@ object CompetitionPreferences {
     val climberPID = arrayOf(0.0, 0.0, 0.0)
     val actuatorPID = arrayOf(0.0, 0.0, 0.0)
     val shooterPIDF = arrayOf(0.0003, 0.0, 0.0, 0.000185)
-    val drivePID = arrayOf(0.0, 0.0, 0.0)
-    val driveFeedForward = arrayOf(0.86657, 2.2779, 0.73969)
+    val drivePID = arrayOf(2.773, 0.0, 0.0)
+    val driveFeedForward = arrayOf(0.72556, 2.437, 2.5888)
 }
 
 object PracticePreferences {
     val climberPID = arrayOf(0.0, 0.0, 0.0)
     val actuatorPID = arrayOf(0.0, 0.0, 0.0)
     val shooterPIDF = arrayOf(0.0003, 0.0, 0.0, 0.000185)
-    val drivePID = arrayOf(0.0, 0.0, 0.0)
-    val driveFeedForward = arrayOf(0.86657, 2.2779, 0.73969)
+    val drivePID = arrayOf(2.773, 0.0, 0.0)
+    val driveFeedForward = arrayOf(0.72556, 2.437, 2.5888)
 }
 
 object Preferences {

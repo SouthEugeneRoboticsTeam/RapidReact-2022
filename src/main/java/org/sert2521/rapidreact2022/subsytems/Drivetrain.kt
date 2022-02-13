@@ -1,7 +1,9 @@
 package org.sert2521.rapidreact2022.subsytems
 
+import com.ctre.phoenix.motorcontrol.NeutralMode
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX
 import com.kauailabs.navx.frc.AHRS
+import edu.wpi.first.math.geometry.Pose2d
 import edu.wpi.first.math.geometry.Rotation2d
 import edu.wpi.first.math.kinematics.DifferentialDriveOdometry
 import edu.wpi.first.wpilibj.Encoder
@@ -28,7 +30,7 @@ object Drivetrain : SubsystemBase() {
     private val gyro = AHRS(GYRO_PORT)
 
     //Make sure start rotation is correct
-    private val odometry = DifferentialDriveOdometry(Rotation2d.fromDegrees(0.0))
+    private val odometry = DifferentialDriveOdometry(gyro.rotation2d)
 
     init {
         frontLeftMotor.inverted = Talons.FRONT_LEFT_DRIVE.reversed
@@ -36,6 +38,11 @@ object Drivetrain : SubsystemBase() {
 
         frontRightMotor.inverted = Talons.FRONT_RIGHT_DRIVE.reversed
         backRightMotor.inverted = Talons.BACK_RIGHT_DRIVE.reversed
+
+        frontLeftMotor.setNeutralMode(NeutralMode.Brake)
+        backLeftMotor.setNeutralMode(NeutralMode.Brake)
+        frontRightMotor.setNeutralMode(NeutralMode.Brake)
+        backRightMotor.setNeutralMode(NeutralMode.Brake)
 
         leftEncoder.distancePerPulse = Encoders.LEFT_DRIVE.encoderDistancePerPulse
         rightEncoder.distancePerPulse = Encoders.RIGHT_DRIVE.encoderDistancePerPulse
@@ -60,6 +67,8 @@ object Drivetrain : SubsystemBase() {
 
         frontLeftMotor.selectedSensorPosition = 0.0
         frontRightMotor.selectedSensorPosition = 0.0
+
+        odometry.resetPosition(Pose2d(0.0, 0.0, Rotation2d.fromDegrees(0.0)), gyro.rotation2d)
     }
 
     val leftDistanceTraveled
@@ -70,6 +79,19 @@ object Drivetrain : SubsystemBase() {
 
     override fun periodic() {
         odometry.update(gyro.rotation2d, leftDistanceTraveled, rightDistanceTraveled)
+
+        if(LOG_DRIVETRAIN) {
+            println("Pose x: " + odometry.poseMeters.x)
+            println("Pose y: " + odometry.poseMeters.y)
+
+            println("Encoder left dis: " + leftDistanceTraveled)
+            println("Encoder right dis: " + rightDistanceTraveled)
+
+            println("Encoder left vel: " + leftVelocity)
+            println("Encoder right vel: " + rightVelocity)
+
+            println("Gyro angle: " + gyro.rotation2d.degrees)
+        }
     }
 
     val pose

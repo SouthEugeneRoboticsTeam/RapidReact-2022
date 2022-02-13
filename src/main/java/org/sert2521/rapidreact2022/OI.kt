@@ -14,7 +14,7 @@ object OI {
     private val overrideIndexer = JoystickButton(primaryController, PrimaryButtons.OVERRIDE_INDEXER.id)
     private val shoot = JoystickButton(primaryController, PrimaryButtons.SHOOT.id)
 
-    private val startClimbTransversal = JoystickButton(secondaryController, SecondaryButtons.START_CLIMB_TRANSVERSAL.id)
+    private val startClimbTraversal = JoystickButton(secondaryController, SecondaryButtons.START_CLIMB_TRAVERSAL.id)
     private val startClimbMid = JoystickButton(secondaryController, SecondaryButtons.START_CLIMB_MID.id)
     private val climbNext = JoystickButton(secondaryController, SecondaryButtons.CLIMB_NEXT.id)
 
@@ -31,7 +31,7 @@ object OI {
     private val outtakeBalls = OuttakeBalls()
     private val shootBalls = ShootBalls()
 
-    private val climbTransversal = ClimbTransversal()
+    private val climbTraversal = ClimbTraversal()
     private val climbMid = ClimbMid()
 
     init {
@@ -39,7 +39,7 @@ object OI {
         outtake.whileHeld(outtakeBalls)
         shoot.whileHeld(shootBalls)
 
-        startClimbTransversal.toggleWhenPressed(climbTransversal)
+        startClimbTraversal.toggleWhenPressed(climbTraversal)
         startClimbMid.toggleWhenPressed(climbMid)
     }
 
@@ -81,9 +81,17 @@ object OI {
         }
     }
 
+    private fun deadband(value: Double, range: Double): Double {
+        if(value < range && value > -range) {
+            return 0.0
+        }
+
+        return value
+    }
+
     val yAxis
-        get() = -primaryController.leftY
+        get() = deadband(-primaryController.leftY, DEADBAND)
 
     val xAxis
-        get() = primaryController.leftX
+        get() = deadband(primaryController.leftX, DEADBAND)
 }
