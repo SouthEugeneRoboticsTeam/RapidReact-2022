@@ -3,7 +3,7 @@ package org.sert2521.rapidreact2022
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard
 import edu.wpi.first.wpilibj2.command.Command
-import org.sert2521.rapidreact2022.commands.DrivePath
+import org.sert2521.rapidreact2022.commands.ShootSingle
 import org.sert2521.rapidreact2022.subsytems.Climber
 import org.sert2521.rapidreact2022.subsytems.Drivetrain
 import org.sert2521.rapidreact2022.subsytems.Intake
@@ -13,20 +13,9 @@ object SmartDashboardManager {
     private val autoChooser = SendableChooser<Command?>()
 
     init {
-        val autos = AutoPaths.values()
-
-        if (autos[0].trajectory != null) {
-            autoChooser.setDefaultOption(autos[0].shuffleBoardName, DrivePath(autos[0].trajectory!!))
-        } else {
-            autoChooser.setDefaultOption(autos[0].shuffleBoardName, null)
-        }
-        for (i in 1 until autos.size) {
-            if (autos[i].trajectory != null) {
-                autoChooser.addOption(autos[i].shuffleBoardName, DrivePath(autos[i].trajectory!!))
-            } else {
-                autoChooser.setDefaultOption(autos[i].shuffleBoardName, null)
-            }
-        }
+        val autoChooser = SendableChooser<Command?>()
+        autoChooser.setDefaultOption("Nothing", null)
+        autoChooser.setDefaultOption("Shoot Single", ShootSingle())
 
         SmartDashboard.putData(autoChooser)
 

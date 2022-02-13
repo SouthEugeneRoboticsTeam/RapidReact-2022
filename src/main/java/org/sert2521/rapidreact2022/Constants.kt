@@ -3,9 +3,6 @@ package org.sert2521.rapidreact2022
 import com.revrobotics.CANSparkMaxLowLevel
 import edu.wpi.first.math.geometry.Pose2d
 import edu.wpi.first.math.geometry.Rotation2d
-import edu.wpi.first.math.trajectory.Trajectory
-import edu.wpi.first.math.trajectory.TrajectoryConfig
-import edu.wpi.first.math.trajectory.TrajectoryGenerator
 import edu.wpi.first.wpilibj.CounterBase
 import edu.wpi.first.wpilibj.SPI
 import kotlin.math.PI
@@ -45,16 +42,12 @@ const val SHOOTER_SHOOT_RPM = 5000.0
 const val SHOOTER_IDLE_RPM = 0.0
 const val SHOOTER_TOLERANCE = 60.0
 
-val GYRO_PORT = SPI.Port.kMXP
+val startPose = Pose2d(0.0, 0.0, Rotation2d(0.0))
+val shootPose = Pose2d(0.0, 0.0, Rotation2d(0.0))
+val endPose = Pose2d(0.0, 0.0, Rotation2d(0.0))
+val pickupPose = Pose2d(0.0, 0.0, Rotation2d(0.0))
 
-enum class AutoPaths(val shuffleBoardName: String, val trajectory: Trajectory?) {
-    NOTHING("Nothing", null),
-    DRIVE_FORWARD("Forward", TrajectoryGenerator.generateTrajectory(
-        Pose2d(0.0, 0.0, Rotation2d.fromDegrees(0.0)),
-        listOf(),
-        Pose2d(3.0, 0.0, Rotation2d.fromDegrees(0.0)),
-        TrajectoryConfig(1.0, 1.0)))
-}
+val GYRO_PORT = SPI.Port.kMXP
 
 const val PRIMARY_CONTROLLER_ID = 0
 const val SECONDARY_CONTROLLER_ID = 0
