@@ -6,7 +6,7 @@ import org.sert2521.rapidreact2022.INTAKE_SPEED
 import org.sert2521.rapidreact2022.OI
 import org.sert2521.rapidreact2022.subsytems.Intake
 
-class IntakeBalls : CommandBase() {
+class IntakeBalls() : CommandBase() {
     init {
         addRequirements(Intake)
     }
