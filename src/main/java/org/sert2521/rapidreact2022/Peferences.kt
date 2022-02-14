@@ -7,93 +7,145 @@ enum class RobotPreference {
     PRACTICE
 }
 
-val robotType = RobotPreference.PRACTICE
+val ROBOT_TYPE = RobotPreference.PRACTICE
+const val CLIMBER_PID_SHUFFLEBOARD = false
+const val ACTUATOR_PID_SHUFFLEBOARD = false
+const val SHOOTER_PIDF_SHUFFLEBOARD = false
+const val DRIVE_PID_SHUFFLEBOARD = false
+const val DRIVE_FEED_FORWARD_SHUFFLEBOARD = false
+const val SHOOTER_SHOOT_RPM_SHUFFLEBOARD = false
+const val SHOOTER_TOLERANCE_SHUFFLEBOARD = false
+const val SHOOTER_IDLE_RPM_SHUFFLEBOARD = false
 
 object CompetitionPreferences {
-    val climberPID = arrayOf(0.0, 0.0, 0.0)
-    val actuatorPID = arrayOf(0.0, 0.0, 0.0)
-    val shooterPIDF = arrayOf(0.0003, 0.0, 0.0, 0.000185)
-    val drivePID = arrayOf(0.0, 0.0, 0.0)
-    val driveFeedForward = arrayOf(0.86657, 2.2779, 0.73969)
+    val CLIMBER_PID = arrayOf(0.0, 0.0, 0.0)
+    val ACTUATOR_PID = arrayOf(0.0, 0.0, 0.0)
+    val SHOOTER_PIDF = arrayOf(0.0003, 0.0, 0.0, 0.000185)
+    val DRIVE_PID = arrayOf(0.0, 0.0, 0.0)
+    val DRIVE_FEED_FORWARD = arrayOf(0.86657, 2.2779, 0.73969)
+
+    const val SHOOTER_SHOOT_RPM = 5000.0
+    const val SHOOTER_TOLERANCE = 60.0
+    const val SHOOTER_IDLE_RPM = 0.0
 }
 
 object PracticePreferences {
-    val climberPID = arrayOf(0.0, 0.0, 0.0)
-    val actuatorPID = arrayOf(0.0, 0.0, 0.0)
-    val shooterPIDF = arrayOf(0.0003, 0.0, 0.0, 0.000185)
-    val drivePID = arrayOf(0.0, 0.0, 0.0)
-    val driveFeedForward = arrayOf(0.86657, 2.2779, 0.73969)
+    val CLIMBER_PID = arrayOf(0.0, 0.0, 0.0)
+    val ACTUATOR_PID = arrayOf(0.0, 0.0, 0.0)
+    val SHOOTER_PIDF = arrayOf(0.0003, 0.0, 0.0, 0.000185)
+    val DRIVE_PID = arrayOf(0.0, 0.0, 0.0)
+    val DRIVE_FEED_FORWARD = arrayOf(0.86657, 2.2779, 0.73969)
+
+    const val SHOOTER_SHOOT_RPM = 5000.0
+    const val SHOOTER_TOLERANCE = 60.0
+    const val SHOOTER_IDLE_RPM = 0.0
 }
 
 object Preferences {
-    fun getClimberPID(shuffleboard: Boolean = false): Array<Double> {
-        var pid = if(robotType == RobotPreference.COMPETITION) {
-            CompetitionPreferences.climberPID
+    fun getClimberPID(): Array<Double> {
+        var pid = if(ROBOT_TYPE == RobotPreference.COMPETITION) {
+            CompetitionPreferences.CLIMBER_PID
         }else{
-            PracticePreferences.climberPID
+            PracticePreferences.CLIMBER_PID
         }
 
-        if(shuffleboard) {
+        if(CLIMBER_PID_SHUFFLEBOARD) {
             pid = SmartDashboardManager.getClimberPID()
         }
 
         return pid
     }
 
-    fun getActuatorPID(shuffleboard: Boolean = false): Array<Double> {
-        var pid = if(robotType == RobotPreference.COMPETITION) {
-            CompetitionPreferences.actuatorPID
+    fun getActuatorPID(): Array<Double> {
+        var pid = if(ROBOT_TYPE == RobotPreference.COMPETITION) {
+            CompetitionPreferences.ACTUATOR_PID
         }else{
-            PracticePreferences.actuatorPID
+            PracticePreferences.ACTUATOR_PID
         }
 
-        if(shuffleboard) {
+        if(ACTUATOR_PID_SHUFFLEBOARD) {
             pid = SmartDashboardManager.getActuatorPID()
         }
 
         return pid
     }
 
-    fun getShooterPIDF(shuffleboard: Boolean = false): Array<Double> {
-        var pidf = if(robotType == RobotPreference.COMPETITION) {
-            CompetitionPreferences.shooterPIDF
+    fun getShooterPIDF(): Array<Double> {
+        var pidf = if(ROBOT_TYPE == RobotPreference.COMPETITION) {
+            CompetitionPreferences.SHOOTER_PIDF
         }else{
-            PracticePreferences.shooterPIDF
+            PracticePreferences.SHOOTER_PIDF
         }
 
-        if(shuffleboard) {
+        if(SHOOTER_PIDF_SHUFFLEBOARD) {
             pidf = SmartDashboardManager.getShooterPIDF()
         }
 
         return pidf
     }
 
-    fun getDrivePID(shuffleboard: Boolean = false): Array<Double> {
-        var pid = if(robotType == RobotPreference.COMPETITION) {
-            CompetitionPreferences.drivePID
+    fun getDrivePID(): Array<Double> {
+        var pid = if(ROBOT_TYPE == RobotPreference.COMPETITION) {
+            CompetitionPreferences.DRIVE_PID
         }else{
-            PracticePreferences.drivePID
+            PracticePreferences.DRIVE_PID
         }
 
-        if(shuffleboard) {
+        if(DRIVE_PID_SHUFFLEBOARD) {
             pid = SmartDashboardManager.getDrivePID()
         }
 
         return pid
     }
 
-    fun getDriveFeedForward(shuffleboard: Boolean = false): Array<Double> {
-        var feedForward = if(robotType == RobotPreference.COMPETITION) {
-            CompetitionPreferences.driveFeedForward
+    fun getDriveFeedForward(): Array<Double> {
+        var feedForward = if(ROBOT_TYPE == RobotPreference.COMPETITION) {
+            CompetitionPreferences.DRIVE_FEED_FORWARD
         }else{
-            PracticePreferences.driveFeedForward
+            PracticePreferences.DRIVE_FEED_FORWARD
         }
 
-        if(shuffleboard) {
+        if(DRIVE_FEED_FORWARD_SHUFFLEBOARD) {
             feedForward = SmartDashboardManager.getDriveFeedForward()
         }
 
         return feedForward
+    }
+
+    fun getShooterRPM(): Double {
+        return if (SHOOTER_SHOOT_RPM_SHUFFLEBOARD) {
+            SmartDashboardManager.getShooterRPM()
+        } else {
+            if(ROBOT_TYPE == RobotPreference.COMPETITION) {
+                CompetitionPreferences.SHOOTER_SHOOT_RPM
+            }else{
+                PracticePreferences.SHOOTER_SHOOT_RPM
+            }
+        }
+    }
+
+    fun getShooterRPMTolerance(): Double {
+        return if (SHOOTER_TOLERANCE_SHUFFLEBOARD) {
+            SmartDashboardManager.getShooterRPMTolerance()
+        } else {
+            if(ROBOT_TYPE == RobotPreference.COMPETITION) {
+                CompetitionPreferences.SHOOTER_TOLERANCE
+            }else{
+                PracticePreferences.SHOOTER_TOLERANCE
+            }
+        }
+    }
+
+    fun getShooterIdleRPM(): Double {
+        return if (SHOOTER_IDLE_RPM_SHUFFLEBOARD) {
+            SmartDashboardManager.getShooterIdleRPM()
+        } else {
+            if(ROBOT_TYPE == RobotPreference.COMPETITION) {
+                CompetitionPreferences.SHOOTER_IDLE_RPM
+            }else{
+                PracticePreferences.SHOOTER_IDLE_RPM
+            }
+        }
     }
 
     fun getAuto(): Command? {
