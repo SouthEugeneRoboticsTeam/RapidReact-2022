@@ -14,6 +14,7 @@ const val WHEEL_CIRCUMFERENCE = 0.1524 * PI
 
 const val TRACK_WIDTH = 0.5816473
 const val MAX_SPEED = 2.0
+const val MAX_SLOW_SPEED = 0.25
 
 const val CLIMBER_HEIGHT_PER_ROTATION = 0.0
 
@@ -52,7 +53,8 @@ enum class PrimaryButtons(val id: Int) {
     INTAKE(1),
     OUTTAKE(2),
     OVERRIDE_INDEXER(3),
-    SHOOT(4)
+    SHOOT(4),
+    SLOW_MODE(5)
 }
 
 enum class SecondaryButtons(val id: Int) {

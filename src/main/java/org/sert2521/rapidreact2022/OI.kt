@@ -9,6 +9,8 @@ object OI {
     private val primaryController = XboxController(PRIMARY_CONTROLLER_ID)
     private val secondaryController = Joystick(SECONDARY_CONTROLLER_ID)
 
+    private val slowMode = JoystickButton(primaryController, PrimaryButtons.SLOW_MODE.id)
+
     private val intake = JoystickButton(primaryController, PrimaryButtons.INTAKE.id)
     private val outtake = JoystickButton(primaryController, PrimaryButtons.OUTTAKE.id)
     private val overrideIndexer = JoystickButton(primaryController, PrimaryButtons.OVERRIDE_INDEXER.id)
@@ -49,6 +51,10 @@ object OI {
 
     fun getClimbNext(): Boolean {
         return climbNext.get()
+    }
+
+    fun getSlowMode(): Boolean {
+        return slowMode.get()
     }
 
     fun getClimbStatic(): Double {
