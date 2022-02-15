@@ -56,19 +56,19 @@ object Drivetrain : SubsystemBase() {
         leftEncoder.samplesToAverage = Encoders.LEFT_DRIVE.samples
         rightEncoder.samplesToAverage = Encoders.RIGHT_DRIVE.samples
 
-        reset()
+        reset(Pose2d(0.0, 0.0, Rotation2d.fromDegrees(0.0)))
 
         defaultCommand = JoystickDrive()
     }
 
-    fun reset() {
+    fun reset(pose: Pose2d) {
         leftEncoder.reset()
         rightEncoder.reset()
 
         frontLeftMotor.selectedSensorPosition = 0.0
         frontRightMotor.selectedSensorPosition = 0.0
 
-        odometry.resetPosition(Pose2d(0.0, 0.0, Rotation2d.fromDegrees(0.0)), gyro.rotation2d)
+        odometry.resetPosition(pose, gyro.rotation2d)
     }
 
     val leftDistanceTraveled

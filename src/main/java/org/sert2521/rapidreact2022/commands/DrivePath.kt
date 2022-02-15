@@ -29,7 +29,6 @@ class DrivePath(start: Pose2d, end: Pose2d, trajectoryConfig: TrajectoryConfig) 
         val drivePIDArray = Preferences.getDrivePID()
         val driveFeedForwardArray = Preferences.getDriveFeedForward()
         addCommands(
-            InstantCommand(Drivetrain::reset),
             RamseteCommand(
                 trajectory,
                 { Drivetrain.pose },

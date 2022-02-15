@@ -3,6 +3,7 @@ package org.sert2521.rapidreact2022
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard
 import edu.wpi.first.wpilibj2.command.Command
+import org.sert2521.rapidreact2022.commands.ShootDouble
 import org.sert2521.rapidreact2022.commands.ShootSingle
 import org.sert2521.rapidreact2022.subsytems.Climber
 import org.sert2521.rapidreact2022.subsytems.Drivetrain
@@ -15,6 +16,7 @@ object SmartDashboardManager {
     init {
         autoChooser.setDefaultOption("Nothing", null)
         autoChooser.addOption("Shoot Single", ShootSingle())
+        autoChooser.addOption("Shoot Double", ShootDouble())
         SmartDashboard.putData(autoChooser)
 
         putNumberWithoutOverride("Tuning/Climber PID/Climber PID P", 0.0)
