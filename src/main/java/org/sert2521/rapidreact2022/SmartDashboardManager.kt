@@ -39,6 +39,10 @@ object SmartDashboardManager {
         putNumberWithoutOverride("Tuning/Drive Feed Forward/Drive Feed Forward S", 0.0)
         putNumberWithoutOverride("Tuning/Drive Feed Forward/Drive Feed Forward V", 0.0)
         putNumberWithoutOverride("Tuning/Drive Feed Forward/Drive Feed Forward A", 0.0)
+
+        putNumberWithoutOverride("Tuning/Shooter/Shooter RPM", 0.0)
+        putNumberWithoutOverride("Tuning/Shooter/Shooter RPM Tolerance", 0.0)
+        putNumberWithoutOverride("Tuning/Shooter/Shooter Idle RPM", 0.0)
     }
 
     private fun putNumberWithoutOverride(key: String, value: Double) {
@@ -90,6 +94,18 @@ object SmartDashboardManager {
         feedForward[2] = SmartDashboard.getNumber("Tuning/Drive Feed Forward/Drive Feed Forward A", 0.0)
 
         return feedForward
+    }
+
+    fun getShooterRPM(): Double {
+        return SmartDashboard.getNumber("Tuning/Shooter/Shooter RPM", 0.0)
+    }
+
+    fun getShooterRPMTolerance(): Double {
+        return SmartDashboard.getNumber("Tuning/Shooter/Shooter RPM Tolerance", 0.0)
+    }
+
+    fun getShooterIdleRPM(): Double {
+        return SmartDashboard.getNumber("Tuning/Shooter/Shooter Idle RPM", 0.0)
     }
 
     fun getAuto(): Command? {

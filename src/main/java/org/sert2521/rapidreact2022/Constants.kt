@@ -39,10 +39,6 @@ const val ACTUATE_ADJUST_SPEED = 0.1
 const val INTAKE_SPEED = 0.4
 const val INDEXER_SPEED = 0.7
 
-const val SHOOTER_SHOOT_RPM = 5000.0
-const val SHOOTER_IDLE_RPM = 0.0
-const val SHOOTER_TOLERANCE = 60.0
-
 val startPose = Pose2d(0.0, 0.0, Rotation2d(0.0))
 val shootPose = Pose2d(0.0, 0.0, Rotation2d(0.0))
 val endPose = Pose2d(0.0, 0.0, Rotation2d(0.0))
