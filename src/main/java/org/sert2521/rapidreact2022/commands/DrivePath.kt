@@ -15,7 +15,7 @@ import org.sert2521.rapidreact2022.Preferences
 import org.sert2521.rapidreact2022.TRACK_WIDTH
 import org.sert2521.rapidreact2022.subsytems.Drivetrain
 
-class DrivePath(start: Pose2d, end: Pose2d) : SequentialCommandGroup() {
+class DrivePath(start: Pose2d, end: Pose2d, trajectoryConfig: TrajectoryConfig) : SequentialCommandGroup() {
     init {
         addRequirements(Drivetrain)
 
@@ -23,7 +23,7 @@ class DrivePath(start: Pose2d, end: Pose2d) : SequentialCommandGroup() {
             start,
             listOf(),
             end,
-            TrajectoryConfig(1.0, 1.0)
+            trajectoryConfig
         )
 
         val drivePIDArray = Preferences.getDrivePID()

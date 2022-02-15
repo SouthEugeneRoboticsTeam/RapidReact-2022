@@ -13,10 +13,8 @@ object SmartDashboardManager {
     private val autoChooser = SendableChooser<Command?>()
 
     init {
-        val autoChooser = SendableChooser<Command?>()
         autoChooser.setDefaultOption("Nothing", null)
-        autoChooser.setDefaultOption("Shoot Single", ShootSingle())
-
+        autoChooser.addOption("Shoot Single", ShootSingle())
         SmartDashboard.putData(autoChooser)
 
         putNumberWithoutOverride("Tuning/Climber PID/Climber PID P", 0.0)

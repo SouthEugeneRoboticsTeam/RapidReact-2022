@@ -39,10 +39,10 @@ const val ACTUATE_ADJUST_SPEED = 0.1
 const val INTAKE_SPEED = 0.4
 const val INDEXER_SPEED = 0.7
 
-val startPose = Pose2d(0.0, 0.0, Rotation2d(0.0))
-val shootPose = Pose2d(0.0, 0.0, Rotation2d(0.0))
-val endPose = Pose2d(0.0, 0.0, Rotation2d(0.0))
-val pickupPose = Pose2d(0.0, 0.0, Rotation2d(0.0))
+val START_POSE = Pose2d(0.0, 0.0, Rotation2d(0.0))
+const val SHOOT_TIME = 4.0
+val END_POSE = Pose2d(-1.0, 0.0, Rotation2d.fromDegrees(0.0))
+val PICKUP_POSE = Pose2d(0.0, 0.0, Rotation2d(0.0))
 
 val GYRO_PORT = SPI.Port.kMXP
 

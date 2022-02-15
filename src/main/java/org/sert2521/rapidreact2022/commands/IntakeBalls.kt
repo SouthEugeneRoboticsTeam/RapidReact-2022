@@ -16,7 +16,7 @@ class IntakeBalls() : CommandBase() {
     }
 
     override fun execute() {
-        if(!Intake.indexerFull || OI.getOverrideIndexer()) {
+        if(!Intake.indexerFull && !OI.getOverrideIndexer()) {
             Intake.setIndexerSpeed(INDEXER_SPEED)
         }else{
             Intake.setIndexerSpeed(0.0)

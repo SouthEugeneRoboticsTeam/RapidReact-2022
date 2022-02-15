@@ -1,16 +1,18 @@
 package org.sert2521.rapidreact2022.commands
 
+import edu.wpi.first.math.trajectory.TrajectoryConfig
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup
-import org.sert2521.rapidreact2022.endPose
-import org.sert2521.rapidreact2022.shootPose
-import org.sert2521.rapidreact2022.startPose
+import org.sert2521.rapidreact2022.END_POSE
+import org.sert2521.rapidreact2022.SHOOT_TIME
+import org.sert2521.rapidreact2022.START_POSE
 
 class ShootSingle : SequentialCommandGroup() {
     init {
+        val trajectoryConfig = TrajectoryConfig(1.0, 1.0)
+        trajectoryConfig.isReversed = true
         addCommands(
-            DrivePath(startPose, shootPose),
-            ShootBalls().withTimeout(4.0),
-            DrivePath(shootPose, endPose),
+            ShootBalls().withTimeout(SHOOT_TIME),
+            DrivePath(START_POSE, END_POSE, trajectoryConfig)
         )
     }
 }
