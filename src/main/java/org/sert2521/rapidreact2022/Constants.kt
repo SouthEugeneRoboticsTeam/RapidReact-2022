@@ -39,8 +39,9 @@ const val ACTUATE_ADJUST_SPEED = 0.1
 const val INTAKE_SPEED = 0.4
 const val INDEXER_SPEED = 0.7
 
-const val SHOOT_TIME = 4.0
+const val LED_LENGTH = 58
 
+const val SHOOT_TIME = 4.0
 val DOUBLE_START_POSE = Pose2d(-0.5, 0.0, Rotation2d(180.0))
 val SHOOT_POSE = Pose2d(0.0, 0.0, Rotation2d(0.0))
 val PICKUP_POSE = Pose2d(-1.0, 0.0, Rotation2d(180.0))
@@ -105,4 +106,8 @@ enum class Potentiometers(val id: Int, val maxAngle: Double, val zeroAngle: Doub
 enum class Encoders(val idA: Int, val idB: Int, val reversed: Boolean, val encodingType: CounterBase.EncodingType, val encoderDistancePerPulse: Double, val maxPeriod: Double, val minRate: Double, val samples: Int) {
     LEFT_DRIVE(0, 1, true, CounterBase.EncodingType.k2X, WHEEL_CIRCUMFERENCE / THROUGH_BORE_PULSES_PER_ROTATION, 0.1, 10.0, 5),
     RIGHT_DRIVE(2, 3, false, CounterBase.EncodingType.k2X, WHEEL_CIRCUMFERENCE / THROUGH_BORE_PULSES_PER_ROTATION, 0.1, 10.0, 5),
+}
+
+enum class LedStrips(val id: Int) {
+    MAIN(9)
 }

@@ -56,12 +56,12 @@ object Drivetrain : SubsystemBase() {
         leftEncoder.samplesToAverage = Encoders.LEFT_DRIVE.samples
         rightEncoder.samplesToAverage = Encoders.RIGHT_DRIVE.samples
 
-        reset(Pose2d(0.0, 0.0, Rotation2d.fromDegrees(0.0)))
+        reset()
 
         defaultCommand = JoystickDrive()
     }
 
-    fun reset(pose: Pose2d) {
+    fun reset(pose: Pose2d = Pose2d(0.0, 0.0, Rotation2d.fromDegrees(0.0))) {
         leftEncoder.reset()
         rightEncoder.reset()
 
