@@ -3,6 +3,7 @@ package org.sert2521.rapidreact2022.commands
 import edu.wpi.first.math.controller.PIDController
 import edu.wpi.first.math.controller.SimpleMotorFeedforward
 import edu.wpi.first.wpilibj2.command.CommandBase
+import org.sert2521.rapidreact2022.MAX_SLOW_SPEED
 import org.sert2521.rapidreact2022.MAX_SPEED
 import org.sert2521.rapidreact2022.OI
 import org.sert2521.rapidreact2022.Preferences
@@ -33,8 +34,14 @@ class JoystickDrive : CommandBase() {
 
     //Basically just used ramsete drive code, but with user input
     override fun execute() {
-        val leftSpeed = (joystickToWheelPercent(OI.yAxis) + joystickToWheelPercent(OI.xAxis)) * MAX_SPEED
-        val rightSpeed = (joystickToWheelPercent(OI.yAxis) - joystickToWheelPercent(OI.xAxis)) * MAX_SPEED
+        val maxSpeed = if (!OI.getSlowMode()) {
+            MAX_SPEED
+        } else {
+            MAX_SLOW_SPEED
+        }
+
+        val leftSpeed = (joystickToWheelPercent(OI.yAxis) + joystickToWheelPercent(OI.xAxis)) * maxSpeed
+        val rightSpeed = (joystickToWheelPercent(OI.yAxis) - joystickToWheelPercent(OI.xAxis)) * maxSpeed
         val leftOutput = feedForward.calculate(leftSpeed) + pid.calculate(Drivetrain.leftVelocity, leftSpeed)
         val rightOutput = feedForward.calculate(rightSpeed) + pid.calculate(Drivetrain.rightVelocity, rightSpeed)
 
