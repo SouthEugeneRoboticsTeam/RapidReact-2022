@@ -32,6 +32,6 @@ class ShootBalls : CommandBase() {
         rainbowLED.cancel()
 
         Intake.stop()
-        Shooter.stop()
+        Shooter.setWheelSpeed(Preferences.getShooterIdleRPM())
     }
 }
