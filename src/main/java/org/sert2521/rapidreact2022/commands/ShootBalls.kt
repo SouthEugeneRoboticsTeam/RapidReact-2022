@@ -8,13 +8,12 @@ import org.sert2521.rapidreact2022.subsytems.Shooter
 
 class ShootBalls : CommandBase() {
     init {
-        addRequirements(Intake)
-        addRequirements(Shooter)
+        addRequirements(Intake, Shooter)
     }
 
     override fun initialize() {
-        Shooter.setWheelSpeed(Preferences.getShooterRPM())
         Intake.setIntakeSpeed(INDEXER_SPEED)
+        Shooter.setWheelSpeed(Preferences.getShooterRPM())
     }
 
     override fun execute() {
@@ -26,7 +25,7 @@ class ShootBalls : CommandBase() {
     }
 
     override fun end(interrupted: Boolean) {
-        Shooter.stop()
         Intake.stop()
+        Shooter.stop()
     }
 }

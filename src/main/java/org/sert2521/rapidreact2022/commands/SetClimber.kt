@@ -20,21 +20,19 @@ class SetClimber(
     private val variablePID: PIDController
     private val variableActuatorPID: PIDController
 
-    init {
-        val climberPIDArray = Preferences.getClimberPID()
-        val actuatorPIDArray = Preferences.getActuatorPID()
-
-        staticPID = PIDController(climberPIDArray[0], climberPIDArray[1], climberPIDArray[2])
-        variablePID = PIDController(climberPIDArray[0], climberPIDArray[1], climberPIDArray[2])
-        variableActuatorPID = PIDController(actuatorPIDArray[0], actuatorPIDArray[1], actuatorPIDArray[2])
-    }
-
     var atStaticLimit = false
     var atVariableLimit = false
     var atVariableActuatorLimit = false
 
     init {
         addRequirements(Climber)
+
+        val climberPIDArray = Preferences.getClimberPID()
+        val actuatorPIDArray = Preferences.getActuatorPID()
+
+        staticPID = PIDController(climberPIDArray[0], climberPIDArray[1], climberPIDArray[2])
+        variablePID = PIDController(climberPIDArray[0], climberPIDArray[1], climberPIDArray[2])
+        variableActuatorPID = PIDController(actuatorPIDArray[0], actuatorPIDArray[1], actuatorPIDArray[2])
     }
 
     override fun initialize() {

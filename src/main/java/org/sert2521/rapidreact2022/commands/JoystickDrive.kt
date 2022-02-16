@@ -15,12 +15,12 @@ class JoystickDrive : CommandBase() {
     private val feedForward: SimpleMotorFeedforward
 
     init {
+        addRequirements(Drivetrain)
+
         val driveFeedForwardArray = Preferences.getDriveFeedForward()
         feedForward = SimpleMotorFeedforward(driveFeedForwardArray[0], driveFeedForwardArray[1], driveFeedForwardArray[2])
         val pidArray = Preferences.getDrivePID()
         pid = PIDController(pidArray[0], pidArray[1], pidArray[2])
-
-        addRequirements(Drivetrain)
     }
 
     override fun initialize() {
