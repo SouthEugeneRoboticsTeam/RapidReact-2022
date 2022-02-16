@@ -5,6 +5,7 @@ import edu.wpi.first.wpilibj.AddressableLEDBuffer
 import edu.wpi.first.wpilibj2.command.SubsystemBase
 import org.sert2521.rapidreact2022.LED_LENGTH
 import org.sert2521.rapidreact2022.LedStrips
+import org.sert2521.rapidreact2022.commands.SpiralLED
 import java.lang.System.currentTimeMillis
 
 object LEDStrip : SubsystemBase() {
@@ -16,6 +17,8 @@ object LEDStrip : SubsystemBase() {
         addressableLED.start()
 
         reset()
+
+        defaultCommand = SpiralLED()
     }
 
     fun setLEDRGB(i: Int, r: Int, g: Int, b: Int) {

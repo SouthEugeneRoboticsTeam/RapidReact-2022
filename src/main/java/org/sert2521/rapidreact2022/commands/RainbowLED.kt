@@ -3,20 +3,19 @@ package org.sert2521.rapidreact2022.commands
 import edu.wpi.first.wpilibj2.command.CommandBase
 import org.sert2521.rapidreact2022.LED_LENGTH
 import org.sert2521.rapidreact2022.subsytems.LEDStrip
+import java.lang.System.currentTimeMillis
 
-class SpiralLED : CommandBase() {
+class RainbowLED : CommandBase() {
     init {
         addRequirements(LEDStrip)
     }
 
-    override fun initialize() {
-        for (i in 0 until LED_LENGTH) {
-            LEDStrip.setLEDHSV(i, 275, 94, ((1 - (i.toDouble() / (LED_LENGTH - 1))) * 39).toInt())
-        }
-    }
-
     override fun execute() {
-        LEDStrip.cycle(100.0)
+        for (i in 0 until LED_LENGTH) {
+            LEDStrip.setLEDHSV(i, ((currentTimeMillis() / 5) % 360).toInt(), 94, 34)
+        }
+
+        LEDStrip.update()
     }
 
     override fun end(interrupted: Boolean) {

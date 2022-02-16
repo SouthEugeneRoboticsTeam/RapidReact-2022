@@ -7,11 +7,15 @@ import org.sert2521.rapidreact2022.subsytems.Intake
 import org.sert2521.rapidreact2022.subsytems.Shooter
 
 class ShootBalls : CommandBase() {
+    private val rainbowLED = RainbowLED()
+
     init {
         addRequirements(Intake, Shooter)
     }
 
     override fun initialize() {
+        rainbowLED.schedule()
+
         Intake.setIntakeSpeed(INDEXER_SPEED)
         Shooter.setWheelSpeed(Preferences.getShooterRPM())
     }
@@ -25,6 +29,8 @@ class ShootBalls : CommandBase() {
     }
 
     override fun end(interrupted: Boolean) {
+        rainbowLED.cancel()
+
         Intake.stop()
         Shooter.stop()
     }

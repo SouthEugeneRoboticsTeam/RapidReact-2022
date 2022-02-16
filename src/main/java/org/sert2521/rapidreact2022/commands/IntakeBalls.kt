@@ -7,11 +7,15 @@ import org.sert2521.rapidreact2022.OI
 import org.sert2521.rapidreact2022.subsytems.Intake
 
 class IntakeBalls : CommandBase() {
+    private val cycleLED = CycleLED()
+
     init {
         addRequirements(Intake)
     }
 
     override fun initialize() {
+        cycleLED.schedule()
+
         Intake.setIntakeSpeed(INTAKE_SPEED)
     }
 
@@ -24,6 +28,8 @@ class IntakeBalls : CommandBase() {
     }
 
     override fun end(interrupted: Boolean) {
+        cycleLED.cancel()
+
         Intake.stop()
     }
 }
