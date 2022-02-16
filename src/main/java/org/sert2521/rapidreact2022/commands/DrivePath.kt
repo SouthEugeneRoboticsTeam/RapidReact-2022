@@ -4,6 +4,7 @@ import edu.wpi.first.math.controller.PIDController
 import edu.wpi.first.math.controller.RamseteController
 import edu.wpi.first.math.controller.SimpleMotorFeedforward
 import edu.wpi.first.math.geometry.Pose2d
+import edu.wpi.first.math.geometry.Translation2d
 import edu.wpi.first.math.kinematics.DifferentialDriveKinematics
 import edu.wpi.first.math.kinematics.DifferentialDriveWheelSpeeds
 import edu.wpi.first.math.trajectory.TrajectoryConfig
@@ -15,13 +16,15 @@ import org.sert2521.rapidreact2022.Preferences
 import org.sert2521.rapidreact2022.TRACK_WIDTH
 import org.sert2521.rapidreact2022.subsytems.Drivetrain
 
-class DrivePath(start: Pose2d, end: Pose2d, trajectoryConfig: TrajectoryConfig) : SequentialCommandGroup() {
+class DrivePath(speed: Double, acceleration: Double, reversed: Boolean, start: Pose2d, end: Pose2d, vararg poses: Translation2d) : SequentialCommandGroup() {
     init {
         addRequirements(Drivetrain)
 
+        val trajectoryConfig = TrajectoryConfig(speed, acceleration)
+        trajectoryConfig.isReversed = reversed
         val trajectory = generateTrajectory(
             start,
-            listOf(),
+            poses.asList(),
             end,
             trajectoryConfig
         )

@@ -42,6 +42,9 @@ const val INDEXER_SPEED = 0.7
 
 const val LED_LENGTH = 58
 
+const val AUTO_SPEED = 0.4
+const val AUTO_ACCELERATION = 0.7
+
 const val SHOOT_TIME = 2.5
 val DOUBLE_START_POSE = Pose2d(-2.0, 0.0, Rotation2d(180.0))
 val SHOOT_POSE = Pose2d(0.0, 0.0, Rotation2d(0.0))
