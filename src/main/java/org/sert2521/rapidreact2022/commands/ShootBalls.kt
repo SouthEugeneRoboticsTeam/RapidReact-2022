@@ -18,7 +18,7 @@ class ShootBalls : CommandBase() {
     }
 
     override fun execute() {
-        if(Preferences.getShooterRPM() - Preferences.getShooterRPMTolerance() <= Shooter.wheelSpeed && Shooter.wheelSpeed <= Preferences.getShooterRPM() + Preferences.getShooterRPMTolerance()) {
+        if((Preferences.getShooterRPM() - Preferences.getShooterRPMTolerance() <= Shooter.wheelSpeed && Shooter.wheelSpeed <= Preferences.getShooterRPM() + Preferences.getShooterRPMTolerance()) || !Intake.indexerFull) {
             Intake.setIndexerSpeed(INDEXER_SPEED)
         }else{
             Intake.setIndexerSpeed(0.0)
@@ -26,6 +26,7 @@ class ShootBalls : CommandBase() {
     }
 
     override fun end(interrupted: Boolean) {
+        Shooter.stop()
         Intake.stop()
     }
 }

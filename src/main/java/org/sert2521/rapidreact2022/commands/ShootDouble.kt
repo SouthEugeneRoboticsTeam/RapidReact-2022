@@ -7,7 +7,7 @@ import org.sert2521.rapidreact2022.subsytems.Drivetrain
 
 class ShootDouble : SequentialCommandGroup() {
     init {
-        val trajectoryConfig = TrajectoryConfig(1.0, 1.0)
+        val trajectoryConfig = TrajectoryConfig(0.3, 0.5)
         trajectoryConfig.isReversed = true
         Drivetrain.reset(SHOOT_POSE)
         addCommands(

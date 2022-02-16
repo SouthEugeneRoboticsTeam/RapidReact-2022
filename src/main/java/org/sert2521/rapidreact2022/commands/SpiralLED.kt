@@ -11,7 +11,7 @@ class SpiralLED : CommandBase() {
 
     override fun initialize() {
         for (i in 0 until LED_LENGTH) {
-            LEDStrip.setLEDHSV(i, 215, 255, ((i.toDouble() / (LED_LENGTH - 1)) * 153).toInt())
+            LEDStrip.setLEDHSV(i, 215, 255, ((1 - (i.toDouble() / (LED_LENGTH - 1))) * 153).toInt())
         }
     }
 
