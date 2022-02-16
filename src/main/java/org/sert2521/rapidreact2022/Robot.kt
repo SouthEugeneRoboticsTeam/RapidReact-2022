@@ -2,12 +2,12 @@ package org.sert2521.rapidreact2022
 
 import edu.wpi.first.wpilibj.TimedRobot
 import edu.wpi.first.wpilibj2.command.CommandScheduler
-import org.sert2521.rapidreact2022.commands.RainbowLED
+import org.sert2521.rapidreact2022.commands.SpiralLED
 
 object Robot : TimedRobot() {
     private val commandScheduler = CommandScheduler.getInstance()
 
-    private val rainbowLED = RainbowLED()
+    private val spiralLED = SpiralLED()
 
     override fun robotPeriodic() {
         commandScheduler.run()
@@ -15,11 +15,11 @@ object Robot : TimedRobot() {
     }
 
     override fun teleopInit() {
-        rainbowLED.schedule()
+        spiralLED.schedule()
     }
 
     override fun teleopExit() {
-        rainbowLED.cancel()
+        spiralLED.cancel()
     }
 
     override fun autonomousInit() {
