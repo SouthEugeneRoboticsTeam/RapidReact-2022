@@ -10,7 +10,7 @@ class ShootSingleRight : SequentialCommandGroup() {
         addCommands(
             InstantCommand( { Drivetrain.reset(SHOOT_POSE) } ),
             ShootBalls().withTimeout(SHOOT_TIME),
-            DrivePath(AUTO_SPEED, AUTO_ACCELERATION, true, SHOOT_POSE, END_POSE_RIGHT)
+            DrivePath(AUTO_EXIT_SPEED, AUTO_EXIT_ACCELERATION, true, SHOOT_POSE, END_POSE_SINGLE_RIGHT)
         )
     }
 }

@@ -16,7 +16,7 @@ object CompetitionPreferences {
     val DRIVE_PID = arrayOf(2.773, 0.0, 0.0)
     val DRIVE_FEED_FORWARD = arrayOf(0.72556, 2.437, 2.5888)
 
-    const val SHOOTER_SHOOT_RPM = 5150.0
+    const val SHOOTER_SHOOT_RPM = 5000.0
     const val SHOOTER_TOLERANCE = 100.0
     const val SHOOTER_IDLE_RPM = 0.0
 }
@@ -28,7 +28,7 @@ object PracticePreferences {
     val DRIVE_PID = arrayOf(2.773, 0.0, 0.0)
     val DRIVE_FEED_FORWARD = arrayOf(0.72556, 2.437, 2.5888)
 
-    const val SHOOTER_SHOOT_RPM = 5150.0
+    const val SHOOTER_SHOOT_RPM = 5000.0
     const val SHOOTER_TOLERANCE = 100.0
     const val SHOOTER_IDLE_RPM = 0.0
 }
