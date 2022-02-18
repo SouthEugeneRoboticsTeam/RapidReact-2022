@@ -13,12 +13,12 @@ class CycleLED : CommandBase() {
 
     override fun initialize() {
         for (i in 0 until LED_LENGTH) {
-            LEDStrip.setLEDHSV(i, 275, 94, (((sin(i * 2 * PI / 4) + 1) * 0.5) * 39).toInt())
+            LEDStrip.setLEDHSV(i, 275, 94, (((sin(i * 2 * PI / 20) + 1) * 0.5) * 50).toInt())
         }
     }
 
     override fun execute() {
-        LEDStrip.cycle(100.0)
+        LEDStrip.cycle(10.0)
     }
 
     override fun end(interrupted: Boolean) {

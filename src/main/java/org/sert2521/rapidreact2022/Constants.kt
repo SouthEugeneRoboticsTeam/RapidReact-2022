@@ -13,9 +13,9 @@ const val THROUGH_BORE_PULSES_PER_ROTATION = 2048.0
 const val WHEEL_CIRCUMFERENCE = 0.1524 * PI
 
 const val TRACK_WIDTH = 0.5816473
-const val MAX_SPEED = 1.0
-const val MAX_SLOW_SPEED = 0.25
-const val SLEW_RATE = 2.0
+const val MAX_SPEED = 2.0
+const val MAX_SLOW_SPEED = 0.5
+const val SLEW_RATE = 4.0
 const val DEADBAND = 0.1
 
 const val CLIMBER_HEIGHT_PER_ROTATION = 0.0
@@ -39,18 +39,25 @@ const val CLIMB_ADJUST_SPEED = 0.1
 const val ACTUATE_ADJUST_SPEED = 0.1
 
 const val INTAKE_SPEED = 0.4
-const val INDEXER_SPEED = 0.7
+const val INDEXER_SPEED = 0.4
 
-const val LED_LENGTH = 58
+const val LED_LENGTH = 56//58, but two are covered
 
-const val AUTO_SPEED = 0.4
-const val AUTO_ACCELERATION = 0.7
+const val AUTO_SPEED = 1.0
+const val AUTO_ACCELERATION = 0.5
 
 const val SHOOT_TIME = 2.5
-val DOUBLE_START_POSE = Pose2d(-2.0, 0.0, Rotation2d(180.0))
-val SHOOT_POSE = Pose2d(0.0, 0.0, Rotation2d(0.0))
-val PICKUP_POSE = Pose2d(-1.0, 0.0, Rotation2d(180.0))
-val END_POSE = Pose2d(-2.5, 0.0, Rotation2d.fromDegrees(0.0))
+
+val SHOOT_POSE = Pose2d(0.0, 0.0, Rotation2d.fromDegrees(0.0))
+
+val DOUBLE_START_POSE_RIGHT = Pose2d(-0.6, 0.9, Rotation2d.fromDegrees(180.0))
+val PICKUP_POSE_RIGHT = Pose2d(-2.6, 0.9, Rotation2d.fromDegrees(180.0))
+val END_POSE_RIGHT = Pose2d(-2.5, -1.5, Rotation2d.fromDegrees(35.0))
+
+val DOUBLE_START_POSE_LEFT = Pose2d(-0.6, 0.9, Rotation2d.fromDegrees(180.0))
+val PICKUP_POSE_LEFT = Pose2d(-2.6, 0.9, Rotation2d.fromDegrees(180.0))
+val ENTRY_POSE = Pose2d(-2.6, 0.0, Rotation2d.fromDegrees(0.0))
+val END_POSE_LEFT = Pose2d(-2.5, 1.5, Rotation2d.fromDegrees(-35.0))
 
 val GYRO_PORT = SPI.Port.kMXP
 

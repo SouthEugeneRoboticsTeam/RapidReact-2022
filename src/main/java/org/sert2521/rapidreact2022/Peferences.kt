@@ -23,7 +23,7 @@ const val LOG_DRIVETRAIN = false
 object CompetitionPreferences {
     val CLIMBER_PID = arrayOf(0.0, 0.0, 0.0)
     val ACTUATOR_PID = arrayOf(0.0, 0.0, 0.0)
-    val SHOOTER_PIDF = arrayOf(0.0003, 0.0, 0.0, 0.000185)
+    val SHOOTER_PIDF = arrayOf(0.00024, 0.0, 0.0, 0.000185)
     val DRIVE_PID = arrayOf(2.773, 0.0, 0.0)
     val DRIVE_FEED_FORWARD = arrayOf(0.72556, 2.437, 2.5888)
 
@@ -35,7 +35,7 @@ object CompetitionPreferences {
 object PracticePreferences {
     val CLIMBER_PID = arrayOf(0.0, 0.0, 0.0)
     val ACTUATOR_PID = arrayOf(0.0, 0.0, 0.0)
-    val SHOOTER_PIDF = arrayOf(0.0003, 0.0, 0.0, 0.000185)
+    val SHOOTER_PIDF = arrayOf(0.00024, 0.0, 0.0, 0.000185)
     val DRIVE_PID = arrayOf(2.773, 0.0, 0.0)
     val DRIVE_FEED_FORWARD = arrayOf(0.72556, 2.437, 2.5888)
 
