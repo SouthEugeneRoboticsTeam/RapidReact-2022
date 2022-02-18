@@ -79,19 +79,6 @@ object Drivetrain : SubsystemBase() {
 
     override fun periodic() {
         odometry.update(gyro.rotation2d, leftDistanceTraveled, rightDistanceTraveled)
-
-        if(LOG_DRIVETRAIN) {
-            println("Pose x: " + odometry.poseMeters.x)
-            println("Pose y: " + odometry.poseMeters.y)
-
-            println("Encoder left dis: " + leftDistanceTraveled)
-            println("Encoder right dis: " + rightDistanceTraveled)
-
-            println("Encoder left vel: " + leftVelocity)
-            println("Encoder right vel: " + rightVelocity)
-
-            println("Gyro angle: " + gyro.rotation2d.degrees)
-        }
     }
 
     val pose

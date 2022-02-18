@@ -11,6 +11,7 @@ import org.sert2521.rapidreact2022.subsytems.Drivetrain
 import org.sert2521.rapidreact2022.subsytems.Intake
 import org.sert2521.rapidreact2022.subsytems.Shooter
 
+//fix update for tuning
 object SmartDashboardManager {
     private val autoChooser = SendableChooser<Command?>()
 
@@ -20,94 +21,6 @@ object SmartDashboardManager {
         autoChooser.addOption("Shoot Single Left", ShootSingleLeft())
         autoChooser.addOption("Shoot Double", ShootDoubleLeft())
         SmartDashboard.putData(autoChooser)
-
-        putNumberWithoutOverride("Tuning/Climber PID/Climber PID P", 0.0)
-        putNumberWithoutOverride("Tuning/Climber PID/Climber PID I", 0.0)
-        putNumberWithoutOverride("Tuning/Climber PID/Climber PID D", 0.0)
-
-        putNumberWithoutOverride("Tuning/Actuator PID/Actuator PID P", 0.0)
-        putNumberWithoutOverride("Tuning/Actuator PID/Actuator PID I", 0.0)
-        putNumberWithoutOverride("Tuning/Actuator PID/Actuator PID D", 0.0)
-
-        putNumberWithoutOverride("Tuning/Shooter PID/Shooter PID P", 0.0)
-        putNumberWithoutOverride("Tuning/Shooter PID/Shooter PID I", 0.0)
-        putNumberWithoutOverride("Tuning/Shooter PID/Shooter PID D", 0.0)
-        putNumberWithoutOverride("Tuning/Shooter PID/Shooter PID F", 0.0)
-
-        putNumberWithoutOverride("Tuning/Drive PID/Drive PID P", 0.0)
-        putNumberWithoutOverride("Tuning/Drive PID/Drive PID I", 0.0)
-        putNumberWithoutOverride("Tuning/Drive PID/Drive PID D", 0.0)
-
-        putNumberWithoutOverride("Tuning/Drive Feed Forward/Drive Feed Forward S", 0.0)
-        putNumberWithoutOverride("Tuning/Drive Feed Forward/Drive Feed Forward V", 0.0)
-        putNumberWithoutOverride("Tuning/Drive Feed Forward/Drive Feed Forward A", 0.0)
-
-        putNumberWithoutOverride("Tuning/Shooter/Shooter RPM", 0.0)
-        putNumberWithoutOverride("Tuning/Shooter/Shooter RPM Tolerance", 0.0)
-        putNumberWithoutOverride("Tuning/Shooter/Shooter Idle RPM", 0.0)
-    }
-
-    private fun putNumberWithoutOverride(key: String, value: Double) {
-        SmartDashboard.putNumber(key, SmartDashboard.getNumber(key, value))
-    }
-
-    fun getClimberPID(): Array<Double> {
-        val pid = arrayOf(0.0, 0.0, 0.0)
-        pid[0] = SmartDashboard.getNumber("Tuning/Climber PID/Climber PID P", 0.0)
-        pid[1] = SmartDashboard.getNumber("Tuning/Climber PID/Climber PID I", 0.0)
-        pid[2] = SmartDashboard.getNumber("Tuning/Climber PID/Climber PID D", 0.0)
-
-        return pid
-    }
-
-    fun getActuatorPID(): Array<Double> {
-        val pid = arrayOf(0.0, 0.0, 0.0)
-        pid[0] = SmartDashboard.getNumber("Tuning/Actuator PID/Actuator PID P", 0.0)
-        pid[1] = SmartDashboard.getNumber("Tuning/Actuator PID/Actuator PID I", 0.0)
-        pid[2] = SmartDashboard.getNumber("Tuning/Actuator PID/Actuator PID D", 0.0)
-
-        return pid
-    }
-
-    fun getShooterPIDF(): Array<Double> {
-        val pidf = arrayOf(0.0, 0.0, 0.0, 0.0)
-        pidf[0] = SmartDashboard.getNumber("Tuning/Shooter PID/Shooter PID P", 0.0)
-        pidf[1] = SmartDashboard.getNumber("Tuning/Shooter PID/Shooter PID I", 0.0)
-        pidf[2] = SmartDashboard.getNumber("Tuning/Shooter PID/Shooter PID D", 0.0)
-        pidf[3] = SmartDashboard.getNumber("Tuning/Shooter PID/Shooter PID F", 0.0)
-
-        return pidf
-    }
-
-    fun getDrivePID(): Array<Double> {
-        val pid = arrayOf(0.0, 0.0, 0.0)
-        pid[0] = SmartDashboard.getNumber("Tuning/Drive PID/Drive PID P", 0.0)
-        pid[1] = SmartDashboard.getNumber("Tuning/Drive PID/Drive PID I", 0.0)
-        pid[2] = SmartDashboard.getNumber("Tuning/Drive PID/Drive PID D", 0.0)
-
-        return pid
-    }
-
-    fun getDriveFeedForward(): Array<Double> {
-        val feedForward = arrayOf(0.0, 0.0, 0.0)
-
-        feedForward[0] = SmartDashboard.getNumber("Tuning/Drive Feed Forward/Drive Feed Forward S", 0.0)
-        feedForward[1] = SmartDashboard.getNumber("Tuning/Drive Feed Forward/Drive Feed Forward V", 0.0)
-        feedForward[2] = SmartDashboard.getNumber("Tuning/Drive Feed Forward/Drive Feed Forward A", 0.0)
-
-        return feedForward
-    }
-
-    fun getShooterRPM(): Double {
-        return SmartDashboard.getNumber("Tuning/Shooter/Shooter RPM", 0.0)
-    }
-
-    fun getShooterRPMTolerance(): Double {
-        return SmartDashboard.getNumber("Tuning/Shooter/Shooter RPM Tolerance", 0.0)
-    }
-
-    fun getShooterIdleRPM(): Double {
-        return SmartDashboard.getNumber("Tuning/Shooter/Shooter Idle RPM", 0.0)
     }
 
     fun getAuto(): Command? {
@@ -128,5 +41,10 @@ object SmartDashboardManager {
         SmartDashboard.putNumber("Tuning/Climber Variable Angle", Climber.variableAngle)
 
         SmartDashboard.putBoolean("Tuning/Intake Full", Intake.indexerFull)
+
+        SmartDashboard.putNumber("Tuning/Pose X", Drivetrain.pose.x)
+        SmartDashboard.putNumber("Tuning/Pose Y", Drivetrain.pose.y)
+
+        SmartDashboard.putNumber("Tuning/Gyro Angle ", Drivetrain.pose.rotation.degrees)
     }
 }
