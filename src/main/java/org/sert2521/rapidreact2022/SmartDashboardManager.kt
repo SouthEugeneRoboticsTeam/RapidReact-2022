@@ -4,6 +4,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SendableChooser
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard
 import edu.wpi.first.wpilibj2.command.Command
 import org.sert2521.rapidreact2022.commands.ShootDoubleLeft
+import org.sert2521.rapidreact2022.commands.ShootDoubleRight
 import org.sert2521.rapidreact2022.commands.ShootSingleLeft
 import org.sert2521.rapidreact2022.commands.ShootSingleRight
 import org.sert2521.rapidreact2022.subsytems.Climber
@@ -19,7 +20,8 @@ object SmartDashboardManager {
         autoChooser.setDefaultOption("Nothing", null)
         autoChooser.addOption("Shoot Single Right", ShootSingleRight())
         autoChooser.addOption("Shoot Single Left", ShootSingleLeft())
-        autoChooser.addOption("Shoot Double", ShootDoubleLeft())
+        autoChooser.addOption("Shoot Double Right", ShootDoubleRight())
+        autoChooser.addOption("Shoot Double Left", ShootDoubleLeft())
         SmartDashboard.putData(autoChooser)
     }
 
