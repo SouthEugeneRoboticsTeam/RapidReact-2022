@@ -33,6 +33,8 @@ class SetClimber(
         staticPID = PIDController(climberPIDArray[0], climberPIDArray[1], climberPIDArray[2])
         variablePID = PIDController(climberPIDArray[0], climberPIDArray[1], climberPIDArray[2])
         variableActuatorPID = PIDController(actuatorPIDArray[0], actuatorPIDArray[1], actuatorPIDArray[2])
+
+        Climber.setLock(false)
     }
 
     override fun initialize() {
@@ -61,6 +63,8 @@ class SetClimber(
     }
 
     override fun end(interrupted: Boolean) {
+        Climber.setLock(true)
+
         Climber.stop()
     }
 }

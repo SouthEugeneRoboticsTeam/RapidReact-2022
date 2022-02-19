@@ -35,8 +35,10 @@ const val HANG_HEIGHT = 0.0
 const val LET_GO_HEIGHT = 0.0
 const val DEFAULT_HEIGHT = 0.0
 
-const val CLIMB_ADJUST_SPEED = 0.1
-const val ACTUATE_ADJUST_SPEED = 0.1
+const val SERVO_UNLOCK_LEFT = 0.0
+const val SERVO_UNLOCK_RIGHT = 0.0
+const val SERVO_LOCK_LEFT = 0.0
+const val SERVO_LOCK_RIGHT = 0.0
 
 const val INTAKE_SPEED = 0.4
 const val INDEXER_SPEED = 0.7
@@ -109,6 +111,8 @@ enum class Encoders(val idA: Int, val idB: Int, val reversed: Boolean, val encod
     RIGHT_DRIVE(2, 3, false, CounterBase.EncodingType.k2X, WHEEL_CIRCUMFERENCE / THROUGH_BORE_PULSES_PER_ROTATION, 0.1, 10.0, 5),
 }
 
-enum class LedStrips(val id: Int) {
-    MAIN(9)
+enum class PWMS(val id: Int) {
+    LED(9),
+    SERVO_LEFT(0),
+    SERVO_RIGHT(0)
 }
