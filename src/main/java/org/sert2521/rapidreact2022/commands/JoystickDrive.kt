@@ -11,7 +11,8 @@ import kotlin.math.abs
 class JoystickDrive : CommandBase() {
     private val pid: PIDController
     private val feedForward: SimpleMotorFeedforward
-    private val slewRateLimiter: SlewRateLimiter
+    private val slewRateLimiterDrive: SlewRateLimiter
+    private val slewRateLimiterTurn: SlewRateLimiter
 
     init {
         addRequirements(Drivetrain)
@@ -21,13 +22,14 @@ class JoystickDrive : CommandBase() {
         val pidArray = robotPreferences.drivePID
         pid = PIDController(pidArray[0], pidArray[1], pidArray[2])
 
-        slewRateLimiter = SlewRateLimiter(SLEW_RATE)
+        slewRateLimiterDrive = SlewRateLimiter(SLEW_RATE)
+        slewRateLimiterTurn = SlewRateLimiter(SLEW_RATE)
     }
 
     override fun initialize() {
         Drivetrain.reset()
         pid.reset()
-        slewRateLimiter.reset(0.0)
+        slewRateLimiterDrive.reset(0.0)
     }
 
     //Squaring(while persevering sign) the input allows for finer control at low values and the ability to go max speed
@@ -43,8 +45,8 @@ class JoystickDrive : CommandBase() {
             MAX_SLOW_SPEED
         }
 
-        val yIn = slewRateLimiter.calculate(joystickToWheelPercent(OI.yAxis))
-        val xIn = joystickToWheelPercent(OI.xAxis)
+        val yIn = slewRateLimiterDrive.calculate(joystickToWheelPercent(OI.yAxis))
+        val xIn = slewRateLimiterTurn.calculate(joystickToWheelPercent(OI.xAxis))
         val leftSpeed = (yIn + xIn) * maxSpeed
         val rightSpeed = (yIn - xIn) * maxSpeed
         val leftOutput = feedForward.calculate(leftSpeed) + pid.calculate(Drivetrain.leftVelocity, leftSpeed)
