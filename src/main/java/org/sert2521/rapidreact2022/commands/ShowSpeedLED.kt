@@ -5,20 +5,20 @@ import org.sert2521.rapidreact2022.LED_LENGTH
 import org.sert2521.rapidreact2022.robotPreferences
 import org.sert2521.rapidreact2022.subsytems.LEDStrip
 import org.sert2521.rapidreact2022.subsytems.Shooter
-import kotlin.math.abs
 
 class ShowSpeedLED : CommandBase() {
     init {
         addRequirements(LEDStrip)
     }
 
-    override fun execute() {
+    override fun initialize() {
         for (i in 0 until LED_LENGTH) {
-            val percentToSpeed = abs(robotPreferences.shooterRPM - Shooter.wheelSpeed) / robotPreferences.shooterRPM
-            LEDStrip.setLEDRGB(i, (percentToSpeed * 255 / 3.5).toInt(), ((1 - percentToSpeed) * 255 / 3.5).toInt(), 0)
+            LEDStrip.setLEDHSV(i, 275, 94, ((1 - (i.toDouble() / (LED_LENGTH - 1))) * 50).toInt())
         }
+    }
 
-        LEDStrip.update()
+    override fun execute() {
+        LEDStrip.cycle((Shooter.wheelSpeed / robotPreferences.shooterRPM) * 20.0)
     }
 
     override fun end(interrupted: Boolean) {

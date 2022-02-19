@@ -52,8 +52,8 @@ abstract class ControlPreferences {
 
     abstract val intake: JoystickButton
     abstract val overrideIndexer: JoystickButton
-    abstract val shoot: JoystickButton
     abstract val outtake: JoystickButton
+    abstract val shoot: JoystickButton
 
     abstract val climbNext: JoystickButton
     abstract val startClimbMid: JoystickButton
@@ -64,36 +64,36 @@ object SoftwarePreferences : ControlPreferences() {
     override val joystickX = { primaryController.leftX }
     override val joystickY = { -primaryController.leftY }
 
-    override val slowMode = JoystickButton(primaryController, XboxController.Button.kRightBumper.value)
+    override val slowMode = JoystickButton(primaryController, 6)
 
-    override val intake = JoystickButton(primaryController, XboxController.Button.kX.value)
-    override val overrideIndexer = JoystickButton(primaryController, XboxController.Button.kA.value)
-    override val shoot = JoystickButton(primaryController, XboxController.Button.kY.value)
-    override val outtake = JoystickButton(primaryController, XboxController.Button.kB.value)
+    override val intake = JoystickButton(primaryController, 3)
+    override val overrideIndexer = JoystickButton(primaryController, 1)
+    override val outtake = JoystickButton(primaryController, 2)
+    override val shoot = JoystickButton(primaryController, 4)
 
-    override val climbNext = JoystickButton(secondaryController, 1)
-    override val startClimbMid = JoystickButton(secondaryController, 2)
-    override val startClimbTraversal = JoystickButton(secondaryController, 3)
+    override val climbNext = JoystickButton(secondaryController, 5)
+    override val startClimbMid = JoystickButton(secondaryController, 6)
+    override val startClimbTraversal = JoystickButton(secondaryController, 7)
 }
 
 object DriveteamPreferences : ControlPreferences() {
     override val joystickX = { primaryController.leftX }
     override val joystickY = { -primaryController.leftY }
 
-    override val slowMode = JoystickButton(primaryController, XboxController.Button.kRightBumper.value)
+    override val slowMode = JoystickButton(primaryController, 6)
 
-    override val intake = JoystickButton(primaryController, XboxController.Button.kX.value)
-    override val overrideIndexer = JoystickButton(primaryController, XboxController.Button.kA.value)
-    override val shoot = JoystickButton(primaryController, XboxController.Button.kY.value)
-    override val outtake = JoystickButton(primaryController, XboxController.Button.kB.value)
+    override val intake = JoystickButton(secondaryController, 8)
+    override val overrideIndexer = JoystickButton(secondaryController, 9)
+    override val outtake = JoystickButton(secondaryController, 7)
+    override val shoot = JoystickButton(secondaryController, 14)
 
-    override val climbNext = JoystickButton(secondaryController, 1)
-    override val startClimbMid = JoystickButton(secondaryController, 2)
-    override val startClimbTraversal = JoystickButton(secondaryController, 3)
+    override val climbNext = JoystickButton(secondaryController, 5)
+    override val startClimbMid = JoystickButton(secondaryController, 6)
+    override val startClimbTraversal = JoystickButton(secondaryController, 7)
 }
 
 val robotPreferences = PracticePreferences
-val controlPreferences = SoftwarePreferences
+val controlPreferences = DriveteamPreferences
 
 fun getAuto(): Command? {
     return SmartDashboardManager.getAuto()

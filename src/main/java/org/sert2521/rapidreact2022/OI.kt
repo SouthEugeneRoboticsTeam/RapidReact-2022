@@ -1,5 +1,6 @@
 package org.sert2521.rapidreact2022
 
+import edu.wpi.first.wpilibj2.command.InstantCommand
 import org.sert2521.rapidreact2022.commands.*
 
 object OI {
@@ -10,6 +11,8 @@ object OI {
     private val climbTraversal = ClimbTraversal()
     private val climbMid = ClimbMid()
 
+    private var slowMode = false
+
     init {
         controlPreferences.intake.whileHeld(intakeBalls)
         controlPreferences.outtake.whileHeld(outtakeBalls)
@@ -17,6 +20,9 @@ object OI {
 
         controlPreferences.startClimbTraversal.toggleWhenPressed(climbTraversal)
         controlPreferences.startClimbMid.toggleWhenPressed(climbMid)
+
+        //make update on enable
+        controlPreferences.slowMode.toggleWhenPressed(InstantCommand( { slowMode = !slowMode } ))
     }
 
     fun getOverrideIndexer(): Boolean {
@@ -24,7 +30,7 @@ object OI {
     }
 
     fun getSlowMode(): Boolean {
-        return controlPreferences.slowMode.get()
+        return slowMode
     }
 
     fun getClimbNext(): Boolean {
