@@ -7,7 +7,6 @@ class ClimbMid : SequentialCommandGroup() {
     init {
         addCommands(
             SetClimber(MID_HEIGHT, DEFAULT_HEIGHT, DEFAULT_ACTUATOR_ANGLE),
-            JoystickAdjustClimber(),
             SetClimber(HANG_HEIGHT, DEFAULT_HEIGHT, DEFAULT_ACTUATOR_ANGLE)
         )
     }
