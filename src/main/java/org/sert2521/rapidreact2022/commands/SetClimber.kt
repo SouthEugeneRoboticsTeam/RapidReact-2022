@@ -20,9 +20,9 @@ class SetClimber(
     private val variablePID: PIDController
     private val variableActuatorPID: PIDController
 
-    var atStaticLimit = false
-    var atVariableLimit = false
-    var atVariableActuatorLimit = false
+    private var atStaticLimit = false
+    private var atVariableLimit = false
+    private var atVariableActuatorLimit = false
 
     init {
         addRequirements(Climber)
