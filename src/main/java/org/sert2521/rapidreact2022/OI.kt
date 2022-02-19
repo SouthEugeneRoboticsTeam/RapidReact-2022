@@ -21,8 +21,11 @@ object OI {
         controlPreferences.startClimbTraversal.toggleWhenPressed(climbTraversal)
         controlPreferences.startClimbMid.toggleWhenPressed(climbMid)
 
-        //make update on enable
         controlPreferences.slowMode.toggleWhenPressed(InstantCommand( { slowMode = !slowMode } ))
+    }
+
+    fun onTeleop() {
+        slowMode = false
     }
 
     fun getOverrideIndexer(): Boolean {

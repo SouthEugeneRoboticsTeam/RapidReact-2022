@@ -11,6 +11,10 @@ object Robot : TimedRobot() {
         SmartDashboardManager.update()
     }
 
+    override fun teleopInit() {
+        OI.onTeleop()
+    }
+
     override fun autonomousInit() {
         getAuto()?.schedule()
     }
