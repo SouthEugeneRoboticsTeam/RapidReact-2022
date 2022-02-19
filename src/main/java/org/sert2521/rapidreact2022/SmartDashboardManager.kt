@@ -12,7 +12,6 @@ import org.sert2521.rapidreact2022.subsytems.Drivetrain
 import org.sert2521.rapidreact2022.subsytems.Intake
 import org.sert2521.rapidreact2022.subsytems.Shooter
 
-//fix update for tuning
 object SmartDashboardManager {
     private val autoChooser = SendableChooser<Command?>()
 

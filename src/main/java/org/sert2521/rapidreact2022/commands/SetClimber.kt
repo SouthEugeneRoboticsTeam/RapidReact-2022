@@ -2,7 +2,7 @@ package org.sert2521.rapidreact2022.commands
 
 import edu.wpi.first.math.controller.PIDController
 import edu.wpi.first.wpilibj2.command.CommandBase
-import org.sert2521.rapidreact2022.Preferences
+import org.sert2521.rapidreact2022.robotPreferences
 import org.sert2521.rapidreact2022.subsytems.Climber
 
 class SetClimber(
@@ -27,8 +27,8 @@ class SetClimber(
     init {
         addRequirements(Climber)
 
-        val climberPIDArray = Preferences.getClimberPID()
-        val actuatorPIDArray = Preferences.getActuatorPID()
+        val climberPIDArray = robotPreferences.climberPID
+        val actuatorPIDArray = robotPreferences.actuatorPID
 
         staticPID = PIDController(climberPIDArray[0], climberPIDArray[1], climberPIDArray[2])
         variablePID = PIDController(climberPIDArray[0], climberPIDArray[1], climberPIDArray[2])

@@ -12,8 +12,8 @@ import edu.wpi.first.math.trajectory.TrajectoryGenerator.generateTrajectory
 import edu.wpi.first.wpilibj2.command.InstantCommand
 import edu.wpi.first.wpilibj2.command.RamseteCommand
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup
-import org.sert2521.rapidreact2022.Preferences
 import org.sert2521.rapidreact2022.TRACK_WIDTH
+import org.sert2521.rapidreact2022.robotPreferences
 import org.sert2521.rapidreact2022.subsytems.Drivetrain
 
 class DrivePath(speed: Double, acceleration: Double, reversed: Boolean, start: Pose2d, end: Pose2d, vararg poses: Translation2d) : SequentialCommandGroup() {
@@ -29,8 +29,8 @@ class DrivePath(speed: Double, acceleration: Double, reversed: Boolean, start: P
             trajectoryConfig
         )
 
-        val drivePIDArray = Preferences.getDrivePID()
-        val driveFeedForwardArray = Preferences.getDriveFeedForward()
+        val drivePIDArray = robotPreferences.drivePID
+        val driveFeedForwardArray = robotPreferences.driveFeedForward
         addCommands(
             RamseteCommand(
                 trajectory,

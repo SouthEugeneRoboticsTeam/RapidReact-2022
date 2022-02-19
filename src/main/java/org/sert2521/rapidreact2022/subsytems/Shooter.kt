@@ -2,9 +2,9 @@ package org.sert2521.rapidreact2022.subsytems
 
 import com.revrobotics.CANSparkMax
 import edu.wpi.first.wpilibj2.command.SubsystemBase
-import org.sert2521.rapidreact2022.Preferences
 import org.sert2521.rapidreact2022.SparkEncoders
 import org.sert2521.rapidreact2022.Sparks
+import org.sert2521.rapidreact2022.robotPreferences
 
 object Shooter : SubsystemBase() {
     private val motor = CANSparkMax(Sparks.SHOOTER.id, Sparks.SHOOTER.type)
@@ -14,7 +14,7 @@ object Shooter : SubsystemBase() {
 
         motor.encoder.positionConversionFactor = SparkEncoders.SHOOTER.conversionFactor
 
-        setPIDF(Preferences.getShooterPIDF())
+        setPIDF(robotPreferences.shooterPIDF)
     }
 
     val wheelSpeed

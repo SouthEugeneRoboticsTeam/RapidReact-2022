@@ -70,27 +70,7 @@ val END_POSE_SINGLE_RIGHT = Pose2d(-2.5, 1.5, Rotation2d.fromDegrees(-35.0))
 val GYRO_PORT = SPI.Port.kMXP
 
 const val PRIMARY_CONTROLLER_ID = 0
-const val SECONDARY_CONTROLLER_ID = 0
-
-enum class PrimaryButtons(val id: Int) {
-    INTAKE(1),
-    OUTTAKE(2),
-    OVERRIDE_INDEXER(3),
-    SHOOT(4),
-    SLOW_MODE(5)
-}
-
-enum class SecondaryButtons(val id: Int) {
-    CLIMB_NEXT(1),
-    STATIC_LOWER(2),
-    STATIC_RAISE(3),
-    VARIABLE_LOWER(4),
-    VARIABLE_RAISE(5),
-    VARIABLE_ANGLE_DOWN(6),
-    VARIABLE_ANGLE_UP(7),
-    START_CLIMB_TRAVERSAL(8),
-    START_CLIMB_MID(9)
-}
+const val SECONDARY_CONTROLLER_ID = 1
 
 enum class Talons(val id: Int, val reversed: Boolean) {
     FRONT_LEFT_DRIVE(1, false),

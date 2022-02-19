@@ -1,104 +1,100 @@
 package org.sert2521.rapidreact2022
 
+import edu.wpi.first.wpilibj.Joystick
+import edu.wpi.first.wpilibj.XboxController
 import edu.wpi.first.wpilibj2.command.Command
+import edu.wpi.first.wpilibj2.command.button.JoystickButton
 
-enum class RobotPreference {
-    COMPETITION,
-    PRACTICE
+abstract class RobotPreferences {
+    abstract val climberPID: Array<Double>
+    abstract val actuatorPID: Array<Double>
+    abstract val shooterPIDF: Array<Double>
+    abstract val drivePID: Array<Double>
+    abstract val driveFeedForward: Array<Double>
+
+    abstract val shooterRPM: Double
+    abstract val shooterTolerance: Double
+    abstract val shooterIdleRPM: Double
 }
 
-val ROBOT_TYPE = RobotPreference.PRACTICE
+object CompetitionPreferences : RobotPreferences() {
+    override val climberPID = arrayOf(0.0, 0.0, 0.0)
+    override val actuatorPID = arrayOf(0.0, 0.0, 0.0)
+    override val shooterPIDF = arrayOf(0.00035, 0.0, 0.0, 0.00018)
+    override val drivePID = arrayOf(2.773, 0.0, 0.0)
+    override val driveFeedForward = arrayOf(0.72556, 2.437, 2.5888)
 
-object CompetitionPreferences {
-    val CLIMBER_PID = arrayOf(0.0, 0.0, 0.0)
-    val ACTUATOR_PID = arrayOf(0.0, 0.0, 0.0)
-    val SHOOTER_PIDF = arrayOf(0.00035, 0.0, 0.0, 0.00018)
-    val DRIVE_PID = arrayOf(2.773, 0.0, 0.0)
-    val DRIVE_FEED_FORWARD = arrayOf(0.72556, 2.437, 2.5888)
-
-    const val SHOOTER_SHOOT_RPM = 5000.0
-    const val SHOOTER_TOLERANCE = 100.0
-    const val SHOOTER_IDLE_RPM = 0.0
+    override val shooterRPM = 5000.0
+    override val shooterTolerance = 100.0
+    override val shooterIdleRPM = 0.0
 }
 
-object PracticePreferences {
-    val CLIMBER_PID = arrayOf(0.0, 0.0, 0.0)
-    val ACTUATOR_PID = arrayOf(0.0, 0.0, 0.0)
-    val SHOOTER_PIDF = arrayOf(0.00035, 0.0, 0.0, 0.00018)
-    val DRIVE_PID = arrayOf(2.773, 0.0, 0.0)
-    val DRIVE_FEED_FORWARD = arrayOf(0.72556, 2.437, 2.5888)
+object PracticePreferences : RobotPreferences() {
+    override val climberPID = arrayOf(0.0, 0.0, 0.0)
+    override val actuatorPID = arrayOf(0.0, 0.0, 0.0)
+    override val shooterPIDF = arrayOf(0.00035, 0.0, 0.0, 0.00018)
+    override val drivePID = arrayOf(2.773, 0.0, 0.0)
+    override val driveFeedForward = arrayOf(0.72556, 2.437, 2.5888)
 
-    const val SHOOTER_SHOOT_RPM = 5000.0
-    const val SHOOTER_TOLERANCE = 100.0
-    const val SHOOTER_IDLE_RPM = 0.0
+    override val shooterRPM = 5000.0
+    override val shooterTolerance = 100.0
+    override val shooterIdleRPM = 0.0
 }
 
-object Preferences {
-    fun getClimberPID(): Array<Double> {
-        return if(ROBOT_TYPE == RobotPreference.COMPETITION) {
-            CompetitionPreferences.CLIMBER_PID
-        }else{
-            PracticePreferences.CLIMBER_PID
-        }
-    }
+abstract class ControlPreferences {
+    val primaryController = XboxController(PRIMARY_CONTROLLER_ID)
+    val secondaryController = Joystick(SECONDARY_CONTROLLER_ID)
 
-    fun getActuatorPID(): Array<Double> {
-        return if(ROBOT_TYPE == RobotPreference.COMPETITION) {
-            CompetitionPreferences.ACTUATOR_PID
-        }else{
-            PracticePreferences.ACTUATOR_PID
-        }
-    }
+    abstract val joystickX: () -> Double
+    abstract val joystickY: () -> Double
 
-    fun getShooterPIDF(): Array<Double> {
-        return if(ROBOT_TYPE == RobotPreference.COMPETITION) {
-            CompetitionPreferences.SHOOTER_PIDF
-        }else{
-            PracticePreferences.SHOOTER_PIDF
-        }
-    }
+    abstract val slowMode: JoystickButton
 
-    fun getDrivePID(): Array<Double> {
-        return if(ROBOT_TYPE == RobotPreference.COMPETITION) {
-            CompetitionPreferences.DRIVE_PID
-        }else{
-            PracticePreferences.DRIVE_PID
-        }
-    }
+    abstract val intake: JoystickButton
+    abstract val overrideIndexer: JoystickButton
+    abstract val shoot: JoystickButton
+    abstract val outtake: JoystickButton
 
-    fun getDriveFeedForward(): Array<Double> {
-        return if(ROBOT_TYPE == RobotPreference.COMPETITION) {
-            CompetitionPreferences.DRIVE_FEED_FORWARD
-        }else{
-            PracticePreferences.DRIVE_FEED_FORWARD
-        }
-    }
+    abstract val climbNext: JoystickButton
+    abstract val startClimbMid: JoystickButton
+    abstract val startClimbTraversal: JoystickButton
+}
 
-    fun getShooterRPM(): Double {
-        return if(ROBOT_TYPE == RobotPreference.COMPETITION) {
-            CompetitionPreferences.SHOOTER_SHOOT_RPM
-        }else{
-            PracticePreferences.SHOOTER_SHOOT_RPM
-        }
-    }
+object SoftwarePreferences : ControlPreferences() {
+    override val joystickX = { primaryController.leftX }
+    override val joystickY = { -primaryController.leftY }
 
-    fun getShooterRPMTolerance(): Double {
-        return if(ROBOT_TYPE == RobotPreference.COMPETITION) {
-            CompetitionPreferences.SHOOTER_TOLERANCE
-        }else{
-            PracticePreferences.SHOOTER_TOLERANCE
-        }
-    }
+    override val slowMode = JoystickButton(primaryController, XboxController.Button.kRightBumper.value)
 
-    fun getShooterIdleRPM(): Double {
-        return if(ROBOT_TYPE == RobotPreference.COMPETITION) {
-            CompetitionPreferences.SHOOTER_IDLE_RPM
-        }else{
-            PracticePreferences.SHOOTER_IDLE_RPM
-        }
-    }
+    override val intake = JoystickButton(primaryController, XboxController.Button.kX.value)
+    override val overrideIndexer = JoystickButton(primaryController, XboxController.Button.kA.value)
+    override val shoot = JoystickButton(primaryController, XboxController.Button.kY.value)
+    override val outtake = JoystickButton(primaryController, XboxController.Button.kB.value)
 
-    fun getAuto(): Command? {
-        return SmartDashboardManager.getAuto()
-    }
+    override val climbNext = JoystickButton(secondaryController, 1)
+    override val startClimbMid = JoystickButton(secondaryController, 2)
+    override val startClimbTraversal = JoystickButton(secondaryController, 3)
+}
+
+object DriveteamPreferences : ControlPreferences() {
+    override val joystickX = { primaryController.leftX }
+    override val joystickY = { -primaryController.leftY }
+
+    override val slowMode = JoystickButton(primaryController, XboxController.Button.kRightBumper.value)
+
+    override val intake = JoystickButton(primaryController, XboxController.Button.kX.value)
+    override val overrideIndexer = JoystickButton(primaryController, XboxController.Button.kA.value)
+    override val shoot = JoystickButton(primaryController, XboxController.Button.kY.value)
+    override val outtake = JoystickButton(primaryController, XboxController.Button.kB.value)
+
+    override val climbNext = JoystickButton(secondaryController, 1)
+    override val startClimbMid = JoystickButton(secondaryController, 2)
+    override val startClimbTraversal = JoystickButton(secondaryController, 3)
+}
+
+val robotPreferences = PracticePreferences
+val controlPreferences = SoftwarePreferences
+
+fun getAuto(): Command? {
+    return SmartDashboardManager.getAuto()
 }

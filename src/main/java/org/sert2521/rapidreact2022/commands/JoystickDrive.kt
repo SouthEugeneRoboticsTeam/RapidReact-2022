@@ -16,9 +16,9 @@ class JoystickDrive : CommandBase() {
     init {
         addRequirements(Drivetrain)
 
-        val driveFeedForwardArray = Preferences.getDriveFeedForward()
+        val driveFeedForwardArray = robotPreferences.driveFeedForward
         feedForward = SimpleMotorFeedforward(driveFeedForwardArray[0], driveFeedForwardArray[1], driveFeedForwardArray[2])
-        val pidArray = Preferences.getDrivePID()
+        val pidArray = robotPreferences.drivePID
         pid = PIDController(pidArray[0], pidArray[1], pidArray[2])
 
         slewRateLimiter = SlewRateLimiter(SLEW_RATE)

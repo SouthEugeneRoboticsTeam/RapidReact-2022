@@ -2,7 +2,7 @@ package org.sert2521.rapidreact2022.commands
 
 import edu.wpi.first.wpilibj2.command.CommandBase
 import org.sert2521.rapidreact2022.INDEXER_SPEED
-import org.sert2521.rapidreact2022.Preferences
+import org.sert2521.rapidreact2022.robotPreferences
 import org.sert2521.rapidreact2022.subsytems.Intake
 import org.sert2521.rapidreact2022.subsytems.Shooter
 
@@ -17,11 +17,11 @@ class ShootBalls : CommandBase() {
         showSpeedLED.schedule()
 
         Intake.setIntakeSpeed(INDEXER_SPEED)
-        Shooter.setWheelSpeed(Preferences.getShooterRPM())
+        Shooter.setWheelSpeed(robotPreferences.shooterRPM)
     }
 
     override fun execute() {
-        if((Preferences.getShooterRPM() - Preferences.getShooterRPMTolerance() <= Shooter.wheelSpeed && Shooter.wheelSpeed <= Preferences.getShooterRPM() + Preferences.getShooterRPMTolerance()) || !Intake.indexerFull) {
+        if((robotPreferences.shooterRPM - robotPreferences.shooterTolerance <= Shooter.wheelSpeed && Shooter.wheelSpeed <= robotPreferences.shooterRPM + robotPreferences.shooterTolerance) || !Intake.indexerFull) {
             Intake.setIndexerSpeed(INDEXER_SPEED)
         }else{
             Intake.setIndexerSpeed(0.0)
@@ -32,6 +32,6 @@ class ShootBalls : CommandBase() {
         showSpeedLED.cancel()
 
         Intake.stop()
-        Shooter.setWheelSpeed(Preferences.getShooterIdleRPM())
+        Shooter.setWheelSpeed(robotPreferences.shooterIdleRPM)
     }
 }

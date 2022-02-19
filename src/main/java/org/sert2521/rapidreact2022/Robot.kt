@@ -12,10 +12,10 @@ object Robot : TimedRobot() {
     }
 
     override fun autonomousInit() {
-        Preferences.getAuto()?.schedule()
+        getAuto()?.schedule()
     }
 
     override fun autonomousExit() {
-        Preferences.getAuto()?.cancel()
+        getAuto()?.cancel()
     }
 }
