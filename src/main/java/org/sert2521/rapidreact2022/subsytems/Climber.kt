@@ -4,8 +4,10 @@ import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX
 import com.revrobotics.CANSparkMax
 import edu.wpi.first.wpilibj.AnalogPotentiometer
 import edu.wpi.first.wpilibj.DigitalInput
+import edu.wpi.first.wpilibj.Servo
 import edu.wpi.first.wpilibj2.command.SubsystemBase
 import org.sert2521.rapidreact2022.*
+import org.sert2521.rapidreact2022.commands.IdleClimber
 
 object Climber : SubsystemBase() {
     private val staticClimberMotor = CANSparkMax(Sparks.STATIC_CLIMBER.id, Sparks.STATIC_CLIMBER.type)
@@ -17,9 +19,8 @@ object Climber : SubsystemBase() {
 
     private val potentiometer = AnalogPotentiometer(Potentiometers.VARIABLE_CLIMBER_ANGLE.id, Potentiometers.VARIABLE_CLIMBER_ANGLE.maxAngle, Potentiometers.VARIABLE_CLIMBER_ANGLE.zeroAngle)
 
-    //fix
-    //private val servoLeft = Servo(PWMS.SERVO_LEFT.id)
-    //private val servoRight = Servo(PWMS.SERVO_RIGHT.id)
+    private val servoLeft = try { Servo(PWMS.SERVO_LEFT.id) } catch (e: Exception) { null }
+    private val servoRight = try { Servo(PWMS.SERVO_RIGHT.id) } catch (e: Exception) { null }
 
     init {
         staticClimberMotor.inverted = Sparks.STATIC_CLIMBER.reversed
@@ -29,8 +30,7 @@ object Climber : SubsystemBase() {
         staticClimberMotor.encoder.positionConversionFactor = SparkEncoders.STATIC_CLIMBER.conversionFactor
         variableClimberMotor.encoder.positionConversionFactor = SparkEncoders.VARIABLE_CLIMBER.conversionFactor
 
-        //fix
-        //defaultCommand = SetClimber()
+        defaultCommand = IdleClimber()
     }
 
     val staticHeight
@@ -62,11 +62,11 @@ object Climber : SubsystemBase() {
 
     fun setLock(locked: Boolean) {
         if (locked) {
-            //servoLeft.set(SERVO_LOCK_LEFT)
-            //servoRight.set(SERVO_LOCK_RIGHT)
+            servoLeft?.set(SERVO_LOCK_LEFT)
+            servoRight?.set(SERVO_LOCK_RIGHT)
         } else {
-            //servoLeft.set(SERVO_UNLOCK_LEFT)
-            //servoRight.set(SERVO_UNLOCK_RIGHT)
+            servoLeft?.set(SERVO_UNLOCK_LEFT)
+            servoRight?.set(SERVO_UNLOCK_RIGHT)
         }
     }
 

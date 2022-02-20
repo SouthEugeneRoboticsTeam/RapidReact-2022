@@ -14,7 +14,7 @@ class SetClimber(
     private val variableAngleToleranceDis: Double = 1.0,
     private val staticToleranceSpeed: Double = 0.01,
     private val variableToleranceSpeed: Double = 0.01,
-    private val variableAngleToleranceSpeed: Double = 1.0,
+    private val variableAngleToleranceSpeed: Double = 1.0
 ) : CommandBase() {
     private val staticPID: PIDController
     private val variablePID: PIDController
@@ -54,8 +54,8 @@ class SetClimber(
 
     override fun execute() {
         atStaticLimit = Climber.elevateStatic(staticPID.calculate(staticHeight - Climber.staticHeight))
-        atVariableLimit = Climber.elevateStatic(variablePID.calculate(variableHeight - Climber.variableHeight))
-        atVariableActuatorLimit = Climber.elevateStatic(variableActuatorPID.calculate(variableAngle - Climber.variableAngle))
+        atVariableLimit = Climber.elevateVariable(variablePID.calculate(variableHeight - Climber.variableHeight))
+        atVariableActuatorLimit = Climber.actuateVariable(variableActuatorPID.calculate(variableAngle - Climber.variableAngle))
     }
 
     override fun isFinished(): Boolean {
@@ -64,7 +64,6 @@ class SetClimber(
 
     override fun end(interrupted: Boolean) {
         Climber.setLock(true)
-
         Climber.stop()
     }
 }
