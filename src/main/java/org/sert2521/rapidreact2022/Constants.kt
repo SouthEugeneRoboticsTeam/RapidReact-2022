@@ -42,7 +42,7 @@ const val SERVO_UNLOCK_RIGHT = 0.0
 const val SERVO_LOCK_LEFT = 0.0
 const val SERVO_LOCK_RIGHT = 0.0
 
-const val INTAKE_SPEED = 0.4
+const val INTAKE_SPEED = 0.8
 const val INDEXER_SPEED = 0.8
 
 const val LED_LENGTH = 56//58, but two are covered
@@ -56,10 +56,13 @@ const val AUTO_TURN_ACCELERATION = 1.0
 const val AUTO_EXIT_SPEED = 3.0
 const val AUTO_EXIT_ACCELERATION = 3.0
 
+const val SHOOTER_RPM = 5000.0
+const val SHOOTER_ENTER_SHOOT = 5000.0
+const val SHOOTER_EXIT_SHOOT = 4600.0
+
 const val SHOOT_TIME = 1.5
 
 val SHOOT_POSE = Pose2d(0.0, 0.0, Rotation2d.fromDegrees(0.0))
-val END_POSE_DOUBLE = Pose2d(-3.4, 0.0, Rotation2d.fromDegrees(0.0))
 
 val DOUBLE_START_POSE_LEFT = Pose2d(-0.6, -0.9, Rotation2d.fromDegrees(180.0))
 val PICKUP_POSE_LEFT = Pose2d(-2.6, -0.9, Rotation2d.fromDegrees(180.0))

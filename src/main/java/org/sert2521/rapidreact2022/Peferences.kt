@@ -11,9 +11,6 @@ abstract class RobotPreferences {
     abstract val shooterPIDF: Array<Double>
     abstract val drivePID: Array<Double>
     abstract val driveFeedForward: Array<Double>
-
-    abstract val shooterRPM: Double
-    abstract val shooterTolerance: Double
 }
 
 object CompetitionPreferences : RobotPreferences() {
@@ -22,9 +19,6 @@ object CompetitionPreferences : RobotPreferences() {
     override val shooterPIDF = arrayOf(0.00035, 0.0, 0.0, 0.00018)
     override val drivePID = arrayOf(2.773, 0.0, 0.0)
     override val driveFeedForward = arrayOf(0.72556, 2.437, 2.5888)
-
-    override val shooterRPM = 5000.0
-    override val shooterTolerance = 100.0
 }
 
 object PracticePreferences : RobotPreferences() {
@@ -33,9 +27,6 @@ object PracticePreferences : RobotPreferences() {
     override val shooterPIDF = arrayOf(0.00035, 0.0, 0.0, 0.00018)
     override val drivePID = arrayOf(2.773, 0.0, 0.0)
     override val driveFeedForward = arrayOf(0.72556, 2.437, 2.5888)
-
-    override val shooterRPM = 5000.0
-    override val shooterTolerance = 100.0
 }
 
 abstract class ControlPreferences {
