@@ -15,11 +15,10 @@ object OI {
     private var slowMode = false
 
     init {
-        //fix holding two at same time probably causing problems
+        controlPreferences.intake.whileHeld(intakeBalls, false)
         controlPreferences.outtake.whileHeld(outtakeBalls)
-        controlPreferences.intake.whileHeld(intakeBalls)
+        controlPreferences.shoot.whileHeld(shootBalls, false)
         controlPreferences.rev.whileHeld(revShooter)
-        controlPreferences.shoot.whileHeld(shootBalls)
 
         controlPreferences.startClimbTraversal.toggleWhenPressed(climbTraversal)
         controlPreferences.startClimbMid.toggleWhenPressed(climbMid)
