@@ -33,9 +33,18 @@ class JoystickDrive : CommandBase() {
         slewRateLimiterTurn.reset(0.0)
     }
 
+    private fun deadband(value: Double, range: Double): Double {
+        if(value < range && value > -range) {
+            return 0.0
+        }
+
+        return value
+    }
+
     //Squaring(while persevering sign) the input allows for finer control at low values and the ability to go max speed
     private fun joystickToWheelPercent(amount: Double): Double {
-        return amount * abs(amount)
+        val deadbanded = deadband(amount, DEADBAND)
+        return deadbanded * abs(deadbanded)
     }
 
     //Basically just used ramsete drive code, but with user input

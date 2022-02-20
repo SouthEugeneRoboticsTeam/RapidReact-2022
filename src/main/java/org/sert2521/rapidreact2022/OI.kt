@@ -46,17 +46,9 @@ object OI {
         return controlPreferences.climbNext.get()
     }
 
-    private fun deadband(value: Double, range: Double): Double {
-        if(value < range && value > -range) {
-            return 0.0
-        }
-
-        return value
-    }
-
     val xAxis
-        get() = deadband(controlPreferences.joystickX(), DEADBAND)
+        get() = controlPreferences.joystickX()
 
     val yAxis
-        get() = deadband(controlPreferences.joystickY(), DEADBAND)
+        get() = controlPreferences.joystickY()
 }
