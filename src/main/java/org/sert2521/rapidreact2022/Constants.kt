@@ -13,8 +13,10 @@ const val THROUGH_BORE_PULSES_PER_ROTATION = 2048.0
 const val WHEEL_CIRCUMFERENCE = 0.1524 * PI
 
 const val TRACK_WIDTH = 0.5816473
-const val MAX_SPEED = 2.0
+const val MAX_FAST_SPEED = 2.0
+const val MAX_SPEED = 1.5
 const val MAX_SLOW_SPEED = 0.5
+const val TURN_MULTIPLIER = 0.55
 const val SLEW_RATE = 4.0
 const val DEADBAND = 0.1
 
@@ -41,7 +43,7 @@ const val SERVO_LOCK_LEFT = 0.0
 const val SERVO_LOCK_RIGHT = 0.0
 
 const val INTAKE_SPEED = 0.4
-const val INDEXER_SPEED = 0.7
+const val INDEXER_SPEED = 0.8
 
 const val LED_LENGTH = 56//58, but two are covered
 

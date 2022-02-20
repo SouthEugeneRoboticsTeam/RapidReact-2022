@@ -18,7 +18,7 @@ class CycleLED : CommandBase() {
     }
 
     override fun execute() {
-        LEDStrip.cycle(10.0)
+        LEDStrip.cycle(20.0)
     }
 
     override fun end(interrupted: Boolean) {

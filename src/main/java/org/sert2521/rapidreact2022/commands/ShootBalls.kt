@@ -7,14 +7,14 @@ import org.sert2521.rapidreact2022.subsytems.Intake
 import org.sert2521.rapidreact2022.subsytems.Shooter
 
 class ShootBalls : CommandBase() {
-    private val showSpeedLED = ShowSpeedLED()
+    private val danceLED = DanceLED()
 
     init {
         addRequirements(Intake, Shooter)
     }
 
     override fun initialize() {
-        showSpeedLED.schedule()
+        danceLED.schedule()
 
         Intake.setIntakeSpeed(INDEXER_SPEED)
         Shooter.setWheelSpeed(robotPreferences.shooterRPM)
@@ -29,9 +29,9 @@ class ShootBalls : CommandBase() {
     }
 
     override fun end(interrupted: Boolean) {
-        showSpeedLED.cancel()
+        danceLED.cancel()
 
         Intake.stop()
-        Shooter.setWheelSpeed(robotPreferences.shooterIdleRPM)
+        Shooter.stop()
     }
 }

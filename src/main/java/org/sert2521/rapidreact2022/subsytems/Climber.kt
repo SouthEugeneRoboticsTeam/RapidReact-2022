@@ -4,7 +4,6 @@ import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX
 import com.revrobotics.CANSparkMax
 import edu.wpi.first.wpilibj.AnalogPotentiometer
 import edu.wpi.first.wpilibj.DigitalInput
-import edu.wpi.first.wpilibj.Servo
 import edu.wpi.first.wpilibj2.command.SubsystemBase
 import org.sert2521.rapidreact2022.*
 
@@ -18,8 +17,9 @@ object Climber : SubsystemBase() {
 
     private val potentiometer = AnalogPotentiometer(Potentiometers.VARIABLE_CLIMBER_ANGLE.id, Potentiometers.VARIABLE_CLIMBER_ANGLE.maxAngle, Potentiometers.VARIABLE_CLIMBER_ANGLE.zeroAngle)
 
-    private val servoLeft = Servo(PWMS.SERVO_LEFT.id)
-    private val servoRight = Servo(PWMS.SERVO_RIGHT.id)
+    //fix
+    //private val servoLeft = Servo(PWMS.SERVO_LEFT.id)
+    //private val servoRight = Servo(PWMS.SERVO_RIGHT.id)
 
     init {
         staticClimberMotor.inverted = Sparks.STATIC_CLIMBER.reversed
@@ -28,6 +28,9 @@ object Climber : SubsystemBase() {
 
         staticClimberMotor.encoder.positionConversionFactor = SparkEncoders.STATIC_CLIMBER.conversionFactor
         variableClimberMotor.encoder.positionConversionFactor = SparkEncoders.VARIABLE_CLIMBER.conversionFactor
+
+        //fix
+        //defaultCommand = SetClimber()
     }
 
     val staticHeight
@@ -59,11 +62,11 @@ object Climber : SubsystemBase() {
 
     fun setLock(locked: Boolean) {
         if (locked) {
-            servoLeft.set(SERVO_LOCK_LEFT)
-            servoRight.set(SERVO_LOCK_RIGHT)
+            //servoLeft.set(SERVO_LOCK_LEFT)
+            //servoRight.set(SERVO_LOCK_RIGHT)
         } else {
-            servoLeft.set(SERVO_UNLOCK_LEFT)
-            servoRight.set(SERVO_UNLOCK_RIGHT)
+            //servoLeft.set(SERVO_UNLOCK_LEFT)
+            //servoRight.set(SERVO_UNLOCK_RIGHT)
         }
     }
 
