@@ -19,8 +19,8 @@ object Climber : SubsystemBase() {
 
     private val potentiometer = AnalogPotentiometer(Potentiometers.VARIABLE_CLIMBER_ANGLE.id, Potentiometers.VARIABLE_CLIMBER_ANGLE.maxAngle, Potentiometers.VARIABLE_CLIMBER_ANGLE.zeroAngle)
 
-    private val servoLeft = try { Servo(PWMS.SERVO_LEFT.id) } catch (e: Exception) { null }
-    private val servoRight = try { Servo(PWMS.SERVO_RIGHT.id) } catch (e: Exception) { null }
+    val servoLeft = try { Servo(PWMS.SERVO_LEFT.id) } catch (e: Exception) { null }
+    val servoRight = try { Servo(PWMS.SERVO_RIGHT.id) } catch (e: Exception) { null }
 
     init {
         staticClimberMotor.inverted = Sparks.STATIC_CLIMBER.reversed
@@ -43,11 +43,11 @@ object Climber : SubsystemBase() {
         get() = potentiometer.get()
 
     fun isAtBottomStatic(): Boolean {
-        return staticDownLimitSwitch.get()
+        return !staticDownLimitSwitch.get()
     }
 
     fun isAtBottomVariable(): Boolean {
-        return variableDownLimitSwitch.get()
+        return !variableDownLimitSwitch.get()
     }
 
     override fun periodic() {

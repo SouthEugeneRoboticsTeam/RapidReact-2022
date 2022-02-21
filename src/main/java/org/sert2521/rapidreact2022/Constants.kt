@@ -20,7 +20,7 @@ const val TURN_MULTIPLIER = 0.55
 const val SLEW_RATE = 4.0
 const val DEADBAND = 0.1
 
-const val CLIMBER_HEIGHT_PER_ROTATION = 0.0
+const val CLIMBER_HEIGHT_PER_ROTATION = 1.0
 
 const val MAX_CLIMBER_ANGLE = 0.0
 const val MIN_CLIMBER_ANGLE = 0.0
@@ -102,13 +102,13 @@ enum class SparkEncoders(val conversionFactor: Double) {
 }
 
 enum class OnOffs(val id: Int) {
-    STATIC_CLIMBER_DOWN(13),
-    VARIABLE_CLIMBER_DOWN(11),
+    STATIC_CLIMBER_DOWN(5),
+    VARIABLE_CLIMBER_DOWN(6),
     INDEXER(4)
 }
 
 enum class Potentiometers(val id: Int, val maxAngle: Double, val zeroAngle: Double) {
-    VARIABLE_CLIMBER_ANGLE(0, 0.0, 0.0)
+    VARIABLE_CLIMBER_ANGLE(1, 360.0, 0.0)
 }
 
 enum class Encoders(val idA: Int, val idB: Int, val reversed: Boolean, val encodingType: CounterBase.EncodingType, val encoderDistancePerPulse: Double, val maxPeriod: Double, val minRate: Double, val samples: Int) {
@@ -119,5 +119,5 @@ enum class Encoders(val idA: Int, val idB: Int, val reversed: Boolean, val encod
 enum class PWMS(val id: Int) {
     LED(9),
     SERVO_LEFT(0),
-    SERVO_RIGHT(0)
+    SERVO_RIGHT(1)
 }

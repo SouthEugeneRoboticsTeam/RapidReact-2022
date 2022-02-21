@@ -14,6 +14,8 @@ object OI {
 
     private var slowMode = false
 
+    private var indexerOverride = false
+
     init {
         controlPreferences.intake.whileHeld(intakeBalls, false)
         controlPreferences.outtake.whileHeld(outtakeBalls)
@@ -24,14 +26,21 @@ object OI {
         controlPreferences.startClimbMid.toggleWhenPressed(climbMid)
 
         controlPreferences.slowMode.toggleWhenPressed(InstantCommand( { slowMode = !slowMode } ))
+        controlPreferences.slowMode.toggleWhenPressed(InstantCommand( { indexerOverride = !indexerOverride } ))
     }
 
-    fun onTeleop() {
+    fun onEnable() {
         slowMode = false
+
+        indexerOverride = false
     }
 
-    fun getOverrideIndexer(): Boolean {
-        return controlPreferences.overrideIndexer.get()
+    fun getIndexerOverride(): Boolean {
+        return indexerOverride
+    }
+
+    fun getRunIndexer(): Boolean {
+        return controlPreferences.runIndexer.get()
     }
 
     fun getSlowMode(): Boolean {
@@ -44,6 +53,18 @@ object OI {
 
     fun getClimbNext(): Boolean {
         return controlPreferences.climbNext.get()
+    }
+
+    fun getClimbStatic(): Double {
+        return controlPreferences.secondaryController.getRawAxis(0) * 0.1
+    }
+
+    fun getClimbVariable(): Double {
+        return controlPreferences.secondaryController.getRawAxis(1) * 0.1
+    }
+
+    fun getClimbActuate(): Double {
+        return controlPreferences.secondaryController.twist * 0.1
     }
 
     val xAxis

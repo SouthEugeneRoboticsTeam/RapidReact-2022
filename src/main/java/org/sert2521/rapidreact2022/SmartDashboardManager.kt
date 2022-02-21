@@ -41,6 +41,9 @@ object SmartDashboardManager {
         SmartDashboard.putNumber("Tuning/Climber Variable Height", Climber.variableHeight)
         SmartDashboard.putNumber("Tuning/Climber Variable Angle", Climber.variableAngle)
 
+        SmartDashboard.putBoolean("Tuning/Climber Static Limit", Climber.isAtBottomStatic())
+        SmartDashboard.putBoolean("Tuning/Climber Variable Limit", Climber.isAtBottomVariable())
+
         SmartDashboard.putBoolean("Tuning/Intake Full", Intake.indexerFull)
 
         SmartDashboard.putNumber("Tuning/Pose X", Drivetrain.pose.x)

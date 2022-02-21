@@ -41,6 +41,7 @@ abstract class ControlPreferences {
 
     abstract val intake: JoystickButton
     abstract val overrideIndexer: JoystickButton
+    abstract val runIndexer: JoystickButton
     abstract val outtake: JoystickButton
     abstract val shoot: JoystickButton
     abstract val rev: JoystickButton
@@ -58,10 +59,11 @@ object SoftwarePreferences : ControlPreferences() {
     override val slowMode = JoystickButton(primaryController, 5)
 
     override val intake = JoystickButton(primaryController, 3)
-    override val overrideIndexer = JoystickButton(primaryController, 1)
+    override val overrideIndexer = JoystickButton(primaryController, -1)
+    override val runIndexer = JoystickButton(primaryController, -2)
     override val outtake = JoystickButton(primaryController, 2)
     override val shoot = JoystickButton(primaryController, 4)
-    override val rev = JoystickButton(primaryController, -1)
+    override val rev = JoystickButton(primaryController, -3)
 
     override val climbNext = JoystickButton(secondaryController, 5)
     override val startClimbMid = JoystickButton(secondaryController, 6)
@@ -69,7 +71,7 @@ object SoftwarePreferences : ControlPreferences() {
 }
 
 object DriveteamPreferences : ControlPreferences() {
-    override val joystickX = { primaryController.leftX }
+    override val joystickX = { primaryController.rightX }
     override val joystickY = { -primaryController.leftY }
 
     override val fastMode = JoystickButton(primaryController, 3)
@@ -77,6 +79,7 @@ object DriveteamPreferences : ControlPreferences() {
 
     override val intake = JoystickButton(secondaryController, 8)
     override val overrideIndexer = JoystickButton(secondaryController, 9)
+    override val runIndexer = JoystickButton(secondaryController, 10)
     override val outtake = JoystickButton(secondaryController, 7)
     override val shoot = JoystickButton(secondaryController, 14)
     override val rev = JoystickButton(secondaryController, 15)
