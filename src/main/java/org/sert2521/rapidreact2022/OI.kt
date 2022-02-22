@@ -29,9 +29,6 @@ object OI {
 
         controlPreferences.slowMode.whenPressed(InstantCommand( { slowMode = !slowMode } ))
         controlPreferences.overrideIndexer.whenPressed(InstantCommand( { indexerOverride = !indexerOverride } ))
-
-        JoystickButton(controlPreferences.secondaryController, 8).whenPressed(InstantCommand( { Climber.setLock(true) } ))
-        JoystickButton(controlPreferences.secondaryController, 7).whenPressed(InstantCommand( { Climber.setLock(false) } ))
     }
 
     fun onEnable() {

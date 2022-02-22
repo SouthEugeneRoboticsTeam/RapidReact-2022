@@ -11,14 +11,22 @@ abstract class RobotPreferences {
     abstract val shooterPIDF: Array<Double>
     abstract val drivePID: Array<Double>
     abstract val driveFeedForward: Array<Double>
+
+    abstract val shooterRPM: Double
+    abstract val shooterEnterRPM: Double
+    abstract val shooterExitRPM: Double
 }
 
 object CompetitionPreferences : RobotPreferences() {
     override val climberPID = arrayOf(0.0, 0.0, 0.0)
     override val actuatorPID = arrayOf(0.0, 0.0, 0.0)
-    override val shooterPIDF = arrayOf(0.00035, 0.0, 0.0, 0.00018)
+    override val shooterPIDF = arrayOf(0.00035, 0.0, 0.0, 0.00019)
     override val drivePID = arrayOf(2.773, 0.0, 0.0)
     override val driveFeedForward = arrayOf(0.72556, 2.437, 2.5888)
+
+    override val shooterRPM = 4600.0
+    override val shooterEnterRPM = 4600.0
+    override val shooterExitRPM = 4400.0
 }
 
 object PracticePreferences : RobotPreferences() {
@@ -27,6 +35,10 @@ object PracticePreferences : RobotPreferences() {
     override val shooterPIDF = arrayOf(0.00035, 0.0, 0.0, 0.00018)
     override val drivePID = arrayOf(2.773, 0.0, 0.0)
     override val driveFeedForward = arrayOf(0.72556, 2.437, 2.5888)
+
+    override val shooterRPM = 5000.0
+    override val shooterEnterRPM = 5000.0
+    override val shooterExitRPM = 4600.0
 }
 
 abstract class ControlPreferences {
@@ -90,7 +102,7 @@ object DriveteamPreferences : ControlPreferences() {
 }
 
 val robotPreferences = CompetitionPreferences
-val controlPreferences = SoftwarePreferences
+val controlPreferences = DriveteamPreferences
 
 fun getAuto(): Command? {
     return SmartDashboardManager.getAuto()

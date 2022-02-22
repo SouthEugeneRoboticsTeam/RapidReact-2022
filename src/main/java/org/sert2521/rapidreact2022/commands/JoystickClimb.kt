@@ -4,7 +4,7 @@ import edu.wpi.first.wpilibj2.command.CommandBase
 import org.sert2521.rapidreact2022.OI
 import org.sert2521.rapidreact2022.subsytems.Climber
 
-class JoystickClimb : CommandBase() {
+/*class JoystickClimb : CommandBase() {
     init {
         addRequirements(Climber)
     }
@@ -24,3 +24,4 @@ class JoystickClimb : CommandBase() {
         Climber.stop()
     }
 }
+*/

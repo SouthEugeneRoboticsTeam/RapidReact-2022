@@ -6,7 +6,7 @@ import org.sert2521.rapidreact2022.DEFAULT_ACTUATOR_ANGLE
 import org.sert2521.rapidreact2022.robotPreferences
 import org.sert2521.rapidreact2022.subsytems.Climber
 
-class IdleClimber : CommandBase() {
+/*class IdleClimber : CommandBase() {
     private val variableActuatorPID: PIDController
 
     init {
@@ -27,3 +27,4 @@ class IdleClimber : CommandBase() {
         Climber.stop()
     }
 }
+*/

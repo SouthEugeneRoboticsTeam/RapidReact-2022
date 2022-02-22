@@ -17,17 +17,17 @@ class ShootBalls : CommandBase() {
         danceLED.schedule()
 
         Intake.setIntakeSpeed(INTAKE_SPEED)
-        Shooter.setWheelSpeed(SHOOTER_RPM)
+        Shooter.setWheelSpeed(robotPreferences.shooterRPM)
 
         shooting = false
     }
 
     override fun execute() {
-        if (SHOOTER_ENTER_SHOOT <= Shooter.wheelSpeed) {
+        if (robotPreferences.shooterEnterRPM <= Shooter.wheelSpeed) {
             shooting = true
         }
 
-        if (SHOOTER_EXIT_SHOOT >= Shooter.wheelSpeed) {
+        if (robotPreferences.shooterExitRPM >= Shooter.wheelSpeed) {
             shooting = false
         }
 

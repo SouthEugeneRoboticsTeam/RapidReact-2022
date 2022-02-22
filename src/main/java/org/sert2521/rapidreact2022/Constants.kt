@@ -37,10 +37,11 @@ const val HANG_HEIGHT = 0.0
 const val LET_GO_HEIGHT = 0.0
 const val DEFAULT_HEIGHT = 0.0
 
-const val SERVO_UNLOCK_LEFT = 0.1
-const val SERVO_UNLOCK_RIGHT = 0.75
-const val SERVO_LOCK_LEFT = 0.75
-const val SERVO_LOCK_RIGHT = 0.0
+const val SERVO_UNLOCK_STATIC = 0.1
+const val SERVO_UNLOCK_VARIABLE = 0.75
+const val SERVO_LOCK_STATIC = 0.75
+const val SERVO_LOCK_VARIABLE = 0.0
+const val SERVO_TOLERANCE = 0.05
 
 const val INTAKE_SPEED = 0.8
 const val INDEXER_SPEED = 0.8
@@ -55,10 +56,6 @@ const val AUTO_TURN_ACCELERATION = 1.0
 
 const val AUTO_EXIT_SPEED = 3.0
 const val AUTO_EXIT_ACCELERATION = 3.0
-
-const val SHOOTER_RPM = 5000.0
-const val SHOOTER_ENTER_SHOOT = 5000.0
-const val SHOOTER_EXIT_SHOOT = 4600.0
 
 const val SHOOT_TIME = 1.5
 
@@ -118,6 +115,6 @@ enum class Encoders(val idA: Int, val idB: Int, val reversed: Boolean, val encod
 
 enum class PWMS(val id: Int) {
     LED(9),
-    SERVO_LEFT(0),
-    SERVO_RIGHT(1)
+    SERVO_STATIC(0),
+    SERVO_VARIABLE(1)
 }

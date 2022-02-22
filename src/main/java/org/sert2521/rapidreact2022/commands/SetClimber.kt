@@ -16,7 +16,7 @@ class SetClimber(
     private val variableToleranceSpeed: Double = 0.01,
     private val variableAngleToleranceSpeed: Double = 1.0
 ) : CommandBase() {
-    private val staticPID: PIDController
+/*    private val staticPID: PIDController
     private val variablePID: PIDController
     private val variableActuatorPID: PIDController
 
@@ -67,3 +67,4 @@ class SetClimber(
         Climber.stop()
     }
 }
+*/}
