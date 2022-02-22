@@ -89,8 +89,8 @@ object DriveteamPreferences : ControlPreferences() {
     override val startClimbTraversal = JoystickButton(secondaryController, 7)
 }
 
-val robotPreferences = PracticePreferences
-val controlPreferences = DriveteamPreferences
+val robotPreferences = CompetitionPreferences
+val controlPreferences = SoftwarePreferences
 
 fun getAuto(): Command? {
     return SmartDashboardManager.getAuto()

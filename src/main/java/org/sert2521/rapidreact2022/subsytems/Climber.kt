@@ -30,6 +30,8 @@ object Climber : SubsystemBase() {
         staticClimberMotor.encoder.positionConversionFactor = SparkEncoders.STATIC_CLIMBER.conversionFactor
         variableClimberMotor.encoder.positionConversionFactor = SparkEncoders.VARIABLE_CLIMBER.conversionFactor
 
+        setLock(true)
+
         defaultCommand = IdleClimber()
     }
 
@@ -56,7 +58,7 @@ object Climber : SubsystemBase() {
         }
 
         if(isAtBottomVariable()) {
-            staticClimberMotor.encoder.position = 0.0
+            variableClimberMotor.encoder.position = 0.0
         }
     }
 

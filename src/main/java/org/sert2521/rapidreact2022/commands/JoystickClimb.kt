@@ -7,7 +7,9 @@ import org.sert2521.rapidreact2022.subsytems.Climber
 class JoystickClimb : CommandBase() {
     init {
         addRequirements(Climber)
+    }
 
+    override fun initialize() {
         Climber.setLock(false)
     }
 

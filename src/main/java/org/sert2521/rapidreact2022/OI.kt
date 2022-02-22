@@ -1,7 +1,9 @@
 package org.sert2521.rapidreact2022
 
 import edu.wpi.first.wpilibj2.command.InstantCommand
+import edu.wpi.first.wpilibj2.command.button.JoystickButton
 import org.sert2521.rapidreact2022.commands.*
+import org.sert2521.rapidreact2022.subsytems.Climber
 
 object OI {
     private val intakeBalls = IntakeBalls()
@@ -25,8 +27,11 @@ object OI {
         controlPreferences.startClimbTraversal.toggleWhenPressed(climbTraversal)
         controlPreferences.startClimbMid.toggleWhenPressed(climbMid)
 
-        controlPreferences.slowMode.toggleWhenPressed(InstantCommand( { slowMode = !slowMode } ))
-        controlPreferences.slowMode.toggleWhenPressed(InstantCommand( { indexerOverride = !indexerOverride } ))
+        controlPreferences.slowMode.whenPressed(InstantCommand( { slowMode = !slowMode } ))
+        controlPreferences.overrideIndexer.whenPressed(InstantCommand( { indexerOverride = !indexerOverride } ))
+
+        JoystickButton(controlPreferences.secondaryController, 8).whenPressed(InstantCommand( { Climber.setLock(true) } ))
+        JoystickButton(controlPreferences.secondaryController, 7).whenPressed(InstantCommand( { Climber.setLock(false) } ))
     }
 
     fun onEnable() {
@@ -56,15 +61,15 @@ object OI {
     }
 
     fun getClimbStatic(): Double {
-        return controlPreferences.secondaryController.getRawAxis(0) * 0.1
+        return controlPreferences.secondaryController.x * 0.4
     }
 
     fun getClimbVariable(): Double {
-        return controlPreferences.secondaryController.getRawAxis(1) * 0.1
+        return controlPreferences.secondaryController.y * 0.4
     }
 
     fun getClimbActuate(): Double {
-        return controlPreferences.secondaryController.twist * 0.1
+        return controlPreferences.secondaryController.z * 0.4
     }
 
     val xAxis

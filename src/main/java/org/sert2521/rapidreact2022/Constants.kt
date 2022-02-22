@@ -37,9 +37,9 @@ const val HANG_HEIGHT = 0.0
 const val LET_GO_HEIGHT = 0.0
 const val DEFAULT_HEIGHT = 0.0
 
-const val SERVO_UNLOCK_LEFT = 0.0
-const val SERVO_UNLOCK_RIGHT = 0.0
-const val SERVO_LOCK_LEFT = 0.0
+const val SERVO_UNLOCK_LEFT = 0.1
+const val SERVO_UNLOCK_RIGHT = 0.75
+const val SERVO_LOCK_LEFT = 0.75
 const val SERVO_LOCK_RIGHT = 0.0
 
 const val INTAKE_SPEED = 0.8
@@ -108,7 +108,7 @@ enum class OnOffs(val id: Int) {
 }
 
 enum class Potentiometers(val id: Int, val maxAngle: Double, val zeroAngle: Double) {
-    VARIABLE_CLIMBER_ANGLE(1, 360.0, 0.0)
+    VARIABLE_CLIMBER_ANGLE(1, 300.0, 0.0)
 }
 
 enum class Encoders(val idA: Int, val idB: Int, val reversed: Boolean, val encodingType: CounterBase.EncodingType, val encoderDistancePerPulse: Double, val maxPeriod: Double, val minRate: Double, val samples: Int) {
