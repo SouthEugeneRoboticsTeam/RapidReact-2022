@@ -20,10 +20,12 @@ const val TURN_MULTIPLIER = 0.55
 const val SLEW_RATE = 4.0
 const val DEADBAND = 0.1
 
-const val CLIMBER_HEIGHT_PER_ROTATION = 1.0
+const val CLIMBER_HEIGHT_PER_ROTATION = 0.00807
 
-const val MAX_CLIMBER_ANGLE = 0.0
-const val MIN_CLIMBER_ANGLE = 0.0
+const val MAX_CLIMBER_ANGLE = 180.0
+const val MIN_CLIMBER_ANGLE = 124.0
+const val MAX_CLIMBER_HEIGHT = 0.64
+const val MIN_CLIMBER_HEIGHT = 0.0
 
 const val MID_HEIGHT = 0.0
 const val NEXT_HOOKED_BAR_HEIGHT = 0.0
@@ -37,11 +39,13 @@ const val HANG_HEIGHT = 0.0
 const val LET_GO_HEIGHT = 0.0
 const val DEFAULT_HEIGHT = 0.0
 
+const val CLIMBER_MAINTAIN = 0.0
+
 const val SERVO_UNLOCK_STATIC = 0.1
 const val SERVO_UNLOCK_VARIABLE = 0.75
 const val SERVO_LOCK_STATIC = 0.75
 const val SERVO_LOCK_VARIABLE = 0.0
-const val SERVO_TOLERANCE = 0.05
+const val LOCK_TIME = 1.0
 
 const val INTAKE_SPEED = 0.8
 const val INDEXER_SPEED = 0.8

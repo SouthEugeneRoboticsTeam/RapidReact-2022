@@ -2,13 +2,12 @@ package org.sert2521.rapidreact2022
 
 import edu.wpi.first.wpilibj.TimedRobot
 import edu.wpi.first.wpilibj2.command.CommandScheduler
+import org.sert2521.rapidreact2022.commands.SetClimber
 import org.sert2521.rapidreact2022.subsytems.Climber
-
-//import org.sert2521.rapidreact2022.commands.JoystickClimb
 
 object Robot : TimedRobot() {
     private val commandScheduler = CommandScheduler.getInstance()
-    //private val climbJoystick = JoystickClimb()
+    private val climb = SetClimber(0.5, Climber.variableAngle, Climber.variableAngle, 0.1, 0.1, 0.1)
 
     override fun robotPeriodic() {
         commandScheduler.run()
@@ -17,13 +16,10 @@ object Robot : TimedRobot() {
 
     override fun teleopInit() {
         OI.onEnable()
-        Climber.setLockStatic(true)
-        Climber.setLockVariable(true)
-        //climbJoystick.schedule()
+
     }
 
     override fun teleopExit() {
-        //climbJoystick.cancel()
     }
 
     override fun autonomousInit() {

@@ -6,10 +6,10 @@ import org.sert2521.rapidreact2022.*
 
 class ClimbMid : SequentialCommandGroup() {
     init {
-        addCommands(
+        /*addCommands(
             SetClimber(MID_HEIGHT, DEFAULT_HEIGHT, DEFAULT_ACTUATOR_ANGLE),
             WaitUntilCommand { OI.getClimbNext() },
             SetClimber(HANG_HEIGHT, DEFAULT_HEIGHT, DEFAULT_ACTUATOR_ANGLE)
-        )
+        )*/
     }
 }

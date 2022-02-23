@@ -2,27 +2,16 @@ package org.sert2521.rapidreact2022.commands
 
 import edu.wpi.first.math.controller.PIDController
 import edu.wpi.first.wpilibj2.command.CommandBase
+import org.sert2521.rapidreact2022.CLIMBER_MAINTAIN
 import org.sert2521.rapidreact2022.robotPreferences
 import org.sert2521.rapidreact2022.subsytems.Climber
 
-class SetClimber(
-    private val staticHeight: Double,
-    private val variableHeight: Double,
-    private val variableAngle: Double,
-    private val staticToleranceDis: Double = 0.01,
-    private val variableToleranceDis: Double = 0.01,
-    private val variableAngleToleranceDis: Double = 1.0,
-    private val staticToleranceSpeed: Double = 0.01,
-    private val variableToleranceSpeed: Double = 0.01,
-    private val variableAngleToleranceSpeed: Double = 1.0
-) : CommandBase() {
-/*    private val staticPID: PIDController
+class SetClimber(private val staticTarget: Double, private val variableTarget: Double, private val angleTarget: Double,
+                 private val staticTolerance: Double, private val variableTolerance: Double, private val angleTolerance: Double) : CommandBase() {
+    private val staticPID: PIDController
     private val variablePID: PIDController
-    private val variableActuatorPID: PIDController
-
-    private var atStaticLimit = false
-    private var atVariableLimit = false
-    private var atVariableActuatorLimit = false
+    private val anglePID: PIDController
+    private var allInTolerance = false
 
     init {
         addRequirements(Climber)
@@ -32,39 +21,47 @@ class SetClimber(
 
         staticPID = PIDController(climberPIDArray[0], climberPIDArray[1], climberPIDArray[2])
         variablePID = PIDController(climberPIDArray[0], climberPIDArray[1], climberPIDArray[2])
-        variableActuatorPID = PIDController(actuatorPIDArray[0], actuatorPIDArray[1], actuatorPIDArray[2])
-
-        Climber.setLock(false)
+        anglePID = PIDController(actuatorPIDArray[0], actuatorPIDArray[1], actuatorPIDArray[2])
     }
 
-    override fun initialize() {
-        staticPID.reset()
-        staticPID.setTolerance(staticToleranceDis, staticToleranceSpeed)
-
-        variablePID.reset()
-        variablePID.setTolerance(variableToleranceDis, variableToleranceSpeed)
-
-        variableActuatorPID.reset()
-        variableActuatorPID.setTolerance(variableAngleToleranceDis, variableAngleToleranceSpeed)
-
-        atStaticLimit = false
-        atVariableLimit = false
-        atVariableActuatorLimit = false
+    private fun inTolerance(target: Double, current: Double, tolerance: Double): Boolean {
+        return target - current >= -tolerance && tolerance <= target - current
     }
 
     override fun execute() {
-        atStaticLimit = Climber.elevateStatic(staticPID.calculate(staticHeight - Climber.staticHeight))
-        atVariableLimit = Climber.elevateVariable(variablePID.calculate(variableHeight - Climber.variableHeight))
-        atVariableActuatorLimit = Climber.actuateVariable(variableActuatorPID.calculate(variableAngle - Climber.variableAngle))
+        allInTolerance = true
+
+        if(inTolerance(staticTarget, Climber.staticHeight, staticTolerance)) {
+            Climber.setStaticSpeed(0.0)
+            Climber.setLockStatic(true)
+        } else {
+            allInTolerance = false
+            Climber.setStaticSpeed(staticPID.calculate(staticTarget - Climber.staticHeight))
+            Climber.setLockStatic(false)
+        }
+
+        if(inTolerance(variableTarget, Climber.variableHeight, variableTolerance)) {
+            Climber.setVariableSpeed(0.0)
+            Climber.setLockVariable(true)
+        } else {
+            allInTolerance = false
+            Climber.setVariableSpeed(variablePID.calculate(variableTarget - Climber.variableHeight))
+            Climber.setLockVariable(false)
+        }
+
+        if(inTolerance(angleTarget, Climber.variableAngle, angleTolerance)) {
+            Climber.setAngleSpeed(0.0)
+        } else {
+            allInTolerance = false
+            Climber.setVariableSpeed(anglePID.calculate(angleTarget - Climber.variableAngle))
+        }
     }
 
     override fun isFinished(): Boolean {
-        return (atStaticLimit or staticPID.atSetpoint()) && (atVariableLimit or variablePID.atSetpoint()) && (atVariableActuatorLimit or variableActuatorPID.atSetpoint())
+        return allInTolerance
     }
 
     override fun end(interrupted: Boolean) {
-        Climber.setLock(true)
         Climber.stop()
     }
 }
-*/}
