@@ -29,6 +29,8 @@ object OI {
 
         controlPreferences.slowMode.whenPressed(InstantCommand( { slowMode = !slowMode } ))
         controlPreferences.overrideIndexer.whenPressed(InstantCommand( { indexerOverride = !indexerOverride } ))
+        controlPreferences.intake.whenPressed(InstantCommand( { Climber.lock() } ))
+        controlPreferences.outtake.whenPressed(InstantCommand( { Climber.unlock() } ))
     }
 
     fun onEnable() {

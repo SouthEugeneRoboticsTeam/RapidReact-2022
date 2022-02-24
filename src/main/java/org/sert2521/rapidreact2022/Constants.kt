@@ -45,7 +45,11 @@ const val SERVO_UNLOCK_STATIC = 0.1
 const val SERVO_UNLOCK_VARIABLE = 0.75
 const val SERVO_LOCK_STATIC = 0.75
 const val SERVO_LOCK_VARIABLE = 0.0
-const val LOCK_TIME = 1.0
+const val LOCK_TIME_STATIC = 2.0
+const val LOCK_TIME_VARIABLE = 3.0
+const val FAILSAFE_TIME = 3.0
+const val MATCH_TIME = 150.0
+const val UNSTICK_POWER = 0.0//5
 
 const val INTAKE_SPEED = 0.8
 const val INDEXER_SPEED = 0.8
@@ -65,14 +69,14 @@ const val SHOOT_TIME = 1.5
 
 val SHOOT_POSE = Pose2d(0.0, 0.0, Rotation2d.fromDegrees(0.0))
 
-val DOUBLE_START_POSE_LEFT = Pose2d(-0.6, -0.9, Rotation2d.fromDegrees(180.0))
-val PICKUP_POSE_LEFT = Pose2d(-2.6, -0.9, Rotation2d.fromDegrees(180.0))
-val ENTRY_POSE_LEFT = Pose2d(-2.6, 0.0, Rotation2d.fromDegrees(0.0))
+val DOUBLE_START_POSE_LEFT = Pose2d(-0.75, -0.9, Rotation2d.fromDegrees(180.0))
+val PICKUP_POSE_LEFT = Pose2d(-2.75, -0.9, Rotation2d.fromDegrees(180.0))
+val ENTRY_POSE_LEFT = Pose2d(-2.75, 0.0, Rotation2d.fromDegrees(0.0))
 val END_POSE_SINGLE_LEFT = Pose2d(-2.5, -1.5, Rotation2d.fromDegrees(35.0))
 
-val DOUBLE_START_POSE_RIGHT = Pose2d(-0.6, 0.9, Rotation2d.fromDegrees(180.0))
-val PICKUP_POSE_RIGHT = Pose2d(-2.6, 0.9, Rotation2d.fromDegrees(180.0))
-val ENTRY_POSE_RIGHT = Pose2d(-2.6, 0.0, Rotation2d.fromDegrees(0.0))
+val DOUBLE_START_POSE_RIGHT = Pose2d(-0.75, 0.9, Rotation2d.fromDegrees(180.0))
+val PICKUP_POSE_RIGHT = Pose2d(-2.75, 0.9, Rotation2d.fromDegrees(180.0))
+val ENTRY_POSE_RIGHT = Pose2d(-2.75, 0.0, Rotation2d.fromDegrees(0.0))
 val END_POSE_SINGLE_RIGHT = Pose2d(-2.5, 1.5, Rotation2d.fromDegrees(-35.0))
 
 val GYRO_PORT = SPI.Port.kMXP

@@ -6,17 +6,24 @@ import com.revrobotics.CANSparkMax
 import edu.wpi.first.wpilibj.AnalogPotentiometer
 import edu.wpi.first.wpilibj.DigitalInput
 import edu.wpi.first.wpilibj.Servo
-import edu.wpi.first.wpilibj.Timer
 import edu.wpi.first.wpilibj2.command.SubsystemBase
 import org.sert2521.rapidreact2022.*
 import java.lang.System.currentTimeMillis
 
-//import org.sert2521.rapidreact2022.commands.IdleClimber
+enum class LockStates {
+    LOCKED,
+    UNLOCKED,
+    NEITHER
+}
 
 object Climber : SubsystemBase() {
     private val staticClimberMotor = CANSparkMax(Sparks.STATIC_CLIMBER.id, Sparks.STATIC_CLIMBER.type)
     private val variableClimberMotor = CANSparkMax(Sparks.VARIABLE_CLIMBER.id, Sparks.VARIABLE_CLIMBER.type)
     private val variableActuator = WPI_TalonSRX(Talons.VARIABLE_ACTUATOR.id)
+
+    private var staticGoal = 0.0
+    private var variableGoal = 0.0
+    private var angleGoal = 0.0
 
     private val staticDownLimitSwitch = DigitalInput(OnOffs.STATIC_CLIMBER_DOWN.id)
     private val variableDownLimitSwitch = DigitalInput(OnOffs.VARIABLE_CLIMBER_DOWN.id)
@@ -28,12 +35,13 @@ object Climber : SubsystemBase() {
 
     private val climbing = false
 
-    private var staticLocked = false
+    //Figure out enable values, maybe use servo values if they save
+    private var staticLocked = LockStates.NEITHER
     private var staticLockedUpdate = 0L
-    private var variableLocked = false
+    private var variableLocked = LockStates.NEITHER
     private var variableLockedUpdate = 0L
 
-    private var forceLocked = true
+    private var forceLocked = false
     private val startTime = currentTimeMillis()
 
     init {
@@ -48,13 +56,12 @@ object Climber : SubsystemBase() {
         staticClimberMotor.encoder.positionConversionFactor = SparkEncoders.STATIC_CLIMBER.conversionFactor
         variableClimberMotor.encoder.positionConversionFactor = SparkEncoders.VARIABLE_CLIMBER.conversionFactor
 
-        lock()
-
-        //defaultCommand = IdleClimber()
+        staticClimberMotor.encoder.position = Double.NEGATIVE_INFINITY
+        variableClimberMotor.encoder.position = Double.POSITIVE_INFINITY
     }
 
     val staticHeight
-        get() = staticClimberMotor.encoder.position
+        get() = -staticClimberMotor.encoder.position
 
     val variableHeight
         get() = variableClimberMotor.encoder.position
@@ -70,28 +77,32 @@ object Climber : SubsystemBase() {
         return !variableDownLimitSwitch.get()
     }
 
-    fun isStaticLocked(): Boolean {
-        return if(currentTimeMillis() - staticLockedUpdate >= LOCK_TIME * 1000) {
+    fun isStaticLocked(): LockStates {
+        return if(currentTimeMillis() - staticLockedUpdate >= LOCK_TIME_STATIC * 1000) {
             staticLocked
         } else {
-            false
+            LockStates.NEITHER
         }
     }
 
-    fun isVariableLocked(): Boolean {
-        return if(currentTimeMillis() - variableLockedUpdate >= LOCK_TIME * 1000) {
+    fun isVariableLocked(): LockStates {
+        return if(currentTimeMillis() - variableLockedUpdate >= LOCK_TIME_VARIABLE * 1000) {
             variableLocked
         } else {
-            false
+            LockStates.NEITHER
         }
     }
 
     fun forceLock() {
         forceLocked = true
-        stop()
+        stopAndLock()
     }
 
     override fun periodic() {
+        if(currentTimeMillis() - startTime >= (MATCH_TIME - FAILSAFE_TIME) * 1000) {
+            forceLock()
+        }
+
         if(isAtBottomStatic()) {
             staticClimberMotor.encoder.position = 0.0
         }
@@ -100,80 +111,120 @@ object Climber : SubsystemBase() {
             variableClimberMotor.encoder.position = 0.0
         }
 
-        if(currentTimeMillis() - startTime >= (150 - LOCK_TIME) * 1000) {
-            forceLock()
-        }
+        staticUpdate()
+        variableUpdate()
+        angleUpdate()
     }
 
-    fun setLockStatic(lock: Boolean) {
-        if(lock != staticLocked) {
-            if(lock) {
+    fun setLockStatic(lock: LockStates) {
+        if(!forceLocked && lock != LockStates.NEITHER) {
+            if(lock == LockStates.LOCKED) {
                 servoStatic?.set(SERVO_LOCK_STATIC)
-                staticLocked = true
-                staticLockedUpdate = currentTimeMillis()
             } else {
                 servoStatic?.set(SERVO_UNLOCK_STATIC)
-                staticLocked = false
             }
+
+            if(staticLocked != lock) {
+                staticLockedUpdate = currentTimeMillis()
+            }
+            staticLocked = lock
         }
     }
 
-    fun setLockVariable(lock: Boolean) {
-        if(lock != variableLocked) {
-            if(lock) {
-                servoStatic?.set(SERVO_LOCK_VARIABLE)
-                variableLocked = true
-                variableLockedUpdate = currentTimeMillis()
+    fun setLockVariable(lock: LockStates) {
+        if(!forceLocked && lock != LockStates.NEITHER) {
+            if(lock == LockStates.LOCKED) {
+                servoVariable?.set(SERVO_LOCK_VARIABLE)
             } else {
                 servoVariable?.set(SERVO_UNLOCK_VARIABLE)
-                variableLocked = false
             }
+
+            if(variableLocked != lock) {
+                variableLockedUpdate = currentTimeMillis()
+            }
+            variableLocked = lock
         }
     }
 
     fun setStaticSpeed(amount: Double) {
-        var offset = 0.0
-        if(climbing) {
-            offset = CLIMBER_MAINTAIN
-        }
-
-        if(isStaticLocked() || (amount < 0.0 && staticHeight <= MIN_CLIMBER_HEIGHT) || (amount > 0.0 && staticHeight >= MAX_CLIMBER_HEIGHT)) {
-            staticClimberMotor.set(offset)
-        } else {
-            staticClimberMotor.set(amount + offset)
-        }
+        staticGoal = amount
+        staticUpdate()
     }
 
     fun setVariableSpeed(amount: Double) {
+        variableGoal = amount
+        variableUpdate()
+    }
+
+    fun setAngleSpeed(amount: Double) {
+        angleGoal = amount
+        angleUpdate()
+    }
+
+    private fun staticUpdate() {
         var offset = 0.0
         if(climbing) {
             offset = CLIMBER_MAINTAIN
         }
+        //will release some pressure from birds if trying to unlock
+        if(isStaticLocked() == LockStates.NEITHER) {
+            offset -= UNSTICK_POWER
+        }
 
-        if(isStaticLocked() || (amount < 0.0 && variableHeight <= MIN_CLIMBER_HEIGHT) || (amount > 0.0 && variableHeight >= MAX_CLIMBER_HEIGHT)) {
-            variableClimberMotor.set(offset)
+        if(isStaticLocked() == LockStates.LOCKED) {
+            staticClimberMotor.set(0.0)
         } else {
-            variableClimberMotor.set(amount + offset)
+            if(isStaticLocked() == LockStates.NEITHER || (staticGoal < 0.0 && staticHeight <= MIN_CLIMBER_HEIGHT) || (staticGoal > 0.0 && staticHeight >= MAX_CLIMBER_HEIGHT)) {
+                staticClimberMotor.set(-offset)
+            } else {
+                staticClimberMotor.set(-staticGoal - offset)
+            }
         }
     }
 
-    fun setAngleSpeed(amount: Double) {
-        if((amount < 0.0 && variableAngle <= MIN_CLIMBER_ANGLE) || (amount > 0.0 && variableAngle >= MAX_CLIMBER_ANGLE)) {
+    private fun variableUpdate() {
+        var offset = 0.0
+        if(climbing) {
+            offset = CLIMBER_MAINTAIN
+        }
+        //will release some pressure from birds if trying to unlock
+        if(isVariableLocked() == LockStates.NEITHER) {
+            offset -= UNSTICK_POWER
+        }
+
+        if(isVariableLocked() == LockStates.LOCKED) {
+            variableClimberMotor.set(0.0)
+        } else {
+            if(isVariableLocked() == LockStates.NEITHER || (variableGoal < 0.0 && variableHeight <= MIN_CLIMBER_HEIGHT) || (variableGoal > 0.0 && variableHeight >= MAX_CLIMBER_HEIGHT)) {
+                variableClimberMotor.set(offset)
+            } else {
+                variableClimberMotor.set(variableGoal + offset)
+            }
+        }
+    }
+
+    private fun angleUpdate() {
+        if((angleGoal < 0.0 && variableAngle <= MIN_CLIMBER_ANGLE) || (angleGoal > 0.0 && variableAngle >= MAX_CLIMBER_ANGLE)) {
             variableActuator.set(0.0)
         } else {
-            variableActuator.set(amount)
+            variableActuator.set(angleGoal)
         }
     }
 
     fun lock() {
-        setLockStatic(true)
-        setLockVariable(true)
+        setLockStatic(LockStates.LOCKED)
+        setLockVariable(LockStates.LOCKED)
     }
 
-    fun stop() {
-        lock()
+    fun unlock() {
+        setLockStatic(LockStates.UNLOCKED)
+        setLockVariable(LockStates.UNLOCKED)
+    }
+
+    fun stopAndLock() {
         setStaticSpeed(0.0)
         setVariableSpeed(0.0)
         setAngleSpeed(0.0)
+        lock()
     }
 }

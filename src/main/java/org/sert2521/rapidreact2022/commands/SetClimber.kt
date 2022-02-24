@@ -2,12 +2,12 @@ package org.sert2521.rapidreact2022.commands
 
 import edu.wpi.first.math.controller.PIDController
 import edu.wpi.first.wpilibj2.command.CommandBase
-import org.sert2521.rapidreact2022.CLIMBER_MAINTAIN
 import org.sert2521.rapidreact2022.robotPreferences
 import org.sert2521.rapidreact2022.subsytems.Climber
+import org.sert2521.rapidreact2022.subsytems.LockStates
 
-class SetClimber(private val staticTarget: Double, private val variableTarget: Double, private val angleTarget: Double,
-                 private val staticTolerance: Double, private val variableTolerance: Double, private val angleTolerance: Double) : CommandBase() {
+class SetClimber(private val staticTarget: Double?, private val variableTarget: Double?, private val angleTarget: Double?,
+                 private val staticTolerance: Double?, private val variableTolerance: Double?, private val angleTolerance: Double?) : CommandBase() {
     private val staticPID: PIDController
     private val variablePID: PIDController
     private val anglePID: PIDController
@@ -25,35 +25,41 @@ class SetClimber(private val staticTarget: Double, private val variableTarget: D
     }
 
     private fun inTolerance(target: Double, current: Double, tolerance: Double): Boolean {
-        return target - current >= -tolerance && tolerance <= target - current
+        return target - current <= tolerance && -tolerance <= target - current
     }
 
     override fun execute() {
         allInTolerance = true
 
-        if(inTolerance(staticTarget, Climber.staticHeight, staticTolerance)) {
-            Climber.setStaticSpeed(0.0)
-            Climber.setLockStatic(true)
-        } else {
-            allInTolerance = false
-            Climber.setStaticSpeed(staticPID.calculate(staticTarget - Climber.staticHeight))
-            Climber.setLockStatic(false)
+        if(staticTarget != null && staticTolerance != null) {
+            if(inTolerance(staticTarget, Climber.staticHeight, staticTolerance)) {
+                Climber.setLockStatic(LockStates.LOCKED)
+            } else {
+                allInTolerance = false
+                Climber.setStaticSpeed(0.2)//staticPID.calculate(staticTarget - Climber.staticHeight))
+                Climber.setLockStatic(LockStates.UNLOCKED)
+            }
         }
 
-        if(inTolerance(variableTarget, Climber.variableHeight, variableTolerance)) {
-            Climber.setVariableSpeed(0.0)
-            Climber.setLockVariable(true)
-        } else {
-            allInTolerance = false
-            Climber.setVariableSpeed(variablePID.calculate(variableTarget - Climber.variableHeight))
-            Climber.setLockVariable(false)
+        if(variableTarget != null && variableTolerance != null) {
+            if(inTolerance(variableTarget, Climber.variableHeight, variableTolerance)) {
+                Climber.setStaticSpeed(0.0)
+                Climber.setLockVariable(LockStates.LOCKED)
+            } else {
+                allInTolerance = false
+                Climber.setVariableSpeed(0.2)//variablePID.calculate(variableTarget - Climber.variableHeight))
+                Climber.setLockVariable(LockStates.UNLOCKED)
+            }
         }
 
-        if(inTolerance(angleTarget, Climber.variableAngle, angleTolerance)) {
-            Climber.setAngleSpeed(0.0)
-        } else {
-            allInTolerance = false
-            Climber.setVariableSpeed(anglePID.calculate(angleTarget - Climber.variableAngle))
+        if(angleTarget != null && angleTolerance != null) {
+            if(inTolerance(angleTarget, Climber.variableAngle, angleTolerance)) {
+                //Just have PID outside if
+                Climber.setAngleSpeed(0.0)
+            } else {
+                allInTolerance = false
+                Climber.setVariableSpeed(0.2)//anglePID.calculate(angleTarget - Climber.variableAngle))
+            }
         }
     }
 
@@ -62,6 +68,6 @@ class SetClimber(private val staticTarget: Double, private val variableTarget: D
     }
 
     override fun end(interrupted: Boolean) {
-        Climber.stop()
+        Climber.stopAndLock()
     }
 }
