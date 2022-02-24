@@ -33,7 +33,7 @@ object Climber : SubsystemBase() {
     private val servoStatic = try { Servo(PWMS.SERVO_STATIC.id) } catch (e: Exception) { null }
     private val servoVariable = try { Servo(PWMS.SERVO_VARIABLE.id) } catch (e: Exception) { null }
 
-    private val climbing = false
+    var climbing = false
 
     //Figure out enable values, maybe use servo values if they save
     private var staticLocked = LockStates.NEITHER
@@ -163,11 +163,12 @@ object Climber : SubsystemBase() {
 
     private fun staticUpdate() {
         var offset = 0.0
-        if(climbing) {
+        if(isStaticLocked() == LockStates.UNLOCKED && climbing) {
             offset = CLIMBER_MAINTAIN
         }
         //will release some pressure from birds if trying to unlock
-        if(isStaticLocked() == LockStates.NEITHER) {
+        //if changing to unlocked
+        if(isStaticLocked() == LockStates.NEITHER && staticLocked == LockStates.UNLOCKED) {
             offset -= UNSTICK_POWER
         }
 
@@ -184,11 +185,12 @@ object Climber : SubsystemBase() {
 
     private fun variableUpdate() {
         var offset = 0.0
-        if(climbing) {
+        if(isVariableLocked() == LockStates.UNLOCKED && climbing) {
             offset = CLIMBER_MAINTAIN
         }
         //will release some pressure from birds if trying to unlock
-        if(isVariableLocked() == LockStates.NEITHER) {
+        //if changing to unlocked
+        if(isVariableLocked() == LockStates.NEITHER && variableLocked == LockStates.UNLOCKED) {
             offset -= UNSTICK_POWER
         }
 

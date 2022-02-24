@@ -17,9 +17,10 @@ abstract class RobotPreferences {
     abstract val shooterExitRPM: Double
 }
 
+//Fix PID
 object CompetitionPreferences : RobotPreferences() {
-    override val climberPID = arrayOf(3.0, 0.0, 0.0)
-    override val actuatorPID = arrayOf(0.1, 0.0, 0.0)
+    override val climberPID = arrayOf(1.0, 0.1, 0.0)
+    override val actuatorPID = arrayOf(0.1, 0.01, 0.0)
     override val shooterPIDF = arrayOf(0.00035, 0.0, 0.0, 0.00019)
     override val drivePID = arrayOf(2.773, 0.0, 0.0)
     override val driveFeedForward = arrayOf(0.72556, 2.437, 2.5888)

@@ -2,12 +2,15 @@ package org.sert2521.rapidreact2022.commands
 
 import edu.wpi.first.math.controller.PIDController
 import edu.wpi.first.wpilibj2.command.CommandBase
+import org.sert2521.rapidreact2022.DEFAULT_ACTUATOR_ANGLE
+import org.sert2521.rapidreact2022.DEFAULT_TOLERANCE
+import org.sert2521.rapidreact2022.DEFAULT_TOLERANCE_ANGLE
 import org.sert2521.rapidreact2022.robotPreferences
 import org.sert2521.rapidreact2022.subsytems.Climber
 import org.sert2521.rapidreact2022.subsytems.LockStates
 
-class SetClimber(private val staticTarget: Double?, private val variableTarget: Double?, private val angleTarget: Double?,
-                 private val staticTolerance: Double?, private val variableTolerance: Double?, private val angleTolerance: Double?) : CommandBase() {
+class SetClimber(private val staticTarget: Double?, private val variableTarget: Double?, private val angleTarget: Double,
+                 private val staticTolerance: Double = DEFAULT_TOLERANCE, private val variableTolerance: Double = DEFAULT_TOLERANCE, private val angleTolerance: Double = DEFAULT_TOLERANCE_ANGLE) : CommandBase() {
     private val staticPID: PIDController
     private val variablePID: PIDController
     private val anglePID: PIDController
@@ -31,36 +34,32 @@ class SetClimber(private val staticTarget: Double?, private val variableTarget: 
     override fun execute() {
         allInTolerance = true
 
-        if(staticTarget != null && staticTolerance != null) {
+        if(staticTarget != null) {
             if(inTolerance(staticTarget, Climber.staticHeight, staticTolerance)) {
                 Climber.setLockStatic(LockStates.LOCKED)
             } else {
                 allInTolerance = false
-                Climber.setStaticSpeed(0.2)//staticPID.calculate(staticTarget - Climber.staticHeight))
+                Climber.setStaticSpeed(staticPID.calculate(Climber.staticHeight - staticTarget))
                 Climber.setLockStatic(LockStates.UNLOCKED)
             }
         }
 
-        if(variableTarget != null && variableTolerance != null) {
+        if(variableTarget != null) {
             if(inTolerance(variableTarget, Climber.variableHeight, variableTolerance)) {
                 Climber.setStaticSpeed(0.0)
                 Climber.setLockVariable(LockStates.LOCKED)
             } else {
                 allInTolerance = false
-                Climber.setVariableSpeed(0.2)//variablePID.calculate(variableTarget - Climber.variableHeight))
+                Climber.setVariableSpeed(variablePID.calculate(Climber.variableHeight - variableTarget))
                 Climber.setLockVariable(LockStates.UNLOCKED)
             }
         }
 
-        if(angleTarget != null && angleTolerance != null) {
-            if(inTolerance(angleTarget, Climber.variableAngle, angleTolerance)) {
-                //Just have PID outside if
-                Climber.setAngleSpeed(0.0)
-            } else {
-                allInTolerance = false
-                Climber.setVariableSpeed(0.2)//anglePID.calculate(angleTarget - Climber.variableAngle))
-            }
+        if(!inTolerance(angleTarget, Climber.variableAngle, angleTolerance)) {
+            allInTolerance = false
         }
+
+        Climber.setAngleSpeed(anglePID.calculate(Climber.variableAngle - angleTarget))
     }
 
     override fun isFinished(): Boolean {
