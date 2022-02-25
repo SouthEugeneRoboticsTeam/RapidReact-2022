@@ -42,6 +42,7 @@ const val DEFAULT_TOLERANCE = 0.01
 const val DEFAULT_TOLERANCE_ANGLE = 1.0
 
 const val CLIMBER_MAINTAIN = -0.4
+const val CLIMBER_RESET = -0.4
 
 const val SERVO_UNLOCK_STATIC = 0.1
 const val SERVO_UNLOCK_VARIABLE = 0.75

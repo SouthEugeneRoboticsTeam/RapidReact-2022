@@ -3,6 +3,7 @@ package org.sert2521.rapidreact2022.subsytems
 import com.ctre.phoenix.motorcontrol.NeutralMode
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX
 import com.revrobotics.CANSparkMax
+import edu.wpi.first.math.controller.PIDController
 import edu.wpi.first.wpilibj.AnalogPotentiometer
 import edu.wpi.first.wpilibj.DigitalInput
 import edu.wpi.first.wpilibj.Servo
@@ -23,6 +24,7 @@ object Climber : SubsystemBase() {
 
     private var staticGoal = 0.0
     private var variableGoal = 0.0
+    private val anglePID: PIDController
     private var angleGoal = 0.0
 
     private val staticDownLimitSwitch = DigitalInput(OnOffs.STATIC_CLIMBER_DOWN.id)
@@ -58,6 +60,9 @@ object Climber : SubsystemBase() {
 
         staticClimberMotor.encoder.position = Double.NEGATIVE_INFINITY
         variableClimberMotor.encoder.position = Double.POSITIVE_INFINITY
+
+        val actuatorPIDArray = robotPreferences.actuatorPID
+        anglePID = PIDController(actuatorPIDArray[0], actuatorPIDArray[1], actuatorPIDArray[2])
     }
 
     val staticHeight
@@ -113,7 +118,7 @@ object Climber : SubsystemBase() {
 
         staticUpdate()
         variableUpdate()
-        angleUpdate()
+        setAngleSpeed()
     }
 
     fun setLockStatic(lock: LockStates) {
@@ -156,9 +161,8 @@ object Climber : SubsystemBase() {
         variableUpdate()
     }
 
-    fun setAngleSpeed(amount: Double) {
-        angleGoal = amount
-        angleUpdate()
+    fun setAnglePos(angle: Double) {
+        angleGoal = angle
     }
 
     private fun staticUpdate() {
@@ -205,7 +209,8 @@ object Climber : SubsystemBase() {
         }
     }
 
-    private fun angleUpdate() {
+    private fun setAngleSpeed() {
+        val angleSpeed = anglePID.calculate(variableAngle - angleGoal)
         if((angleGoal < 0.0 && variableAngle <= MIN_CLIMBER_ANGLE) || (angleGoal > 0.0 && variableAngle >= MAX_CLIMBER_ANGLE)) {
             variableActuator.set(0.0)
         } else {
@@ -226,7 +231,6 @@ object Climber : SubsystemBase() {
     fun stopAndLock() {
         setStaticSpeed(0.0)
         setVariableSpeed(0.0)
-        setAngleSpeed(0.0)
         lock()
     }
 }
