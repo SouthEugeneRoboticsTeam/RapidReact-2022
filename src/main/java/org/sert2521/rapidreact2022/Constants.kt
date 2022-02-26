@@ -23,6 +23,7 @@ const val CLIMBER_HEIGHT_PER_ROTATION = 0.00807
 
 const val MAX_CLIMBER_ANGLE = 180.0
 const val MIN_CLIMBER_ANGLE = 124.0
+const val START_POS = 1.0
 const val MAX_CLIMBER_HEIGHT = 0.63
 const val MIN_CLIMBER_HEIGHT = 0.0
 

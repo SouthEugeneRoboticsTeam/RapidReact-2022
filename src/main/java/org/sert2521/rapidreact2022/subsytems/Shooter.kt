@@ -14,18 +14,14 @@ object Shooter : SubsystemBase() {
 
         motor.encoder.positionConversionFactor = SparkEncoders.SHOOTER.conversionFactor
 
-        setPIDF(robotPreferences.shooterPIDF)
+        motor.pidController.p = robotPreferences.shooterPIDF[0]
+        motor.pidController.i = robotPreferences.shooterPIDF[1]
+        motor.pidController.d = robotPreferences.shooterPIDF[2]
+        motor.pidController.ff = robotPreferences.shooterPIDF[3]
     }
 
     val wheelSpeed
         get() = motor.encoder.velocity
-
-    fun setPIDF(pidfArray: Array<Double>) {
-        motor.pidController.p = pidfArray[0]
-        motor.pidController.i = pidfArray[1]
-        motor.pidController.d = pidfArray[2]
-        motor.pidController.ff = pidfArray[3]
-    }
 
     fun setWheelSpeed(rpm: Double) {
         motor.pidController.setReference(rpm, CANSparkMax.ControlType.kVelocity)

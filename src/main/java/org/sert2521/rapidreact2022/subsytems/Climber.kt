@@ -72,8 +72,8 @@ object Climber : SubsystemBase() {
         variableLocked = LockStates.NEITHER
         variableLockedUpdate = 0L
 
-        staticClimberMotor.encoder.position = Double.POSITIVE_INFINITY
-        variableClimberMotor.encoder.position = Double.POSITIVE_INFINITY
+        staticClimberMotor.encoder.position = START_POS
+        variableClimberMotor.encoder.position = START_POS
 
         forceLocked = false
         startClimber.schedule(false)
@@ -183,20 +183,18 @@ object Climber : SubsystemBase() {
     }
 
     private fun staticUpdate() {
-        var offset = 0.0
-        //will release some pressure from birds if trying to unlock
-        //if changing to unlocked
-        if(isStaticLocked() == LockStates.NEITHER && staticLocked == LockStates.UNLOCKED) {
-            offset -= UNSTICK_POWER
+        var unstick = 0.0
+        if(isVariableLocked() == LockStates.NEITHER && variableLocked == LockStates.UNLOCKED) {
+            unstick -= UNSTICK_POWER
         }
 
         if(isStaticLocked() == LockStates.LOCKED) {
             staticClimberMotor.pidController.setReference(0.0, CANSparkMax.ControlType.kVelocity)
         } else {
             if(isStaticLocked() == LockStates.NEITHER || (staticGoal < 0.0 && isAtBottomStatic()) || (staticGoal > 0.0 && staticHeight >= MAX_CLIMBER_HEIGHT)) {
-                staticClimberMotor.pidController.setReference(offset, CANSparkMax.ControlType.kVelocity)
+                staticClimberMotor.pidController.setReference(unstick, CANSparkMax.ControlType.kVelocity)
             } else {
-                staticClimberMotor.pidController.setReference(staticGoal + offset, CANSparkMax.ControlType.kVelocity)
+                staticClimberMotor.pidController.setReference(staticGoal + unstick, CANSparkMax.ControlType.kVelocity)
             }
         }
     }
