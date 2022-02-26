@@ -67,7 +67,7 @@ object Climber : SubsystemBase() {
         variableLocked = LockStates.NEITHER
         variableLockedUpdate = 0L
 
-        staticClimberMotor.encoder.position = Double.NEGATIVE_INFINITY
+        staticClimberMotor.encoder.position = Double.POSITIVE_INFINITY
         variableClimberMotor.encoder.position = Double.POSITIVE_INFINITY
 
         forceLocked = false
@@ -75,7 +75,7 @@ object Climber : SubsystemBase() {
     }
 
     val staticHeight
-        get() = -staticClimberMotor.encoder.position
+        get() = staticClimberMotor.encoder.position
 
     val variableHeight
         get() = variableClimberMotor.encoder.position
@@ -189,9 +189,9 @@ object Climber : SubsystemBase() {
             staticClimberMotor.set(0.0)
         } else {
             if(isStaticLocked() == LockStates.NEITHER || (staticGoal < 0.0 && staticHeight <= MIN_CLIMBER_HEIGHT) || (staticGoal > 0.0 && staticHeight >= MAX_CLIMBER_HEIGHT)) {
-                staticClimberMotor.set(-offset)
+                staticClimberMotor.set(offset)
             } else {
-                staticClimberMotor.set(-staticGoal - offset)
+                staticClimberMotor.set(staticGoal + offset)
             }
         }
     }
@@ -215,7 +215,7 @@ object Climber : SubsystemBase() {
         }
     }
 
-    fun angleUpdate() {
+    private fun angleUpdate() {
         if((angleGoal < 0.0 && variableAngle <= MIN_CLIMBER_ANGLE) || (angleGoal > 0.0 && variableAngle >= MAX_CLIMBER_ANGLE)) {
             variableActuator.set(0.0)
         } else {

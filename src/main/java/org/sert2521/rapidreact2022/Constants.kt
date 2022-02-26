@@ -91,11 +91,11 @@ enum class Talons(val id: Int, val reversed: Boolean) {
     BACK_RIGHT_DRIVE(4, true),
     INTAKE(5, false),
     INDEXER(6, true),
-    VARIABLE_ACTUATOR(7, false)
+    VARIABLE_ACTUATOR(7, true)
 } 
 
 enum class Sparks(val id: Int, val type: CANSparkMaxLowLevel.MotorType, val reversed: Boolean) {
-    STATIC_CLIMBER(8, CANSparkMaxLowLevel.MotorType.kBrushless, false),
+    STATIC_CLIMBER(8, CANSparkMaxLowLevel.MotorType.kBrushless, true),
     VARIABLE_CLIMBER(9, CANSparkMaxLowLevel.MotorType.kBrushless, false),
     SHOOTER(10, CANSparkMaxLowLevel.MotorType.kBrushless, true)
 }
