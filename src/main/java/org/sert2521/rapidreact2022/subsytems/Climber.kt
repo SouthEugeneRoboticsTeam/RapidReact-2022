@@ -17,8 +17,6 @@ enum class LockStates {
     NEITHER
 }
 
-//Make maintain using PID
-//Make sure encoders are equal to arm height
 object Climber : SubsystemBase() {
     private val staticClimberMotor = CANSparkMax(Sparks.STATIC_CLIMBER.id, Sparks.STATIC_CLIMBER.type)
     private val variableClimberMotor = CANSparkMax(Sparks.VARIABLE_CLIMBER.id, Sparks.VARIABLE_CLIMBER.type)
