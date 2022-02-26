@@ -23,18 +23,17 @@ const val CLIMBER_HEIGHT_PER_ROTATION = 0.00807
 
 const val MAX_CLIMBER_ANGLE = 180.0
 const val MIN_CLIMBER_ANGLE = 124.0
-const val MAX_CLIMBER_HEIGHT = 0.68
+const val MAX_CLIMBER_HEIGHT = 0.63
 const val MIN_CLIMBER_HEIGHT = 0.0
 
-const val MID_HEIGHT = 0.66
+const val MID_HEIGHT = 0.62
 const val HANG_HEIGHT = 0.2
-const val REACH_HIGH_HEIGHT = 0.0
-const val REACH_HIGH_ANGLE = 0.0
-const val HIT_HIGH_ANGLE = 0.0
-const val LET_GO_MID_HEIGHT = 0.0
-const val LET_GO_MID_ANGLE = 0.0
+const val REACH_HIGH_HEIGHT = 0.45
+const val REACH_HIGH_ANGLE = 125.0
+const val HIT_HIGH_ANGLE = 140.0
+const val LET_GO_MID_HEIGHT = 0.45
 
-const val DEFAULT_ANGLE = 0.0
+const val DEFAULT_ANGLE = 144.0
 const val DEFAULT_TOLERANCE = 0.01
 const val DEFAULT_TOLERANCE_ANGLE = 1.0
 

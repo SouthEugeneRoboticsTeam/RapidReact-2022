@@ -23,7 +23,7 @@ class SetClimber(private val staticTarget: Double, private val variableTarget: D
     init {
         addRequirements(Climber)
 
-        val climberPIDArray = robotPreferences.climberPID
+        val climberPIDArray = robotPreferences.climberPIDPos
         val actuatorPIDArray = robotPreferences.actuatorPID
 
         staticPID = PIDController(climberPIDArray[0], climberPIDArray[1], climberPIDArray[2])

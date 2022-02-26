@@ -8,7 +8,7 @@ import edu.wpi.first.wpilibj.DigitalInput
 import edu.wpi.first.wpilibj.Servo
 import edu.wpi.first.wpilibj2.command.SubsystemBase
 import org.sert2521.rapidreact2022.*
-import org.sert2521.rapidreact2022.commands.ResetClimber
+import org.sert2521.rapidreact2022.commands.StartClimber
 import java.lang.System.currentTimeMillis
 
 enum class LockStates {
@@ -42,7 +42,7 @@ object Climber : SubsystemBase() {
     private var forceLocked = false
     private val startTime = currentTimeMillis()
 
-    private val resetClimber = ResetClimber()
+    private val startClimber = StartClimber()
 
     init {
         staticClimberMotor.inverted = Sparks.STATIC_CLIMBER.reversed
@@ -55,6 +55,14 @@ object Climber : SubsystemBase() {
 
         staticClimberMotor.encoder.positionConversionFactor = SparkEncoders.STATIC_CLIMBER.conversionFactor
         variableClimberMotor.encoder.positionConversionFactor = SparkEncoders.VARIABLE_CLIMBER.conversionFactor
+
+        staticClimberMotor.pidController.p = robotPreferences.climberPIDVel[0]
+        staticClimberMotor.pidController.i = robotPreferences.climberPIDVel[1]
+        staticClimberMotor.pidController.d = robotPreferences.climberPIDVel[2]
+
+        variableClimberMotor.pidController.p = robotPreferences.climberPIDVel[0]
+        variableClimberMotor.pidController.i = robotPreferences.climberPIDVel[1]
+        variableClimberMotor.pidController.d = robotPreferences.climberPIDVel[2]
     }
 
     fun onEnable() {
@@ -67,7 +75,7 @@ object Climber : SubsystemBase() {
         variableClimberMotor.encoder.position = Double.POSITIVE_INFINITY
 
         forceLocked = false
-        resetClimber.schedule(false)
+        startClimber.schedule(false)
     }
 
     val staticHeight
@@ -182,31 +190,29 @@ object Climber : SubsystemBase() {
         }
 
         if(isStaticLocked() == LockStates.LOCKED) {
-            staticClimberMotor.set(0.0)
+            staticClimberMotor.pidController.setReference(0.0, CANSparkMax.ControlType.kVelocity)
         } else {
             if(isStaticLocked() == LockStates.NEITHER || (staticGoal < 0.0 && isAtBottomStatic()) || (staticGoal > 0.0 && staticHeight >= MAX_CLIMBER_HEIGHT)) {
-                staticClimberMotor.set(offset)
+                staticClimberMotor.pidController.setReference(offset, CANSparkMax.ControlType.kVelocity)
             } else {
-                staticClimberMotor.set(staticGoal + offset)
+                staticClimberMotor.pidController.setReference(staticGoal + offset, CANSparkMax.ControlType.kVelocity)
             }
         }
     }
 
     private fun variableUpdate() {
-        var offset = 0.0
-        //will release some pressure from birds if trying to unlock
-        //if changing to unlocked
+        var unstick = 0.0
         if(isVariableLocked() == LockStates.NEITHER && variableLocked == LockStates.UNLOCKED) {
-            offset -= UNSTICK_POWER
+            unstick -= UNSTICK_POWER
         }
 
         if(isVariableLocked() == LockStates.LOCKED) {
-            variableClimberMotor.set(0.0)
+            variableClimberMotor.pidController.setReference(0.0, CANSparkMax.ControlType.kVelocity)
         } else {
             if(isVariableLocked() == LockStates.NEITHER || (variableGoal < 0.0 && isAtBottomVariable()) || (variableGoal > 0.0 && variableHeight >= MAX_CLIMBER_HEIGHT)) {
-                variableClimberMotor.set(offset)
+                variableClimberMotor.pidController.setReference(unstick, CANSparkMax.ControlType.kVelocity)
             } else {
-                variableClimberMotor.set(variableGoal + offset)
+                variableClimberMotor.pidController.setReference(variableGoal + unstick, CANSparkMax.ControlType.kVelocity)
             }
         }
     }

@@ -2,6 +2,7 @@ package org.sert2521.rapidreact2022
 
 import edu.wpi.first.wpilibj2.command.InstantCommand
 import org.sert2521.rapidreact2022.commands.*
+import kotlin.math.abs
 
 object OI {
     private val intakeBalls = IntakeBalls()
@@ -16,6 +17,8 @@ object OI {
     var climbing = false
 
     private var indexerOverride = false
+
+    private var climbNext = false
 
     init {
         controlPreferences.intake.whileHeld(intakeBalls, false)
@@ -54,19 +57,26 @@ object OI {
     }
 
     fun getClimbNext(): Boolean {
-        return controlPreferences.climbNext.get()
+        val currPress = controlPreferences.climbNext.get()
+        return if (!climbNext) {
+            climbNext = currPress
+            currPress
+        } else {
+            climbNext = currPress
+            false
+        }
     }
 
     fun getClimbStatic(): Double {
-        return controlPreferences.secondaryController.x * 0.4
+        return controlPreferences.primaryController.rightY * -0.8 * abs(controlPreferences.primaryController.rightY)
     }
 
     fun getClimbVariable(): Double {
-        return controlPreferences.secondaryController.y * 0.4
+        return controlPreferences.primaryController.leftY * -0.8 * abs(controlPreferences.primaryController.leftY)
     }
 
     fun getClimbActuate(): Double {
-        return controlPreferences.secondaryController.z * 0.4
+        return controlPreferences.secondaryController.y * -0.8
     }
 
     val xAxis

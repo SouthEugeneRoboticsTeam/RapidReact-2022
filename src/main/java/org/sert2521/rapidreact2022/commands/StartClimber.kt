@@ -4,10 +4,11 @@ import edu.wpi.first.math.controller.PIDController
 import edu.wpi.first.wpilibj2.command.CommandBase
 import org.sert2521.rapidreact2022.CLIMBER_RESET
 import org.sert2521.rapidreact2022.DEFAULT_ANGLE
+import org.sert2521.rapidreact2022.MIN_CLIMBER_HEIGHT
 import org.sert2521.rapidreact2022.robotPreferences
 import org.sert2521.rapidreact2022.subsytems.Climber
 
-class ResetClimber : CommandBase() {
+class StartClimber : CommandBase() {
     private val anglePID: PIDController
 
     init {
@@ -34,6 +35,7 @@ class ResetClimber : CommandBase() {
     }
 
     override fun end(interrupted: Boolean) {
+        SetClimber(MIN_CLIMBER_HEIGHT, MIN_CLIMBER_HEIGHT, DEFAULT_ANGLE) { false }.schedule()
         Climber.stop()
     }
 }

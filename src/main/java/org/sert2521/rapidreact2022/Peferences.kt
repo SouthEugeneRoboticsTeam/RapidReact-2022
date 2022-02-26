@@ -6,7 +6,8 @@ import edu.wpi.first.wpilibj2.command.Command
 import edu.wpi.first.wpilibj2.command.button.JoystickButton
 
 abstract class RobotPreferences {
-    abstract val climberPID: Array<Double>
+    abstract val climberPIDPos: Array<Double>
+    abstract val climberPIDVel: Array<Double>
     abstract val actuatorPID: Array<Double>
     abstract val shooterPIDF: Array<Double>
     abstract val drivePID: Array<Double>
@@ -17,10 +18,10 @@ abstract class RobotPreferences {
     abstract val shooterExitRPM: Double
 }
 
-//Fix PID
 object CompetitionPreferences : RobotPreferences() {
-    override val climberPID = arrayOf(1.0, 0.1, 0.0)
-    override val actuatorPID = arrayOf(0.1, 0.01, 0.0)
+    override val climberPIDPos = arrayOf(1.3, 0.05, 0.0)
+    override val climberPIDVel = arrayOf(0.01, 0.0, 0.0)
+    override val actuatorPID = arrayOf(0.05, 0.0, 0.0)
     override val shooterPIDF = arrayOf(0.00035, 0.0, 0.0, 0.00019)
     override val drivePID = arrayOf(2.773, 0.0, 0.0)
     override val driveFeedForward = arrayOf(0.72556, 2.437, 2.5888)
@@ -31,7 +32,8 @@ object CompetitionPreferences : RobotPreferences() {
 }
 
 object PracticePreferences : RobotPreferences() {
-    override val climberPID = arrayOf(0.0, 0.0, 0.0)
+    override val climberPIDPos = arrayOf(0.0, 0.0, 0.0)
+    override val climberPIDVel = arrayOf(0.0, 0.0, 0.0)
     override val actuatorPID = arrayOf(0.0, 0.0, 0.0)
     override val shooterPIDF = arrayOf(0.00035, 0.0, 0.0, 0.00018)
     override val drivePID = arrayOf(2.773, 0.0, 0.0)
@@ -98,8 +100,8 @@ object DriveteamPreferences : ControlPreferences() {
     override val rev = JoystickButton(secondaryController, 15)
 
     override val climbNext = JoystickButton(secondaryController, 5)
-    override val startClimbMid = JoystickButton(secondaryController, 6)
-    override val startClimbTraversal = JoystickButton(secondaryController, 7)
+    override val startClimbMid = JoystickButton(secondaryController, 11)
+    override val startClimbTraversal = JoystickButton(secondaryController, 13)
 }
 
 val robotPreferences = CompetitionPreferences
