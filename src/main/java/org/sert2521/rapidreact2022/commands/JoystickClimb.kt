@@ -14,13 +14,12 @@ class JoystickClimb : CommandBase() {
     }
 
     override fun execute() {
-        println(OI.getClimbStatic())
         Climber.setStaticSpeed(OI.getClimbStatic())
         Climber.setVariableSpeed(OI.getClimbVariable())
         Climber.setAngleSpeed(OI.getClimbActuate())
     }
 
     override fun end(interrupted: Boolean) {
-        Climber.stopAndLock()
+        Climber.stop()
     }
 }

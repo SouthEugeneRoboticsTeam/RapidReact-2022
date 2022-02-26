@@ -1,9 +1,7 @@
 package org.sert2521.rapidreact2022
 
 import edu.wpi.first.wpilibj2.command.InstantCommand
-import edu.wpi.first.wpilibj2.command.button.JoystickButton
 import org.sert2521.rapidreact2022.commands.*
-import org.sert2521.rapidreact2022.subsytems.Climber
 
 object OI {
     private val intakeBalls = IntakeBalls()
@@ -15,6 +13,7 @@ object OI {
     private val climbMid = ClimbMid()
 
     private var slowMode = false
+    var climbing = false
 
     private var indexerOverride = false
 
@@ -29,12 +28,11 @@ object OI {
 
         controlPreferences.slowMode.whenPressed(InstantCommand( { slowMode = !slowMode } ))
         controlPreferences.overrideIndexer.whenPressed(InstantCommand( { indexerOverride = !indexerOverride } ))
-        controlPreferences.intake.whenPressed(InstantCommand( { Climber.lock() } ))
-        controlPreferences.outtake.whenPressed(InstantCommand( { Climber.unlock() } ))
     }
 
     fun onEnable() {
         slowMode = false
+        climbing = false
 
         indexerOverride = false
     }
@@ -48,7 +46,7 @@ object OI {
     }
 
     fun getSlowMode(): Boolean {
-        return slowMode
+        return slowMode || climbing
     }
 
     fun isFast(): Boolean {

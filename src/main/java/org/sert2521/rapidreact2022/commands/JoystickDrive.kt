@@ -59,14 +59,8 @@ class JoystickDrive : CommandBase() {
             MAX_SLOW_SPEED
         }
 
-        val turnMultiplier = if (OI.getSlowMode()) {
-            TURN_MULTIPLIER
-        } else {
-            1.0
-        }
-
         val yIn = slewRateLimiterDrive.calculate(joystickToWheelPercent(OI.yAxis))
-        val xIn = slewRateLimiterTurn.calculate(joystickToWheelPercent(OI.xAxis) * turnMultiplier)
+        val xIn = slewRateLimiterTurn.calculate(joystickToWheelPercent(OI.xAxis))
         val leftSpeed = (yIn + xIn) * maxSpeed
         val rightSpeed = (yIn - xIn) * maxSpeed
         val leftOutput = feedForward.calculate(leftSpeed) + pid.calculate(Drivetrain.leftVelocity, leftSpeed)

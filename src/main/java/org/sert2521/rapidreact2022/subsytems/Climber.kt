@@ -17,8 +17,6 @@ enum class LockStates {
     NEITHER
 }
 
-//Update spins per encoder pulse
-//Make slow mode on climb
 //Make maintain using PID
 //Make sure encoders are equal to arm height
 object Climber : SubsystemBase() {
@@ -120,11 +118,11 @@ object Climber : SubsystemBase() {
         }
 
         if(isAtBottomStatic()) {
-            staticClimberMotor.encoder.position = 0.0
+            staticClimberMotor.encoder.position = MIN_CLIMBER_HEIGHT
         }
 
         if(isAtBottomVariable()) {
-            variableClimberMotor.encoder.position = 0.0
+            variableClimberMotor.encoder.position = MIN_CLIMBER_HEIGHT
         }
 
         staticUpdate()
@@ -188,7 +186,7 @@ object Climber : SubsystemBase() {
         if(isStaticLocked() == LockStates.LOCKED) {
             staticClimberMotor.set(0.0)
         } else {
-            if(isStaticLocked() == LockStates.NEITHER || (staticGoal < 0.0 && staticHeight <= MIN_CLIMBER_HEIGHT) || (staticGoal > 0.0 && staticHeight >= MAX_CLIMBER_HEIGHT)) {
+            if(isStaticLocked() == LockStates.NEITHER || (staticGoal < 0.0 && isAtBottomStatic()) || (staticGoal > 0.0 && staticHeight >= MAX_CLIMBER_HEIGHT)) {
                 staticClimberMotor.set(offset)
             } else {
                 staticClimberMotor.set(staticGoal + offset)
@@ -207,7 +205,7 @@ object Climber : SubsystemBase() {
         if(isVariableLocked() == LockStates.LOCKED) {
             variableClimberMotor.set(0.0)
         } else {
-            if(isVariableLocked() == LockStates.NEITHER || (variableGoal < 0.0 && variableHeight <= MIN_CLIMBER_HEIGHT) || (variableGoal > 0.0 && variableHeight >= MAX_CLIMBER_HEIGHT)) {
+            if(isVariableLocked() == LockStates.NEITHER || (variableGoal < 0.0 && isAtBottomVariable()) || (variableGoal > 0.0 && variableHeight >= MAX_CLIMBER_HEIGHT)) {
                 variableClimberMotor.set(offset)
             } else {
                 variableClimberMotor.set(variableGoal + offset)
