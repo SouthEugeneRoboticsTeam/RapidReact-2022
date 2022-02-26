@@ -3,12 +3,12 @@ package org.sert2521.rapidreact2022.subsytems
 import com.ctre.phoenix.motorcontrol.NeutralMode
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX
 import com.revrobotics.CANSparkMax
-import edu.wpi.first.math.controller.PIDController
 import edu.wpi.first.wpilibj.AnalogPotentiometer
 import edu.wpi.first.wpilibj.DigitalInput
 import edu.wpi.first.wpilibj.Servo
 import edu.wpi.first.wpilibj2.command.SubsystemBase
 import org.sert2521.rapidreact2022.*
+import org.sert2521.rapidreact2022.commands.ResetClimber
 import java.lang.System.currentTimeMillis
 
 enum class LockStates {
@@ -17,6 +17,10 @@ enum class LockStates {
     NEITHER
 }
 
+//Update spins per encoder pulse
+//Make slow mode on climb
+//Make maintain using PID
+//Make sure encoders are equal to arm height
 object Climber : SubsystemBase() {
     private val staticClimberMotor = CANSparkMax(Sparks.STATIC_CLIMBER.id, Sparks.STATIC_CLIMBER.type)
     private val variableClimberMotor = CANSparkMax(Sparks.VARIABLE_CLIMBER.id, Sparks.VARIABLE_CLIMBER.type)
@@ -24,7 +28,6 @@ object Climber : SubsystemBase() {
 
     private var staticGoal = 0.0
     private var variableGoal = 0.0
-    private val anglePID: PIDController
     private var angleGoal = 0.0
 
     private val staticDownLimitSwitch = DigitalInput(OnOffs.STATIC_CLIMBER_DOWN.id)
@@ -35,9 +38,6 @@ object Climber : SubsystemBase() {
     private val servoStatic = try { Servo(PWMS.SERVO_STATIC.id) } catch (e: Exception) { null }
     private val servoVariable = try { Servo(PWMS.SERVO_VARIABLE.id) } catch (e: Exception) { null }
 
-    var climbing = false
-
-    //Figure out enable values, maybe use servo values if they save
     private var staticLocked = LockStates.NEITHER
     private var staticLockedUpdate = 0L
     private var variableLocked = LockStates.NEITHER
@@ -45,6 +45,8 @@ object Climber : SubsystemBase() {
 
     private var forceLocked = false
     private val startTime = currentTimeMillis()
+
+    private val resetClimber = ResetClimber()
 
     init {
         staticClimberMotor.inverted = Sparks.STATIC_CLIMBER.reversed
@@ -57,12 +59,19 @@ object Climber : SubsystemBase() {
 
         staticClimberMotor.encoder.positionConversionFactor = SparkEncoders.STATIC_CLIMBER.conversionFactor
         variableClimberMotor.encoder.positionConversionFactor = SparkEncoders.VARIABLE_CLIMBER.conversionFactor
+    }
+
+    fun onEnable() {
+        staticLocked = LockStates.NEITHER
+        staticLockedUpdate = 0L
+        variableLocked = LockStates.NEITHER
+        variableLockedUpdate = 0L
 
         staticClimberMotor.encoder.position = Double.NEGATIVE_INFINITY
         variableClimberMotor.encoder.position = Double.POSITIVE_INFINITY
 
-        val actuatorPIDArray = robotPreferences.actuatorPID
-        anglePID = PIDController(actuatorPIDArray[0], actuatorPIDArray[1], actuatorPIDArray[2])
+        forceLocked = false
+        resetClimber.schedule(false)
     }
 
     val staticHeight
@@ -98,9 +107,11 @@ object Climber : SubsystemBase() {
         }
     }
 
+    //Re-add
     fun forceLock() {
-        forceLocked = true
-        stopAndLock()
+        /*forceLocked = true
+        stop()
+        lock()*/
     }
 
     override fun periodic() {
@@ -118,7 +129,7 @@ object Climber : SubsystemBase() {
 
         staticUpdate()
         variableUpdate()
-        setAngleSpeed()
+        angleUpdate()
     }
 
     fun setLockStatic(lock: LockStates) {
@@ -161,15 +172,13 @@ object Climber : SubsystemBase() {
         variableUpdate()
     }
 
-    fun setAnglePos(angle: Double) {
-        angleGoal = angle
+    fun setAngleSpeed(amount: Double) {
+        angleGoal = amount
+        angleUpdate()
     }
 
     private fun staticUpdate() {
         var offset = 0.0
-        if(isStaticLocked() == LockStates.UNLOCKED && climbing) {
-            offset = CLIMBER_MAINTAIN
-        }
         //will release some pressure from birds if trying to unlock
         //if changing to unlocked
         if(isStaticLocked() == LockStates.NEITHER && staticLocked == LockStates.UNLOCKED) {
@@ -189,9 +198,6 @@ object Climber : SubsystemBase() {
 
     private fun variableUpdate() {
         var offset = 0.0
-        if(isVariableLocked() == LockStates.UNLOCKED && climbing) {
-            offset = CLIMBER_MAINTAIN
-        }
         //will release some pressure from birds if trying to unlock
         //if changing to unlocked
         if(isVariableLocked() == LockStates.NEITHER && variableLocked == LockStates.UNLOCKED) {
@@ -209,8 +215,7 @@ object Climber : SubsystemBase() {
         }
     }
 
-    private fun setAngleSpeed() {
-        val angleSpeed = anglePID.calculate(variableAngle - angleGoal)
+    fun angleUpdate() {
         if((angleGoal < 0.0 && variableAngle <= MIN_CLIMBER_ANGLE) || (angleGoal > 0.0 && variableAngle >= MAX_CLIMBER_ANGLE)) {
             variableActuator.set(0.0)
         } else {
@@ -228,9 +233,9 @@ object Climber : SubsystemBase() {
         setLockVariable(LockStates.UNLOCKED)
     }
 
-    fun stopAndLock() {
+    fun stop() {
         setStaticSpeed(0.0)
         setVariableSpeed(0.0)
-        lock()
+        setAngleSpeed(0.0)
     }
 }

@@ -5,6 +5,7 @@ import org.sert2521.rapidreact2022.*
 import org.sert2521.rapidreact2022.subsytems.Intake
 import org.sert2521.rapidreact2022.subsytems.Shooter
 
+//Add waiting period
 class ShootBalls : CommandBase() {
     private val danceLED = DanceLED()
     private var shooting = false

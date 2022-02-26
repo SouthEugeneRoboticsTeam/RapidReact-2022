@@ -28,20 +28,17 @@ const val MAX_CLIMBER_HEIGHT = 0.68
 const val MIN_CLIMBER_HEIGHT = 0.0
 
 const val MID_HEIGHT = 0.66
-const val NEXT_HOOKED_BAR_HEIGHT = 0.0
-const val FORWARD_HOOKED_ACTUATOR_ANGLE = 0.0
-const val NEXT_UNHOOKED_BAR_HEIGHT = 0.0
-const val FORWARD_UNHOOKED_ACTUATOR_ANGLE = 0.0
-const val DEFAULT_ACTUATOR_ANGLE = 150.0
-const val BACKWARD_HOOKED_ACTUATOR_ANGLE = 0.0
-const val BACKWARD_UNHOOKED_ACTUATOR_ANGLE = 0.0
 const val HANG_HEIGHT = 0.2
-const val LET_GO_HEIGHT = 0.0
+const val REACH_HIGH_HEIGHT = 0.0
+const val REACH_HIGH_ANGLE = 0.0
+const val HIT_HIGH_ANGLE = 0.0
+const val LET_GO_MID_HEIGHT = 0.0
+const val LET_GO_MID_ANGLE = 0.0
 
+const val DEFAULT_ANGLE = 0.0
 const val DEFAULT_TOLERANCE = 0.01
 const val DEFAULT_TOLERANCE_ANGLE = 1.0
 
-const val CLIMBER_MAINTAIN = -0.4
 const val CLIMBER_RESET = -0.4
 
 const val SERVO_UNLOCK_STATIC = 0.1
@@ -50,7 +47,7 @@ const val SERVO_LOCK_STATIC = 0.75
 const val SERVO_LOCK_VARIABLE = 0.0
 const val LOCK_TIME_STATIC = 1.0
 const val LOCK_TIME_VARIABLE = 1.5
-const val FAILSAFE_TIME = 3.0
+const val FAILSAFE_TIME = 1.5
 const val MATCH_TIME = 150.0
 const val UNSTICK_POWER = 0.02
 
