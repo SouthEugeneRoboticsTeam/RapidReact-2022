@@ -184,7 +184,7 @@ object Climber : SubsystemBase() {
 
     private fun staticUpdate() {
         var unstick = 0.0
-        if(isVariableLocked() == LockStates.NEITHER && variableLocked == LockStates.UNLOCKED) {
+        if(isStaticLocked() == LockStates.NEITHER && staticLocked == LockStates.UNLOCKED) {
             unstick -= UNSTICK_POWER
         }
 
