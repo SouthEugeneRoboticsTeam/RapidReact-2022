@@ -2,7 +2,7 @@ package org.sert2521.rapidreact2022.commands
 
 import edu.wpi.first.math.controller.PIDController
 import edu.wpi.first.wpilibj2.command.CommandBase
-import org.sert2521.rapidreact2022.CLIMBER_RESET
+import org.sert2521.rapidreact2022.CLIMBER_RESET_SPEED
 import org.sert2521.rapidreact2022.DEFAULT_ANGLE
 import org.sert2521.rapidreact2022.MIN_CLIMBER_HEIGHT
 import org.sert2521.rapidreact2022.robotPreferences
@@ -20,8 +20,8 @@ class StartClimber : CommandBase() {
 
     override fun initialize() {
         Climber.unlock()
-        Climber.setStaticSpeed(CLIMBER_RESET)
-        Climber.setVariableSpeed(CLIMBER_RESET)
+        Climber.setStaticSpeed(CLIMBER_RESET_SPEED)
+        Climber.setVariableSpeed(CLIMBER_RESET_SPEED)
 
         anglePID.reset()
     }
@@ -35,7 +35,7 @@ class StartClimber : CommandBase() {
     }
 
     override fun end(interrupted: Boolean) {
-        SetClimber(MIN_CLIMBER_HEIGHT, MIN_CLIMBER_HEIGHT, DEFAULT_ANGLE) { false }.schedule()
+        SetClimberPID(MIN_CLIMBER_HEIGHT, MIN_CLIMBER_HEIGHT, DEFAULT_ANGLE) { false }.schedule()
         Climber.stop()
     }
 }

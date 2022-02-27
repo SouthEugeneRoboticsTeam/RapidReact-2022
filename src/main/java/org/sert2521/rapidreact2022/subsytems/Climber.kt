@@ -17,7 +17,15 @@ enum class LockStates {
     NEITHER
 }
 
+enum class Arms {
+    STATIC,
+    VARIABLE,
+    BOTH,
+    NEITHER
+}
+
 //Make it stop if the angle isn't changing
+//Make forcelock button and unforcelock button
 object Climber : SubsystemBase() {
     private val staticClimberMotor = CANSparkMax(Sparks.STATIC_CLIMBER.id, Sparks.STATIC_CLIMBER.type)
     private val variableClimberMotor = CANSparkMax(Sparks.VARIABLE_CLIMBER.id, Sparks.VARIABLE_CLIMBER.type)
@@ -45,6 +53,8 @@ object Climber : SubsystemBase() {
 
     private val startClimber = StartClimber()
 
+    var loadBearingArm = Arms.NEITHER
+
     init {
         staticClimberMotor.inverted = Sparks.STATIC_CLIMBER.reversed
         variableClimberMotor.inverted = Sparks.VARIABLE_CLIMBER.reversed
@@ -56,14 +66,6 @@ object Climber : SubsystemBase() {
 
         staticClimberMotor.encoder.positionConversionFactor = SparkEncoders.STATIC_CLIMBER.conversionFactor
         variableClimberMotor.encoder.positionConversionFactor = SparkEncoders.VARIABLE_CLIMBER.conversionFactor
-
-        staticClimberMotor.pidController.p = robotPreferences.climberPIDVel[0]
-        staticClimberMotor.pidController.i = robotPreferences.climberPIDVel[1]
-        staticClimberMotor.pidController.d = robotPreferences.climberPIDVel[2]
-
-        variableClimberMotor.pidController.p = robotPreferences.climberPIDVel[0]
-        variableClimberMotor.pidController.i = robotPreferences.climberPIDVel[1]
-        variableClimberMotor.pidController.d = robotPreferences.climberPIDVel[2]
     }
 
     fun onEnable() {
@@ -72,8 +74,14 @@ object Climber : SubsystemBase() {
         variableLocked = LockStates.NEITHER
         variableLockedUpdate = 0L
 
+        loadBearingArm = Arms.NEITHER
+
         staticClimberMotor.encoder.position = START_POS
         variableClimberMotor.encoder.position = START_POS
+
+        staticGoal = 0.0
+        variableGoal = 0.0
+        angleGoal = 0.0
 
         forceLocked = false
         startClimber.schedule(false)
@@ -185,16 +193,24 @@ object Climber : SubsystemBase() {
     private fun staticUpdate() {
         var unstick = 0.0
         if(isStaticLocked() == LockStates.NEITHER && staticLocked == LockStates.UNLOCKED) {
-            unstick -= UNSTICK_POWER
+            unstick += UNSTICK_SPEED
+        }
+
+        var maintain = 0.0
+        if (loadBearingArm == Arms.STATIC) {
+            maintain += CLIMBER_MAINTAIN
+        }
+        if (loadBearingArm == Arms.BOTH) {
+            maintain += CLIMBER_MAINTAIN / 2.0
         }
 
         if(isStaticLocked() == LockStates.LOCKED) {
-            staticClimberMotor.pidController.setReference(0.0, CANSparkMax.ControlType.kVelocity)
+            staticClimberMotor.set(0.0)
         } else {
             if(isStaticLocked() == LockStates.NEITHER || (staticGoal < 0.0 && isAtBottomStatic()) || (staticGoal > 0.0 && staticHeight >= MAX_CLIMBER_HEIGHT)) {
-                staticClimberMotor.pidController.setReference(unstick, CANSparkMax.ControlType.kVelocity)
+                staticClimberMotor.set(unstick)
             } else {
-                staticClimberMotor.pidController.setReference(staticGoal + unstick, CANSparkMax.ControlType.kVelocity)
+                staticClimberMotor.set(staticGoal + maintain)
             }
         }
     }
@@ -202,16 +218,24 @@ object Climber : SubsystemBase() {
     private fun variableUpdate() {
         var unstick = 0.0
         if(isVariableLocked() == LockStates.NEITHER && variableLocked == LockStates.UNLOCKED) {
-            unstick -= UNSTICK_POWER
+            unstick += UNSTICK_SPEED
+        }
+
+        var maintain = 0.0
+        if (loadBearingArm == Arms.VARIABLE) {
+            maintain += CLIMBER_MAINTAIN
+        }
+        if (loadBearingArm == Arms.BOTH) {
+            maintain += CLIMBER_MAINTAIN / 2.0
         }
 
         if(isVariableLocked() == LockStates.LOCKED) {
-            variableClimberMotor.pidController.setReference(0.0, CANSparkMax.ControlType.kVelocity)
+            variableClimberMotor.set(0.0)
         } else {
             if(isVariableLocked() == LockStates.NEITHER || (variableGoal < 0.0 && isAtBottomVariable()) || (variableGoal > 0.0 && variableHeight >= MAX_CLIMBER_HEIGHT)) {
-                variableClimberMotor.pidController.setReference(unstick, CANSparkMax.ControlType.kVelocity)
+                variableClimberMotor.set(unstick)
             } else {
-                variableClimberMotor.pidController.setReference(variableGoal + unstick, CANSparkMax.ControlType.kVelocity)
+                variableClimberMotor.set(variableGoal + maintain)
             }
         }
     }

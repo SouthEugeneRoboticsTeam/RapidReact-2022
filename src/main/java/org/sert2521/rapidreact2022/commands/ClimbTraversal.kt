@@ -9,11 +9,11 @@ class ClimbTraversal : SequentialCommandGroup() {
     init {
         addCommands(
             InstantCommand( { OI.climbing = true} ),
-            SetClimber(MID_HEIGHT, REACH_HIGH_HEIGHT, REACH_HIGH_ANGLE) { OI.getClimbNext() },
-            SetClimber(HANG_HEIGHT, REACH_HIGH_HEIGHT, REACH_HIGH_ANGLE) { OI.getClimbNext() },
-            SetClimber(HANG_HEIGHT, REACH_HIGH_HEIGHT, HIT_HIGH_ANGLE) { OI.getClimbNext() },
-            SetClimber(LET_GO_MID_HEIGHT, HANG_HEIGHT, HIT_HIGH_ANGLE) { OI.getClimbNext() },
-            SetClimber(MIN_CLIMBER_HEIGHT, HANG_HEIGHT, DEFAULT_ANGLE),
+            SetClimberPID(MID_HEIGHT, REACH_HIGH_HEIGHT, REACH_HIGH_ANGLE) { OI.getClimbNext() },
+            SetClimberPID(HANG_HEIGHT, REACH_HIGH_HEIGHT, REACH_HIGH_ANGLE) { OI.getClimbNext() },
+            SetClimberPID(HANG_HEIGHT, REACH_HIGH_HEIGHT, HIT_HIGH_ANGLE) { OI.getClimbNext() },
+            SetClimberPID(LET_GO_MID_HEIGHT, HANG_HEIGHT, HIT_HIGH_ANGLE) { OI.getClimbNext() },
+            SetClimberPID(MIN_CLIMBER_HEIGHT, HANG_HEIGHT, DEFAULT_ANGLE),
             InstantCommand( { Climber.lock() } )
         )
     }

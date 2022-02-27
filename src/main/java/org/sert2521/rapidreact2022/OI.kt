@@ -26,8 +26,8 @@ object OI {
         controlPreferences.shoot.whileHeld(shootBalls, false)
         controlPreferences.rev.whileHeld(revShooter)
 
-        controlPreferences.startClimbTraversal.toggleWhenPressed(climbTraversal)
-        controlPreferences.startClimbMid.toggleWhenPressed(climbMid)
+        //controlPreferences.startClimbTraversal.whenPressed(climbTraversal, false)
+        controlPreferences.startClimbMid.whenPressed(climbMid, false)
 
         controlPreferences.slowMode.whenPressed(InstantCommand( { slowMode = !slowMode } ))
         controlPreferences.overrideIndexer.whenPressed(InstantCommand( { indexerOverride = !indexerOverride } ))
@@ -68,15 +68,15 @@ object OI {
     }
 
     fun getClimbStatic(): Double {
-        return controlPreferences.primaryController.rightY * -0.8 * abs(controlPreferences.primaryController.rightY)
+        return controlPreferences.primaryController.rightY * abs(controlPreferences.primaryController.rightY)
     }
 
     fun getClimbVariable(): Double {
-        return controlPreferences.primaryController.leftY * -0.8 * abs(controlPreferences.primaryController.leftY)
+        return controlPreferences.primaryController.leftY * abs(controlPreferences.primaryController.leftY)
     }
 
     fun getClimbActuate(): Double {
-        return controlPreferences.secondaryController.y * -0.8
+        return controlPreferences.secondaryController.y
     }
 
     val xAxis

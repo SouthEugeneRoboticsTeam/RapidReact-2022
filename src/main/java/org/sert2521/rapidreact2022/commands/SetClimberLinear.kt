@@ -6,42 +6,37 @@ import org.sert2521.rapidreact2022.DEFAULT_TOLERANCE
 import org.sert2521.rapidreact2022.DEFAULT_TOLERANCE_ANGLE
 import org.sert2521.rapidreact2022.robotPreferences
 import org.sert2521.rapidreact2022.subsytems.Climber
+import org.sert2521.rapidreact2022.subsytems.LockStates
+import kotlin.math.sign
 
-class SetClimber(private val staticTarget: Double, private val variableTarget: Double, private val angleTarget: Double,
-                 private val isDone: () -> Boolean) : CommandBase() {
+class SetClimberLinear(private val staticTarget: Double, private val variableTarget: Double, private val angleTarget: Double,
+                       private val staticSpeed: Double = 0.0, private val variableSpeed: Double = 0.0,
+                       private val isDone: () -> Boolean) : CommandBase() {
     constructor(staticTarget: Double, variableTarget: Double, angleTarget: Double,
+                staticSpeed: Double = 0.0, variableSpeed: Double = 0.0,
                 staticTolerance: Double = DEFAULT_TOLERANCE, variableTolerance: Double = DEFAULT_TOLERANCE, angleTolerance: Double = DEFAULT_TOLERANCE_ANGLE) :
             this(staticTarget, variableTarget, angleTarget,
-                    { staticTarget - Climber.staticHeight in -staticTolerance..staticTolerance &&
-                    variableTarget - Climber.variableHeight in -variableTolerance..variableTolerance &&
+                    staticSpeed, variableSpeed,
+                    { ((staticTarget - Climber.staticHeight in -staticTolerance..staticTolerance) || (Climber.isStaticLocked() == LockStates.LOCKED)) &&
+                    (variableTarget - Climber.variableHeight in -variableTolerance..variableTolerance || (Climber.isVariableLocked() == LockStates.LOCKED)) &&
                     angleTarget - Climber.variableAngle in -angleTolerance..angleTolerance } )
-
-    private val staticPID: PIDController
-    private val variablePID: PIDController
     private val anglePID: PIDController
 
     init {
         addRequirements(Climber)
 
-        val climberPIDArray = robotPreferences.climberPIDPos
         val actuatorPIDArray = robotPreferences.actuatorPID
 
-        staticPID = PIDController(climberPIDArray[0], climberPIDArray[1], climberPIDArray[2])
-        variablePID = PIDController(climberPIDArray[0], climberPIDArray[1], climberPIDArray[2])
         anglePID = PIDController(actuatorPIDArray[0], actuatorPIDArray[1], actuatorPIDArray[2])
     }
 
     override fun initialize() {
-        staticPID.reset()
-        variablePID.reset()
         anglePID.reset()
-
-        Climber.unlock()
     }
 
     override fun execute() {
-        Climber.setStaticSpeed(staticPID.calculate(Climber.staticHeight, staticTarget))
-        Climber.setVariableSpeed(variablePID.calculate(Climber.variableHeight, variableTarget))
+        Climber.setStaticSpeed(staticSpeed * sign(staticTarget - Climber.staticHeight))
+        Climber.setVariableSpeed(variableSpeed * sign(variableTarget - Climber.variableHeight))
         Climber.setAngleSpeed(anglePID.calculate(Climber.variableAngle, angleTarget))
     }
 

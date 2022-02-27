@@ -28,17 +28,24 @@ const val MAX_CLIMBER_HEIGHT = 0.63
 const val MIN_CLIMBER_HEIGHT = 0.0
 
 const val MID_HEIGHT = 0.62
-const val HANG_HEIGHT = 0.2
-const val REACH_HIGH_HEIGHT = 0.45
+const val HIT_MID_HEIGHT = 0.54
+const val HIT_MID_ANGLE = 149.0
+const val MID_ANGLE_HANG = 151.0
+const val HANG_HEIGHT = 0.0
+const val UNHOOK_MID_HEIGHT = 0.1
+const val REACH_HIGH_HEIGHT = 0.63
 const val REACH_HIGH_ANGLE = 125.0
-const val HIT_HIGH_ANGLE = 140.0
+const val HIT_HIGH_HEIGHT = 0.57
+const val HIT_HIGH_ANGLE = 135.0
 const val LET_GO_MID_HEIGHT = 0.45
+const val RELEASE_SPEED = -0.25
 
 const val DEFAULT_ANGLE = 144.0
-const val DEFAULT_TOLERANCE = 0.01
-const val DEFAULT_TOLERANCE_ANGLE = 1.0
+const val DEFAULT_TOLERANCE = 0.015
+const val DEFAULT_TOLERANCE_ANGLE = 1.5
 
-const val CLIMBER_RESET = -0.4
+const val CLIMBER_MAINTAIN = -0.5
+const val CLIMBER_RESET_SPEED = -0.4
 
 const val SERVO_UNLOCK_STATIC = 0.1
 const val SERVO_UNLOCK_VARIABLE = 0.75
@@ -48,7 +55,7 @@ const val LOCK_TIME_STATIC = 1.0
 const val LOCK_TIME_VARIABLE = 1.5
 const val FAILSAFE_TIME = 1.5
 const val MATCH_TIME = 150.0
-const val UNSTICK_POWER = 0.02
+const val UNSTICK_SPEED = -0.1
 
 const val INTAKE_SPEED = 0.8
 const val INDEXER_SPEED = 0.8
