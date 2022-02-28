@@ -10,7 +10,7 @@ object OI {
     private val shootBalls = ShootBalls()
     private val revShooter = RevShooter()
 
-    private val climbTraversal = ClimbTraversal()
+    private val climbTraversal = ClimbHigh()
     private val climbMid = ClimbMid()
 
     private var slowMode = false
@@ -26,7 +26,7 @@ object OI {
         controlPreferences.shoot.whileHeld(shootBalls, false)
         controlPreferences.rev.whileHeld(revShooter)
 
-        //controlPreferences.startClimbTraversal.whenPressed(climbTraversal, false)
+        controlPreferences.startClimbTraversal.whenPressed(climbTraversal, false)
         controlPreferences.startClimbMid.whenPressed(climbMid, false)
 
         controlPreferences.slowMode.whenPressed(InstantCommand( { slowMode = !slowMode } ))

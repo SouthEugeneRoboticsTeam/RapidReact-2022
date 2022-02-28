@@ -9,17 +9,21 @@ import org.sert2521.rapidreact2022.subsytems.Climber
 import org.sert2521.rapidreact2022.subsytems.LockStates
 import kotlin.math.sign
 
+//Add enableable angle to SetClimbPID
 class SetClimberLinear(private val staticTarget: Double, private val variableTarget: Double, private val angleTarget: Double,
                        private val staticSpeed: Double = 0.0, private val variableSpeed: Double = 0.0,
+                       private val angleOn: Boolean = true,
                        private val isDone: () -> Boolean) : CommandBase() {
     constructor(staticTarget: Double, variableTarget: Double, angleTarget: Double,
                 staticSpeed: Double = 0.0, variableSpeed: Double = 0.0,
-                staticTolerance: Double = DEFAULT_TOLERANCE, variableTolerance: Double = DEFAULT_TOLERANCE, angleTolerance: Double = DEFAULT_TOLERANCE_ANGLE) :
+                staticTolerance: Double = DEFAULT_TOLERANCE, variableTolerance: Double = DEFAULT_TOLERANCE, angleTolerance: Double = DEFAULT_TOLERANCE_ANGLE ,
+                angleOn: Boolean = true) :
             this(staticTarget, variableTarget, angleTarget,
                     staticSpeed, variableSpeed,
+                    angleOn,
                     { ((staticTarget - Climber.staticHeight in -staticTolerance..staticTolerance) || (Climber.isStaticLocked() == LockStates.LOCKED)) &&
                     (variableTarget - Climber.variableHeight in -variableTolerance..variableTolerance || (Climber.isVariableLocked() == LockStates.LOCKED)) &&
-                    angleTarget - Climber.variableAngle in -angleTolerance..angleTolerance } )
+                    (angleTarget - Climber.variableAngle in -angleTolerance..angleTolerance || !angleOn) } )
     private val anglePID: PIDController
 
     init {
@@ -37,7 +41,11 @@ class SetClimberLinear(private val staticTarget: Double, private val variableTar
     override fun execute() {
         Climber.setStaticSpeed(staticSpeed * sign(staticTarget - Climber.staticHeight))
         Climber.setVariableSpeed(variableSpeed * sign(variableTarget - Climber.variableHeight))
-        Climber.setAngleSpeed(anglePID.calculate(Climber.variableAngle, angleTarget))
+        if(angleOn) {
+            Climber.setAngleSpeed(anglePID.calculate(Climber.variableAngle, angleTarget))
+        } else {
+            Climber.setAngleSpeed(0.0)
+        }
     }
 
     override fun isFinished(): Boolean {

@@ -35,10 +35,11 @@ const val HANG_HEIGHT = 0.0
 const val UNHOOK_MID_HEIGHT = 0.1
 const val REACH_HIGH_HEIGHT = 0.63
 const val REACH_HIGH_ANGLE = 125.0
-const val HIT_HIGH_HEIGHT = 0.57
+const val HIT_HIGH_HEIGHT = 0.552
 const val HIT_HIGH_ANGLE = 135.0
-const val LET_GO_MID_HEIGHT = 0.45
-const val RELEASE_SPEED = -0.25
+const val LET_GO_MID_HEIGHT = 0.48
+const val RELEASE_SPEED = 0.07
+const val LOW_SPEED = 0.1
 
 const val DEFAULT_ANGLE = 144.0
 const val DEFAULT_TOLERANCE = 0.015
