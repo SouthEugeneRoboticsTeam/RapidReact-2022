@@ -60,6 +60,7 @@ abstract class ControlPreferences {
 
     abstract val climbNext: JoystickButton
     abstract val startClimbMid: JoystickButton
+    abstract val startClimbHigh: JoystickButton
     abstract val startClimbTraversal: JoystickButton
 }
 
@@ -79,7 +80,8 @@ object SoftwarePreferences : ControlPreferences() {
 
     override val climbNext = JoystickButton(secondaryController, 5)
     override val startClimbMid = JoystickButton(secondaryController, 6)
-    override val startClimbTraversal = JoystickButton(secondaryController, 7)
+    override val startClimbHigh = JoystickButton(secondaryController, 7)
+    override val startClimbTraversal = JoystickButton(secondaryController, 8)
 }
 
 object DriveteamPreferences : ControlPreferences() {
@@ -98,6 +100,7 @@ object DriveteamPreferences : ControlPreferences() {
 
     override val climbNext = JoystickButton(secondaryController, 5)
     override val startClimbMid = JoystickButton(secondaryController, 11)
+    override val startClimbHigh = JoystickButton(secondaryController, 12)
     override val startClimbTraversal = JoystickButton(secondaryController, 13)
 }
 
