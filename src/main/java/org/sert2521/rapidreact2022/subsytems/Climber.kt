@@ -24,8 +24,8 @@ enum class Arms {
     NEITHER
 }
 
+//Make birds work at start
 //Make it stop if the angle isn't changing
-//Make forcelock button and unforcelock button
 object Climber : SubsystemBase() {
     private val staticClimberMotor = CANSparkMax(Sparks.STATIC_CLIMBER.id, Sparks.STATIC_CLIMBER.type)
     private val variableClimberMotor = CANSparkMax(Sparks.VARIABLE_CLIMBER.id, Sparks.VARIABLE_CLIMBER.type)
@@ -49,11 +49,11 @@ object Climber : SubsystemBase() {
     private var variableLockedUpdate = 0L
 
     private var forceLocked = false
-    private val startTime = currentTimeMillis()
 
     private val startClimber = StartClimber()
 
     var loadBearingArm = Arms.NEITHER
+    var climbing = false
 
     init {
         staticClimberMotor.inverted = Sparks.STATIC_CLIMBER.reversed
@@ -75,6 +75,7 @@ object Climber : SubsystemBase() {
         variableLockedUpdate = 0L
 
         loadBearingArm = Arms.NEITHER
+        climbing = false
 
         staticClimberMotor.encoder.position = START_POS
         variableClimberMotor.encoder.position = START_POS
@@ -120,18 +121,7 @@ object Climber : SubsystemBase() {
         }
     }
 
-    //Re-add
-    fun forceLock() {
-        /*forceLocked = true
-        stop()
-        lock()*/
-    }
-
     override fun periodic() {
-        if(currentTimeMillis() - startTime >= (MATCH_TIME - FAILSAFE_TIME) * 1000) {
-            forceLock()
-        }
-
         if(isAtBottomStatic()) {
             staticClimberMotor.encoder.position = MIN_CLIMBER_HEIGHT
         }
@@ -193,7 +183,11 @@ object Climber : SubsystemBase() {
     private fun staticUpdate() {
         var unstick = 0.0
         if(isStaticLocked() == LockStates.NEITHER && staticLocked == LockStates.UNLOCKED) {
-            unstick += UNSTICK_SPEED
+            unstick += if(!climbing) {
+                UNSTICK_SPEED_DOWN
+            } else {
+                UNSTICK_SPEED_CLIMB
+            }
         }
 
         var maintain = 0.0
@@ -218,7 +212,11 @@ object Climber : SubsystemBase() {
     private fun variableUpdate() {
         var unstick = 0.0
         if(isVariableLocked() == LockStates.NEITHER && variableLocked == LockStates.UNLOCKED) {
-            unstick += UNSTICK_SPEED
+            unstick += if(!climbing) {
+                UNSTICK_SPEED_DOWN
+            } else {
+                UNSTICK_SPEED_CLIMB
+            }
         }
 
         var maintain = 0.0

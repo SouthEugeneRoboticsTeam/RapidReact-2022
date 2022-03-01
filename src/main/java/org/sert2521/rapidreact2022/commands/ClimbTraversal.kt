@@ -4,6 +4,7 @@ import edu.wpi.first.wpilibj2.command.InstantCommand
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup
 import edu.wpi.first.wpilibj2.command.WaitUntilCommand
 import org.sert2521.rapidreact2022.*
+import org.sert2521.rapidreact2022.subsytems.Arms
 import org.sert2521.rapidreact2022.subsytems.Climber
 import org.sert2521.rapidreact2022.subsytems.LockStates
 
@@ -12,14 +13,17 @@ class ClimbTraversal : SequentialCommandGroup() {
         addCommands(
             ClimbUp(),
             ClimbNext(),
-            SetClimberPID(LET_GO_MID_HEIGHT, HIT_NEXT_HEIGHT, RESET_ANGLE),
-            SetClimberPID(RESET_HEIGHT, HIT_NEXT_HEIGHT, RESET_ANGLE),
+            SetClimberPID(LET_GO_MID_HEIGHT, HIT_NEXT_HEIGHT, RESET_ANGLE) { OI.getClimbNext() },
+            SetClimberPID(RESET_HEIGHT, HIT_NEXT_HEIGHT, RESET_ANGLE) { OI.getClimbNext() },
             SetClimberPID(RESET_HEIGHT, HIT_NEXT_HEIGHT, REHOOK_ANGLE),
-            SetClimberLinear(HIT_NEXT_HEIGHT, HIT_MID_HEIGHT, REHOOK_ANGLE, staticSpeed = LOW_SPEED, variableSpeed = LOW_SPEED) { OI.getClimbNext() },
+            SetClimberLinear(LOCK_NEXT_HEIGHT, HIT_NEXT_HEIGHT, REHOOK_ANGLE, staticSpeed = LOW_SPEED, angleOn = false),
+            WaitUntilCommand { OI.getClimbNext() },
             InstantCommand( { Climber.setLockVariable(LockStates.UNLOCKED) } ),
             WaitUntilCommand { Climber.isVariableLocked() == LockStates.UNLOCKED },
+            InstantCommand( { Climber.loadBearingArm = Arms.BOTH } ),
             SetClimberPID(HANG_HEIGHT, HANG_HEIGHT, TOP_ANGLE_HANG),
             ClimbNext(),
+            SetClimberPID(LOW_HEIGHT, HIT_NEXT_HEIGHT, DEFAULT_ANGLE),
             InstantCommand( { Climber.lock() } )
         )
     }

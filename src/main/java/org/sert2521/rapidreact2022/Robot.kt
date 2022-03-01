@@ -4,6 +4,12 @@ import edu.wpi.first.wpilibj.TimedRobot
 import edu.wpi.first.wpilibj2.command.CommandScheduler
 import org.sert2521.rapidreact2022.subsytems.Climber
 
+//Add setup instructions
+//Servos positions
+//Cycle robot before changing servos
+//Static all way back on start
+//Variable all way back on start
+//Start arms in proper pos
 object Robot : TimedRobot() {
     private val commandScheduler = CommandScheduler.getInstance()
 
