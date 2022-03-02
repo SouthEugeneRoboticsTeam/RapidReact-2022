@@ -11,12 +11,12 @@ class SpiralLED : CommandBase() {
 
     override fun initialize() {
         for (i in 0 until robotPreferences.ledLength) {
-            LEDStrip.setLEDHSV(i, 82 + i * 8, 92, ((1 - (i.toDouble() / (robotPreferences.ledLength - 1))) * 50).toInt())
+            LEDStrip.setLEDHSV(i, 275, 92, ((1 - (i.toDouble() / (robotPreferences.ledLength - 1))) * 50).toInt())
         }
     }
 
     override fun execute() {
-        LEDStrip.cycle(30.0)
+        LEDStrip.cycle(40.0)
     }
 
     override fun end(interrupted: Boolean) {

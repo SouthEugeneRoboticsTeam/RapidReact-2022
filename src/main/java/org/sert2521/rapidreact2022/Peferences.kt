@@ -94,8 +94,8 @@ object DriveteamPreferences : ControlPreferences() {
     override val joystickX = { primaryController.rightX }
     override val joystickY = { -primaryController.leftY }
 
-    override val fastMode = JoystickButton(primaryController, 3)
-    override val slowMode = JoystickButton(primaryController, 4)
+    override val fastMode = JoystickButton(primaryController, 6)
+    override val slowMode = JoystickButton(primaryController, 5)
 
     override val intake = JoystickButton(secondaryController, 8)
     override val overrideIndexer = JoystickButton(secondaryController, 10)
