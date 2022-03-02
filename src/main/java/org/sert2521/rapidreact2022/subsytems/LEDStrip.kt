@@ -3,17 +3,17 @@ package org.sert2521.rapidreact2022.subsytems
 import edu.wpi.first.wpilibj.AddressableLED
 import edu.wpi.first.wpilibj.AddressableLEDBuffer
 import edu.wpi.first.wpilibj2.command.SubsystemBase
-import org.sert2521.rapidreact2022.LED_LENGTH
 import org.sert2521.rapidreact2022.PWMS
 import org.sert2521.rapidreact2022.commands.SpiralLED
+import org.sert2521.rapidreact2022.robotPreferences
 import java.lang.System.currentTimeMillis
 
 object LEDStrip : SubsystemBase() {
     private val addressableLED = AddressableLED(PWMS.LED.id)
-    private var buffer = AddressableLEDBuffer(LED_LENGTH)
+    private var buffer = AddressableLEDBuffer(robotPreferences.ledLength)
 
     init {
-        addressableLED.setLength(LED_LENGTH)
+        addressableLED.setLength(robotPreferences.ledLength)
         addressableLED.start()
 
         reset()
@@ -30,9 +30,9 @@ object LEDStrip : SubsystemBase() {
     }
 
     fun cycle(frequency: Double) {
-        val newBuffer = AddressableLEDBuffer(LED_LENGTH)
-        for (i in 0 until LED_LENGTH) {
-            newBuffer.setLED(i, buffer.getLED(((i + ((currentTimeMillis() * frequency) / 1000)) % LED_LENGTH).toInt()))
+        val newBuffer = AddressableLEDBuffer(robotPreferences.ledLength)
+        for (i in 0 until robotPreferences.ledLength) {
+            newBuffer.setLED(i, buffer.getLED(((i + ((currentTimeMillis() * frequency) / 1000)) % robotPreferences.ledLength).toInt()))
         }
 
         addressableLED.setData(newBuffer)
@@ -42,7 +42,7 @@ object LEDStrip : SubsystemBase() {
     }
 
     fun reset() {
-        buffer = AddressableLEDBuffer(LED_LENGTH)
+        buffer = AddressableLEDBuffer(robotPreferences.ledLength)
         update()
     }
 }

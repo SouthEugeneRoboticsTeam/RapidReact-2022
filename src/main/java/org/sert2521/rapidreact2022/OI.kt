@@ -27,8 +27,8 @@ object OI {
         controlPreferences.shoot.whileHeld(shootBalls, false)
         controlPreferences.rev.whileHeld(revShooter)
 
-        controlPreferences.startClimbMid.whenPressed(climbMid, false)
-        controlPreferences.startClimbHigh.whenPressed(climbHigh, false)
+        //controlPreferences.startClimbMid.whenPressed(climbMid, false)
+        //controlPreferences.startClimbHigh.whenPressed(climbHigh, false)
         controlPreferences.startClimbTraversal.whenPressed(climbTraversal, false)
 
         controlPreferences.slowMode.whenPressed(InstantCommand( { slowMode = !slowMode } ))

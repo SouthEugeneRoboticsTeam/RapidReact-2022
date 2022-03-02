@@ -1,7 +1,7 @@
 package org.sert2521.rapidreact2022.commands
 
 import edu.wpi.first.wpilibj2.command.CommandBase
-import org.sert2521.rapidreact2022.LED_LENGTH
+import org.sert2521.rapidreact2022.robotPreferences
 import org.sert2521.rapidreact2022.subsytems.LEDStrip
 
 class DanceLED : CommandBase() {
@@ -10,7 +10,7 @@ class DanceLED : CommandBase() {
     }
 
     override fun initialize() {
-        for (i in 0 until LED_LENGTH) {
+        for (i in 0 until robotPreferences.ledLength) {
             LEDStrip.setLEDHSV(i, 275, 94, (i % 2) * 50)
         }
     }

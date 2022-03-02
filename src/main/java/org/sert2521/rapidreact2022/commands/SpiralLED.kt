@@ -1,7 +1,7 @@
 package org.sert2521.rapidreact2022.commands
 
 import edu.wpi.first.wpilibj2.command.CommandBase
-import org.sert2521.rapidreact2022.LED_LENGTH
+import org.sert2521.rapidreact2022.robotPreferences
 import org.sert2521.rapidreact2022.subsytems.LEDStrip
 
 class SpiralLED : CommandBase() {
@@ -10,8 +10,8 @@ class SpiralLED : CommandBase() {
     }
 
     override fun initialize() {
-        for (i in 0 until LED_LENGTH) {
-            LEDStrip.setLEDHSV(i, 82 + i * 8, 92, ((1 - (i.toDouble() / (LED_LENGTH - 1))) * 50).toInt())
+        for (i in 0 until robotPreferences.ledLength) {
+            LEDStrip.setLEDHSV(i, 82 + i * 8, 92, ((1 - (i.toDouble() / (robotPreferences.ledLength - 1))) * 50).toInt())
         }
     }
 

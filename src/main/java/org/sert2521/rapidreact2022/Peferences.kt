@@ -12,6 +12,8 @@ abstract class RobotPreferences {
     abstract val drivePID: Array<Double>
     abstract val driveFeedForward: Array<Double>
 
+    abstract val ledLength: Int
+
     abstract val shooterRPM: Double
     abstract val shooterEnterRPM: Double
     abstract val shooterExitRPM: Double
@@ -20,9 +22,11 @@ abstract class RobotPreferences {
 object CompetitionPreferences : RobotPreferences() {
     override val climberPID = arrayOf(1.5, 0.5, 0.0)
     override val actuatorPID = arrayOf(0.06, 0.1, 0.0)
-    override val shooterPIDF = arrayOf(0.00035, 0.0, 0.0, 0.00019)
+    override val shooterPIDF = arrayOf(0.00045, 0.0, 0.0, 0.00021)
     override val drivePID = arrayOf(2.773, 0.0, 0.0)
     override val driveFeedForward = arrayOf(0.72556, 2.437, 2.5888)
+
+    override val ledLength = 16
 
     override val shooterRPM = 4600.0
     override val shooterEnterRPM = 4600.0
@@ -35,6 +39,8 @@ object PracticePreferences : RobotPreferences() {
     override val shooterPIDF = arrayOf(0.00035, 0.0, 0.0, 0.00018)
     override val drivePID = arrayOf(2.773, 0.0, 0.0)
     override val driveFeedForward = arrayOf(0.72556, 2.437, 2.5888)
+
+    override val ledLength = 56//58, but two are covered
 
     override val shooterRPM = 5000.0
     override val shooterEnterRPM = 5000.0

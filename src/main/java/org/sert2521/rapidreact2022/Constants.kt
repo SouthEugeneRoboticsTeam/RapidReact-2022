@@ -67,30 +67,30 @@ const val UNSTICK_SPEED_CLIMB = -0.25
 const val INTAKE_SPEED = 0.8
 const val INDEXER_SPEED = 0.8
 
-const val LED_LENGTH = 56//58, but two are covered
+const val AUTO_SPEED = 1.2
+const val AUTO_ACCELERATION = 1.2
 
-const val AUTO_SPEED = 1.7
-const val AUTO_ACCELERATION = 1.7
+const val AUTO_TURN_SPEED = 0.7
+const val AUTO_TURN_ACCELERATION = 0.7
 
-const val AUTO_TURN_SPEED = 1.0
-const val AUTO_TURN_ACCELERATION = 1.0
-
-const val AUTO_EXIT_SPEED = 3.0
-const val AUTO_EXIT_ACCELERATION = 3.0
+const val AUTO_EXIT_SPEED = 1.5
+const val AUTO_EXIT_ACCELERATION = 1.5
 
 const val SHOOT_TIME = 1.5
 
 val SHOOT_POSE = Pose2d(0.0, 0.0, Rotation2d.fromDegrees(0.0))
 
-val DOUBLE_START_POSE_LEFT = Pose2d(-0.75, -0.9, Rotation2d.fromDegrees(180.0))
-val PICKUP_POSE_LEFT = Pose2d(-2.75, -0.9, Rotation2d.fromDegrees(180.0))
-val ENTRY_POSE_LEFT = Pose2d(-2.75, 0.0, Rotation2d.fromDegrees(0.0))
-val END_POSE_SINGLE_LEFT = Pose2d(-2.5, -1.5, Rotation2d.fromDegrees(35.0))
+val DOUBLE_START_POSE_LEFT = Pose2d(-0.8, -1.05, Rotation2d.fromDegrees(180.0))
+val PICKUP_POSE_LEFT = Pose2d(-2.55, -1.05, Rotation2d.fromDegrees(205.0))
+val ENTRY_POSE_LEFT = Pose2d(-2.8, 0.0, Rotation2d.fromDegrees(0.0))
+val END_POSE_SINGLE_LEFT = Pose2d(-1.85, -2.0, Rotation2d.fromDegrees(35.0))
 
-val DOUBLE_START_POSE_RIGHT = Pose2d(-0.75, 0.9, Rotation2d.fromDegrees(180.0))
-val PICKUP_POSE_RIGHT = Pose2d(-2.75, 0.9, Rotation2d.fromDegrees(180.0))
-val ENTRY_POSE_RIGHT = Pose2d(-2.75, 0.0, Rotation2d.fromDegrees(0.0))
-val END_POSE_SINGLE_RIGHT = Pose2d(-2.5, 1.5, Rotation2d.fromDegrees(-35.0))
+val DOUBLE_START_POSE_RIGHT = Pose2d(-0.8, 1.05, Rotation2d.fromDegrees(180.0))
+val PICKUP_POSE_RIGHT = Pose2d(-2.8, 1.05, Rotation2d.fromDegrees(180.0))
+val ENTRY_POSE_RIGHT = Pose2d(-2.8, 0.0, Rotation2d.fromDegrees(0.0))
+val END_POSE_SINGLE_RIGHT = Pose2d(-1.85, 2.0, Rotation2d.fromDegrees(-35.0))
+
+const val DRIVE_FORWARD_DISTANCE = 1.75
 
 val GYRO_PORT = SPI.Port.kMXP
 
