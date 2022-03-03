@@ -11,6 +11,8 @@ import org.sert2521.rapidreact2022.subsytems.Climber
 //Variable all way back on start
 //Start arms in proper pos
 //Put ball in deep
+//Things at competition
+//Also reset gyro
 object Robot : TimedRobot() {
     private val commandScheduler = CommandScheduler.getInstance()
 

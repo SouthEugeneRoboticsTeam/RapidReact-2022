@@ -21,10 +21,10 @@ const val DEADBAND = 0.1
 
 const val CLIMBER_HEIGHT_PER_ROTATION = 0.00807
 
-const val MAX_CLIMBER_ANGLE = 180.0
+const val MAX_CLIMBER_ANGLE = 168.0
 const val MIN_CLIMBER_ANGLE = 124.0
 const val START_POS = 1.0
-const val MAX_CLIMBER_HEIGHT = 0.63
+const val MAX_CLIMBER_HEIGHT = 0.66
 const val MIN_CLIMBER_HEIGHT = 0.0
 
 const val MID_HEIGHT = 0.62
@@ -32,21 +32,22 @@ const val HIT_MID_HEIGHT = 0.545
 const val HIT_MID_ANGLE = 149.2
 const val TOP_ANGLE_HANG = 151.5
 const val HANG_HEIGHT = 0.0
-const val UNHOOK_HEIGHT = 0.1
-const val REACH_NEXT_HEIGHT = 0.63
-const val REACH_NEXT_ANGLE = 125.0
+const val UNHOOK_HEIGHT = 0.2
+const val REACH_NEXT_HEIGHT = 0.66
+const val REACH_NEXT_ANGLE = 130.0
 const val HIT_NEXT_HEIGHT = 0.55
-const val LOCK_NEXT_HEIGHT = 0.525
-const val HANG_NEXT_HEIGHT = 0.47
-const val HIT_NEXT_ANGLE = 135.0
-const val HANG_NEXT_ANGLE = 131.0
-const val LET_GO_MID_HEIGHT = 0.45
-const val RELEASE_SPEED = 0.2
-const val RESET_ANGLE = 160.0
+const val LOCK_NEXT_HEIGHT = 0.505
+const val HANG_NEXT_HEIGHT = 0.45
+const val HIT_NEXT_ANGLE = 136.0
+const val HANG_NEXT_ANGLE = 131.5
+const val LET_GO_MID_HEIGHT = 0.44
+const val RELEASE_SPEED = 0.3
+const val RESET_ANGLE = 160.5
 const val RESET_HEIGHT = 0.6
 const val REHOOK_ANGLE = 151.6
 const val LOW_SPEED = 0.25
-const val LOW_HEIGHT = 0.1
+const val LOW_HEIGHT = 0.25
+const val END_ANGLE = 167.0
 
 const val DEFAULT_ANGLE = 144.0
 const val DEFAULT_TOLERANCE = 0.015

@@ -16,7 +16,7 @@ class SpiralLED : CommandBase() {
     }
 
     override fun execute() {
-        LEDStrip.cycle(40.0)
+        LEDStrip.cycle(4.0)
     }
 
     override fun end(interrupted: Boolean) {

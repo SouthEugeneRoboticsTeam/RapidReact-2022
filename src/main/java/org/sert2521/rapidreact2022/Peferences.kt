@@ -20,7 +20,7 @@ abstract class RobotPreferences {
 }
 
 object CompetitionPreferences : RobotPreferences() {
-    override val climberPID = arrayOf(1.5, 0.5, 0.0)
+    override val climberPID = arrayOf(1.8, 0.6, 0.0)
     override val actuatorPID = arrayOf(0.06, 0.1, 0.0)
     override val shooterPIDF = arrayOf(0.00045, 0.0, 0.0, 0.00021)
     override val drivePID = arrayOf(2.773, 0.0, 0.0)

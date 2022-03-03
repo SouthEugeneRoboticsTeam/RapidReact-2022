@@ -2,6 +2,7 @@ package org.sert2521.rapidreact2022
 
 import edu.wpi.first.wpilibj2.command.InstantCommand
 import org.sert2521.rapidreact2022.commands.*
+import org.sert2521.rapidreact2022.subsytems.Climber
 import kotlin.math.abs
 
 object OI {
@@ -15,7 +16,6 @@ object OI {
     private val climbTraversal = ClimbTraversal()
 
     private var slowMode = false
-    var climbing = false
 
     private var indexerOverride = false
 
@@ -37,7 +37,6 @@ object OI {
 
     fun onEnable() {
         slowMode = false
-        climbing = false
 
         indexerOverride = false
     }
@@ -51,7 +50,7 @@ object OI {
     }
 
     fun getSlowMode(): Boolean {
-        return slowMode || climbing
+        return slowMode || Climber.climbing
     }
 
     fun isFast(): Boolean {
