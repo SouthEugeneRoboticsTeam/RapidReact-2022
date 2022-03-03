@@ -23,7 +23,7 @@ class ClimbTraversal : SequentialCommandGroup() {
             InstantCommand( { Climber.loadBearingArm = Arms.BOTH } ),
             SetClimberPID(HANG_HEIGHT, HANG_HEIGHT, TOP_ANGLE_HANG),
             ClimbNext(),
-            SetClimberPID(LOW_HEIGHT, HIT_NEXT_HEIGHT, END_ANGLE),
+            SetClimberPID(END_HEIGHT, HIT_NEXT_HEIGHT, END_ANGLE),
             InstantCommand( { Climber.lock() } )
         )
     }

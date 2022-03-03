@@ -12,7 +12,7 @@ class ClimbUp : SequentialCommandGroup() {
             InstantCommand( { Climber.climbing = true } ),
             //Reconsider these two
             SetClimberPID(MID_HEIGHT, MID_HEIGHT, HIT_MID_ANGLE) { OI.getClimbNext() },
-            SetClimberLinear(HIT_MID_HEIGHT, HIT_MID_HEIGHT, HIT_MID_ANGLE, staticSpeed = LOW_SPEED, variableSpeed = LOW_SPEED),
+            SetClimberLinear(HIT_MID_HEIGHT, HIT_MID_HEIGHT, HIT_MID_ANGLE, staticSpeed = LOW_SPEED, variableSpeed = LOW_SPEED) { OI.getClimbNext() },
             InstantCommand( { Climber.loadBearingArm = Arms.BOTH } ),
             SetClimberPID(HANG_HEIGHT, HANG_HEIGHT, TOP_ANGLE_HANG),
         )

@@ -16,15 +16,15 @@ class ClimbNext : SequentialCommandGroup() {
             InstantCommand( { Climber.loadBearingArm = Arms.NEITHER } ),
             SetClimberPID(HANG_HEIGHT, UNHOOK_HEIGHT, TOP_ANGLE_HANG, angleOn = false),
             SetClimberPID(HANG_HEIGHT, REACH_NEXT_HEIGHT, REACH_NEXT_ANGLE),
-            SetClimberPID(HANG_HEIGHT, REACH_NEXT_HEIGHT, HIT_NEXT_ANGLE) { OI.getClimbNext() },
-            SetClimberLinear(HANG_HEIGHT, HIT_NEXT_HEIGHT, HIT_NEXT_ANGLE, variableSpeed = LOW_SPEED),
+            SetClimberPID(HANG_HEIGHT, REACH_NEXT_HEIGHT, HIT_NEXT_FAR_ANGLE) { OI.getClimbNext() },
+            SetClimberLinear(HANG_HEIGHT, HIT_NEXT_HEIGHT, HIT_NEXT_CLOSE_ANGLE, variableSpeed = LOW_SPEED),
             SetClimberLinear(HANG_HEIGHT, HANG_NEXT_HEIGHT, HANG_NEXT_ANGLE, variableSpeed = LOW_SPEED),
             InstantCommand( { Climber.setLockVariable(LockStates.LOCKED) } ),
             WaitUntilCommand { Climber.isVariableLocked() == LockStates.LOCKED },
             InstantCommand( { Climber.setLockStatic(LockStates.UNLOCKED) } ),
             WaitUntilCommand { Climber.isStaticLocked() == LockStates.UNLOCKED },
-            SetClimberLinear(LET_GO_MID_HEIGHT, HANG_NEXT_HEIGHT, HIT_NEXT_ANGLE, staticSpeed = RELEASE_SPEED, angleOn = false),
-            SetClimberPID(LET_GO_MID_HEIGHT, HANG_NEXT_HEIGHT, DEFAULT_ANGLE)
+            SetClimberLinear(LET_GO_MID_HEIGHT, HANG_NEXT_HEIGHT, HIT_NEXT_CLOSE_ANGLE, staticSpeed = RELEASE_SPEED, angleOn = false),
+            SetClimberPID(GO_UNDER_HEIGHT, HANG_NEXT_HEIGHT, DEFAULT_ANGLE)
         )
     }
 }
