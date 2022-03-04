@@ -28,9 +28,9 @@ object CompetitionPreferences : RobotPreferences() {
 
     override val ledLength = 16
 
-    override val shooterRPM = 4600.0
-    override val shooterEnterRPM = 4600.0
-    override val shooterExitRPM = 4500.0
+    override val shooterRPM = 4440.0
+    override val shooterEnterRPM = 4440.0
+    override val shooterExitRPM = 4340.0
 }
 
 object PracticePreferences : RobotPreferences() {
