@@ -18,7 +18,7 @@ class ClimbNext : SequentialCommandGroup() {
             SetClimberPID(HANG_HEIGHT, REACH_NEXT_HEIGHT, REACH_NEXT_ANGLE),
             SetClimberPID(HANG_HEIGHT, REACH_NEXT_HEIGHT, HIT_NEXT_FAR_ANGLE) { OI.getClimbNext() },
             SetClimberLinear(HANG_HEIGHT, HIT_NEXT_HEIGHT, HIT_NEXT_CLOSE_ANGLE, variableSpeed = LOW_SPEED),
-            SetClimberLinear(HANG_HEIGHT, HANG_NEXT_HEIGHT, HANG_NEXT_ANGLE, variableSpeed = LOW_SPEED),
+            SetClimberLinear(HANG_HEIGHT, HANG_NEXT_HEIGHT, HANG_NEXT_ANGLE, variableSpeed = LOW_SPEED, angleOn = false),
             InstantCommand( { Climber.setLockVariable(LockStates.LOCKED) } ),
             WaitUntilCommand { Climber.isVariableLocked() == LockStates.LOCKED },
             InstantCommand( { Climber.setLockStatic(LockStates.UNLOCKED) } ),

@@ -24,7 +24,7 @@ enum class Arms {
     NEITHER
 }
 
-//Make birds work at start
+//Make hold pos while doing the birds
 //Make it stop if the angle isn't changing
 object Climber : SubsystemBase() {
     private val staticClimberMotor = CANSparkMax(Sparks.STATIC_CLIMBER.id, Sparks.STATIC_CLIMBER.type)
