@@ -21,7 +21,7 @@ class ClimbTraversal : SequentialCommandGroup() {
             InstantCommand( { Climber.setLockVariable(LockStates.UNLOCKED) } ),
             WaitUntilCommand { Climber.isVariableLocked() == LockStates.UNLOCKED },
             InstantCommand( { Climber.loadBearingArm = Arms.BOTH } ),
-            SetClimberPID(HANG_HEIGHT, HANG_HEIGHT, TOP_ANGLE_HANG),
+            SetClimberPID(HANG_HEIGHT, HANG_HEIGHT, TOP_ANGLE_HANG, angleOn = false),
             ClimbNext(),
             SetClimberPID(END_HEIGHT, HIT_NEXT_HEIGHT, END_ANGLE),
             InstantCommand( { Climber.lock() } )

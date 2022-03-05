@@ -29,11 +29,11 @@ const val MIN_CLIMBER_HEIGHT = 0.0
 
 const val MID_HEIGHT = 0.62
 const val HIT_MID_HEIGHT = 0.545
-const val HIT_MID_ANGLE = 150.0
+const val HIT_MID_ANGLE = 150.3
 const val TOP_ANGLE_HANG = 152.5
 const val HANG_HEIGHT = 0.0
 const val UNHOOK_HEIGHT = 0.24
-const val UNHOOK_ANGLE = 151.5
+const val UNHOOK_ANGLE = 152.0
 const val REACH_NEXT_HEIGHT = 0.66
 const val REACH_NEXT_ANGLE = 130.0
 const val HIT_NEXT_HEIGHT = 0.55
@@ -42,13 +42,13 @@ const val HANG_NEXT_HEIGHT = 0.45
 const val HIT_NEXT_FAR_ANGLE = 136.3
 const val HIT_NEXT_CLOSE_ANGLE = 135.5
 const val HANG_NEXT_ANGLE = 131.5
-const val LET_GO_MID_HEIGHT = 0.48
+const val LET_GO_MID_HEIGHT = 0.53
 const val GO_UNDER_HEIGHT = 0.38
-const val RELEASE_SPEED = 0.3
+const val RELEASE_SPEED = 0.32
 const val RESET_ANGLE = 160.5
 const val RESET_HEIGHT = 0.6
 const val REHOOK_ANGLE = 151.6
-const val LOW_SPEED = 0.25
+const val LOW_SPEED = 0.28
 const val END_ANGLE = 167.0
 const val END_HEIGHT = 0.1
 
@@ -95,6 +95,8 @@ val ENTRY_POSE_RIGHT = Pose2d(-2.8, 0.0, Rotation2d.fromDegrees(0.0))
 val END_POSE_SINGLE_RIGHT = Pose2d(-1.85, 2.0, Rotation2d.fromDegrees(-35.0))
 
 const val DRIVE_FORWARD_DISTANCE = 1.75
+
+const val SHOOT_DELAY = 0.7
 
 val GYRO_PORT = SPI.Port.kMXP
 
