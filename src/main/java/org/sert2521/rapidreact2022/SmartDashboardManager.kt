@@ -3,6 +3,7 @@ package org.sert2521.rapidreact2022
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard
 import edu.wpi.first.wpilibj2.command.Command
+import edu.wpi.first.wpilibj2.command.WaitCommand
 import org.sert2521.rapidreact2022.commands.*
 import org.sert2521.rapidreact2022.subsytems.Climber
 import org.sert2521.rapidreact2022.subsytems.Drivetrain
@@ -21,10 +22,16 @@ object SmartDashboardManager {
         autoChooser.addOption("Shoot Double Right", ShootDoubleRight())
         autoChooser.addOption("Shoot Double Left", ShootDoubleLeft())
         SmartDashboard.putData(autoChooser)
+
+        SmartDashboard.putNumber("Auto Delay", 0.0)
     }
 
     fun getAuto(): Command? {
-        return autoChooser.selected
+        if(autoChooser.selected == null) {
+            return null
+        }
+
+        return WaitCommand(SmartDashboard.getNumber("Auto Delay", 0.0)).andThen(autoChooser.selected)
     }
 
     fun update() {
