@@ -11,20 +11,19 @@ import org.sert2521.rapidreact2022.subsytems.LockStates
 class ClimbTraversal : SequentialCommandGroup() {
     init {
         addCommands(
-            ClimbUp(),
-            ClimbNext(),
-            SetClimberPID(LET_GO_MID_HEIGHT, HANG_NEXT_HEIGHT, RESET_ANGLE),
-            SetClimberPID(RESET_HEIGHT, HANG_NEXT_HEIGHT, RESET_ANGLE),
-            SetClimberPID(RESET_HEIGHT, HANG_NEXT_HEIGHT, REHOOK_ANGLE),
-            SetClimberLinear(LOCK_NEXT_HEIGHT, HANG_NEXT_HEIGHT, REHOOK_ANGLE, staticSpeed = LOW_SPEED, angleOn = false),
-            WaitUntilCommand { OI.getClimbNext() },
-            InstantCommand( { Climber.setLockVariable(LockStates.UNLOCKED) } ),
-            WaitUntilCommand { Climber.isVariableLocked() == LockStates.UNLOCKED },
-            InstantCommand( { Climber.loadBearingArm = Arms.BOTH } ),
-            SetClimberPID(HANG_HEIGHT, HANG_HEIGHT, TOP_ANGLE_HANG),
-            ClimbNext(),
-            SetClimberPID(END_HEIGHT, HIT_NEXT_HEIGHT, END_ANGLE),
-            InstantCommand( { Climber.lock() } )
+                ClimbUp(),
+                ClimbNext(),
+                SetClimber(GO_UNDER, PULL_IN_NEXT, PAST_CURRENT_ANGLE),
+                SetClimber(ABOVE_CURRENT, PULL_IN_NEXT, PAST_CURRENT_ANGLE),
+                ClimberHitBar(ABOVE_CURRENT, PULL_IN_NEXT) { OI.getClimbNext() },
+                ClimberHitBar(HIT_CURRENT, PULL_IN_NEXT) { OI.getClimbNext() },
+                InstantCommand( { Climber.setLockVariable(LockStates.UNLOCKED) } ),
+                WaitUntilCommand { Climber.isVariableLocked() == LockStates.UNLOCKED },
+                InstantCommand( { Climber.loadBearingArm = Arms.BOTH } ),
+                SetClimber(HANG_HEIGHT, HANG_HEIGHT, null),
+                ClimbNext(),
+                SetClimber(END, PULL_IN_NEXT, END_ANGLE),
+                InstantCommand( { Climber.lock() } )
         )
     }
 }

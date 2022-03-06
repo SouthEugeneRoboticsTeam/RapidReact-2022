@@ -11,20 +11,21 @@ import org.sert2521.rapidreact2022.subsytems.LockStates
 class ClimbNext : SequentialCommandGroup() {
     init {
         addCommands(
-            InstantCommand( { Climber.setLockStatic(LockStates.LOCKED) } ),
-            WaitUntilCommand { Climber.isStaticLocked() == LockStates.LOCKED },
-            InstantCommand( { Climber.loadBearingArm = Arms.NEITHER } ),
-            SetClimberPID(HANG_HEIGHT, UNHOOK_HEIGHT, TOP_ANGLE_HANG, angleOn = false),
-            SetClimberPID(HANG_HEIGHT, REACH_NEXT_HEIGHT, REACH_NEXT_ANGLE),
-            SetClimberPID(HANG_HEIGHT, REACH_NEXT_HEIGHT, HIT_NEXT_FAR_ANGLE) { OI.getClimbNext() },
-            SetClimberLinear(HANG_HEIGHT, HIT_NEXT_HEIGHT, HIT_NEXT_CLOSE_ANGLE, variableSpeed = LOW_SPEED),
-            SetClimberLinear(HANG_HEIGHT, HANG_NEXT_HEIGHT, HANG_NEXT_ANGLE, variableSpeed = LOW_SPEED),
-            InstantCommand( { Climber.setLockVariable(LockStates.LOCKED) } ),
-            WaitUntilCommand { Climber.isVariableLocked() == LockStates.LOCKED },
-            InstantCommand( { Climber.setLockStatic(LockStates.UNLOCKED) } ),
-            WaitUntilCommand { Climber.isStaticLocked() == LockStates.UNLOCKED },
-            SetClimberLinear(LET_GO_MID_HEIGHT, HANG_NEXT_HEIGHT, HIT_NEXT_CLOSE_ANGLE, staticSpeed = RELEASE_SPEED, angleOn = false),
-            SetClimberPID(GO_UNDER_HEIGHT, HANG_NEXT_HEIGHT, DEFAULT_ANGLE)
+                InstantCommand( { Climber.setLockStatic(LockStates.LOCKED) } ),
+                WaitUntilCommand { Climber.isStaticLocked() == LockStates.LOCKED },
+                InstantCommand( { Climber.loadBearingArm = Arms.VARIABLE } ),
+                SetClimber(HANG_HEIGHT, LET_GO_BAR_VARIABLE, null),
+                SetClimber(HANG_HEIGHT, LET_GO_BAR_VARIABLE, PAST_NEXT_ANGLE),
+                SetClimber(HANG_HEIGHT, ABOVE_NEXT, PAST_NEXT_ANGLE),
+                ClimberHitBar(HANG_HEIGHT, ABOVE_NEXT) { OI.getClimbNext() },
+                ClimberHitBar(HANG_HEIGHT, PULL_IN_NEXT) { OI.getClimbNext() },
+                InstantCommand( { Climber.setLockVariable(LockStates.LOCKED) } ),
+                WaitUntilCommand { Climber.isVariableLocked() == LockStates.LOCKED },
+                InstantCommand( { Climber.setLockStatic(LockStates.UNLOCKED) } ),
+                WaitUntilCommand { Climber.isStaticLocked() == LockStates.UNLOCKED },
+                InstantCommand( { Climber.loadBearingArm = Arms.NEITHER } ),
+                SetClimber(LET_GO_STATIC, PULL_IN_NEXT, null),
+                SetClimber(GO_UNDER, PULL_IN_NEXT, UNDER_ANGLE)
         )
     }
 }

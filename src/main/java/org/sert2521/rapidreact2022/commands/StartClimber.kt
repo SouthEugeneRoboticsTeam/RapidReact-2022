@@ -35,7 +35,7 @@ class StartClimber : CommandBase() {
     }
 
     override fun end(interrupted: Boolean) {
-        SetClimberPID(MIN_CLIMBER_HEIGHT, MIN_CLIMBER_HEIGHT, DEFAULT_ANGLE) { false }.schedule()
+        SetClimber(MIN_CLIMBER_HEIGHT, MIN_CLIMBER_HEIGHT, DEFAULT_ANGLE) { false }.schedule()
         Climber.stop()
     }
 }

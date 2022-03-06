@@ -11,8 +11,6 @@ object OI {
     private val shootBalls = ShootBalls()
     private val revShooter = RevShooter()
 
-    private val climbMid = ClimbMid()
-    private val climbHigh = ClimbHigh()
     private val climbTraversal = ClimbTraversal()
 
     private var slowMode = false

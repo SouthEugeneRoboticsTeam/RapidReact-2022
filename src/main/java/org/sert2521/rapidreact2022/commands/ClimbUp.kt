@@ -9,12 +9,11 @@ import org.sert2521.rapidreact2022.subsytems.Climber
 class ClimbUp : SequentialCommandGroup() {
     init {
         addCommands(
-            InstantCommand( { Climber.climbing = true } ),
-            //Reconsider these two
-            SetClimberPID(MID_HEIGHT, MID_HEIGHT, HIT_MID_ANGLE) { OI.getClimbNext() },
-            SetClimberLinear(HIT_MID_HEIGHT, HIT_MID_HEIGHT, HIT_MID_ANGLE, staticSpeed = LOW_SPEED, variableSpeed = LOW_SPEED) { OI.getClimbNext() },
-            InstantCommand( { Climber.loadBearingArm = Arms.BOTH } ),
-            SetClimberPID(HANG_HEIGHT, HANG_HEIGHT, TOP_ANGLE_HANG),
+                InstantCommand( { Climber.climbing = true } ),
+                SetClimber(REACH_MID, REACH_MID, DEFAULT_ANGLE) { OI.getClimbNext() },
+                SetClimber(HIT_MID, HIT_MID, HIT_MID_ANGLE) { OI.getClimbNext() },
+                InstantCommand( { Climber.loadBearingArm = Arms.BOTH } ),
+                SetClimber(HANG_HEIGHT, HANG_HEIGHT, null)
         )
     }
 }

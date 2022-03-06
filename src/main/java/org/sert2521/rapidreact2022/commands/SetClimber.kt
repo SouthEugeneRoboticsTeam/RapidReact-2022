@@ -8,17 +8,14 @@ import org.sert2521.rapidreact2022.robotPreferences
 import org.sert2521.rapidreact2022.subsytems.Climber
 import org.sert2521.rapidreact2022.subsytems.LockStates
 
-class SetClimberPID(private val staticTarget: Double, private val variableTarget: Double, private val angleTarget: Double,
-                    private val angleOn: Boolean = true,
-                    private val isDone: () -> Boolean) : CommandBase() {
-    constructor(staticTarget: Double, variableTarget: Double, angleTarget: Double,
-                staticTolerance: Double = DEFAULT_TOLERANCE, variableTolerance: Double = DEFAULT_TOLERANCE, angleTolerance: Double = DEFAULT_TOLERANCE_ANGLE,
-                angleOn: Boolean = true) :
+class SetClimber(private val staticTarget: Double, private val variableTarget: Double, private val angleTarget: Double?,
+                 private val isDone: () -> Boolean) : CommandBase() {
+    constructor(staticTarget: Double, variableTarget: Double, angleTarget: Double?,
+                staticTolerance: Double = DEFAULT_TOLERANCE, variableTolerance: Double = DEFAULT_TOLERANCE, angleTolerance: Double = DEFAULT_TOLERANCE_ANGLE) :
             this(staticTarget, variableTarget, angleTarget,
-                    angleOn,
                     { ((staticTarget - Climber.staticHeight in -staticTolerance..staticTolerance) || (Climber.isStaticLocked() == LockStates.LOCKED)) &&
                     (variableTarget - Climber.variableHeight in -variableTolerance..variableTolerance || (Climber.isVariableLocked() == LockStates.LOCKED)) &&
-                    (angleTarget - Climber.variableAngle in -angleTolerance..angleTolerance || !angleOn) } )
+                    (angleTarget == null || angleTarget - Climber.variableAngle in -angleTolerance..angleTolerance) } )
     private val staticPID: PIDController
     private val variablePID: PIDController
     private val anglePID: PIDController
@@ -43,7 +40,7 @@ class SetClimberPID(private val staticTarget: Double, private val variableTarget
     override fun execute() {
         Climber.setStaticSpeed(staticPID.calculate(Climber.staticHeight, staticTarget))
         Climber.setVariableSpeed(variablePID.calculate(Climber.variableHeight, variableTarget))
-        if(angleOn) {
+        if(angleTarget != null) {
             Climber.setAngleSpeed(anglePID.calculate(Climber.variableAngle, angleTarget))
         } else {
             Climber.setAngleSpeed(0.0)

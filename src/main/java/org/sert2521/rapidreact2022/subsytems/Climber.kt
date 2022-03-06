@@ -48,8 +48,6 @@ object Climber : SubsystemBase() {
     private var variableLocked = LockStates.NEITHER
     private var variableLockedUpdate = 0L
 
-    private var forceLocked = false
-
     private val startClimber = StartClimber()
 
     var loadBearingArm = Arms.NEITHER
@@ -84,7 +82,6 @@ object Climber : SubsystemBase() {
         variableGoal = 0.0
         angleGoal = 0.0
 
-        forceLocked = false
         startClimber.schedule(false)
     }
 
@@ -136,33 +133,29 @@ object Climber : SubsystemBase() {
     }
 
     fun setLockStatic(lock: LockStates) {
-        if(!forceLocked && lock != LockStates.NEITHER) {
-            if(lock == LockStates.LOCKED) {
-                servoStatic?.set(SERVO_LOCK_STATIC)
-            } else {
-                servoStatic?.set(SERVO_UNLOCK_STATIC)
-            }
-
-            if(staticLocked != lock) {
-                staticLockedUpdate = currentTimeMillis()
-            }
-            staticLocked = lock
+        if(lock == LockStates.LOCKED) {
+            servoStatic?.set(SERVO_LOCK_STATIC)
+        } else {
+            servoStatic?.set(SERVO_UNLOCK_STATIC)
         }
+
+        if(staticLocked != lock) {
+            staticLockedUpdate = currentTimeMillis()
+        }
+        staticLocked = lock
     }
 
     fun setLockVariable(lock: LockStates) {
-        if(!forceLocked && lock != LockStates.NEITHER) {
-            if(lock == LockStates.LOCKED) {
-                servoVariable?.set(SERVO_LOCK_VARIABLE)
-            } else {
-                servoVariable?.set(SERVO_UNLOCK_VARIABLE)
-            }
-
-            if(variableLocked != lock) {
-                variableLockedUpdate = currentTimeMillis()
-            }
-            variableLocked = lock
+        if(lock == LockStates.LOCKED) {
+            servoVariable?.set(SERVO_LOCK_VARIABLE)
+        } else {
+            servoVariable?.set(SERVO_UNLOCK_VARIABLE)
         }
+
+        if(variableLocked != lock) {
+            variableLockedUpdate = currentTimeMillis()
+        }
+        variableLocked = lock
     }
 
     fun setStaticSpeed(amount: Double) {
