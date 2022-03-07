@@ -4,6 +4,10 @@ plugins {
     id "edu.wpi.first.GradleRIO" version "2022.3.1"
 }
 
+repositories {
+    maven { url "https://jitpack.io" }
+}
+
 def javaVersion = JavaVersion.VERSION_11
 
 def ROBOT_MAIN_CLASS = "org.sert2521.rapidreact2022.Main"
@@ -53,6 +57,8 @@ test {
 }
 
 dependencies {
+    implementation "com.github.dominikWin:badlog:v0.1.1"
+
     implementation wpi.java.deps.wpilib()
     implementation wpi.java.vendor.java()
 

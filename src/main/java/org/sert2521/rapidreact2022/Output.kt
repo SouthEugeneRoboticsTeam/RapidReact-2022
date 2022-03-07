@@ -1,5 +1,6 @@
 package org.sert2521.rapidreact2022
 
+import badlog.lib.BadLog
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard
 import edu.wpi.first.wpilibj2.command.Command
@@ -10,8 +11,7 @@ import org.sert2521.rapidreact2022.subsytems.Drivetrain
 import org.sert2521.rapidreact2022.subsytems.Intake
 import org.sert2521.rapidreact2022.subsytems.Shooter
 
-//Add auto delay
-object SmartDashboardManager {
+object Output {
     private val autoChooser = SendableChooser<Command?>()
 
     init {
@@ -24,6 +24,8 @@ object SmartDashboardManager {
         SmartDashboard.putData(autoChooser)
 
         SmartDashboard.putNumber("Auto Delay", 0.0)
+
+        BadLog.init(LOG_PATH + "${System.currentTimeMillis()}.bag")
     }
 
     fun getAuto(): Command? {

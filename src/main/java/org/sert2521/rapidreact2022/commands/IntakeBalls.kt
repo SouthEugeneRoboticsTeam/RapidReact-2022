@@ -3,7 +3,7 @@ package org.sert2521.rapidreact2022.commands
 import edu.wpi.first.wpilibj2.command.CommandBase
 import org.sert2521.rapidreact2022.INDEXER_SPEED
 import org.sert2521.rapidreact2022.INTAKE_SPEED
-import org.sert2521.rapidreact2022.OI
+import org.sert2521.rapidreact2022.Input
 import org.sert2521.rapidreact2022.subsytems.Intake
 
 class IntakeBalls : CommandBase() {
@@ -20,7 +20,7 @@ class IntakeBalls : CommandBase() {
     }
 
     override fun execute() {
-        if((!Intake.indexerFull && !OI.getIndexerOverride()) || (OI.getRunIndexer() && OI.getIndexerOverride())) {
+        if((!Intake.indexerFull && !Input.getIndexerOverride()) || (Input.getRunIndexer() && Input.getIndexerOverride())) {
             Intake.setIndexerSpeed(INDEXER_SPEED)
         }else{
             Intake.setIndexerSpeed(0.0)

@@ -5,7 +5,7 @@ import org.sert2521.rapidreact2022.commands.*
 import org.sert2521.rapidreact2022.subsytems.Climber
 import kotlin.math.abs
 
-object OI {
+object Input {
     private val intakeBalls = IntakeBalls()
     private val outtakeBalls = OuttakeBalls()
     private val shootBalls = ShootBalls()

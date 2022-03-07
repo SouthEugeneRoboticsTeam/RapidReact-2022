@@ -18,16 +18,16 @@ object Robot : TimedRobot() {
 
     override fun robotPeriodic() {
         commandScheduler.run()
-        SmartDashboardManager.update()
+        Output.update()
     }
 
     override fun teleopInit() {
-        OI.onEnable()
+        Input.onEnable()
         Climber.onEnable()
     }
 
     override fun autonomousInit() {
-        OI.onEnable()
+        Input.onEnable()
         Climber.onEnable()
         getAuto()?.schedule()
     }

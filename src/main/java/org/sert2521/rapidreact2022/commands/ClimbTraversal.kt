@@ -17,7 +17,7 @@ class ClimbTraversal : SequentialCommandGroup() {
             SetClimberPID(RESET_HEIGHT, HANG_NEXT_HEIGHT, RESET_ANGLE),
             SetClimberPID(RESET_HEIGHT, HANG_NEXT_HEIGHT, REHOOK_ANGLE),
             SetClimberLinear(LOCK_NEXT_HEIGHT, HANG_NEXT_HEIGHT, REHOOK_ANGLE, staticSpeed = LOW_SPEED, angleOn = false),
-            WaitUntilCommand { OI.getClimbNext() },
+            WaitUntilCommand { Input.getClimbNext() },
             InstantCommand( { Climber.setLockVariable(LockStates.UNLOCKED) } ),
             WaitUntilCommand { Climber.isVariableLocked() == LockStates.UNLOCKED },
             InstantCommand( { Climber.loadBearingArm = Arms.BOTH } ),

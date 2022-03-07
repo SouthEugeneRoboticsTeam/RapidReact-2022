@@ -114,5 +114,5 @@ val robotPreferences = CompetitionPreferences
 val controlPreferences = DriveteamPreferences
 
 fun getAuto(): Command? {
-    return SmartDashboardManager.getAuto()
+    return Output.getAuto()
 }
