@@ -5,14 +5,20 @@ import edu.wpi.first.wpilibj.smartdashboard.SendableChooser
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard
 import edu.wpi.first.wpilibj2.command.Command
 import edu.wpi.first.wpilibj2.command.WaitCommand
+import jdk.nashorn.internal.runtime.regexp.joni.Config.log
 import org.sert2521.rapidreact2022.commands.*
 import org.sert2521.rapidreact2022.subsytems.Climber
 import org.sert2521.rapidreact2022.subsytems.Drivetrain
 import org.sert2521.rapidreact2022.subsytems.Intake
 import org.sert2521.rapidreact2022.subsytems.Shooter
+import java.io.File
+import java.util.*
+import java.util.function.Supplier
 
 object Output {
     private val autoChooser = SendableChooser<Command?>()
+    private val shuffleboardOutputs = mutableMapOf<String, Supplier<Double>>()
+    private val log: BadLog?
 
     init {
         autoChooser.setDefaultOption("Nothing", null)
@@ -25,7 +31,28 @@ object Output {
 
         SmartDashboard.putNumber("Auto Delay", 0.0)
 
-        BadLog.init(LOG_PATH + "${System.currentTimeMillis()}.bag")
+        val path = File(LOG_PATH)
+        if (path.exists() && path.canWrite()) {
+            log = BadLog.init(LOG_PATH + "${System.currentTimeMillis()}.bag")
+
+            BadLog.createTopic("Shooter Speed", "rpm", { Shooter.wheelSpeed })
+
+            BadLog.createTopic("Drivetrain Left Speed", "m/s", { Drivetrain.leftVelocity })
+            BadLog.createTopic("Drivetrain Right Speed", "m/s", { Drivetrain.rightVelocity })
+
+            BadLog.createTopic("Drivetrain Left Distance", "m", { Drivetrain.leftDistanceTraveled })
+            BadLog.createTopic("Drivetrain Right Distance", "m", { Drivetrain.rightDistanceTraveled })
+
+            BadLog.createTopic("Pose X", "m", { Drivetrain.pose.x })
+            BadLog.createTopic("Pose Y", "m", { Drivetrain.pose.y })
+            BadLog.createTopic("Pose Angle", "°", { Drivetrain.pose.rotation.degrees })
+
+            BadLog.createTopic("Intake Full", BadLog.UNITLESS, { if(Intake.indexerFull) { 1.0 } else { 0.0 } })
+        } else {
+            log = null
+        }
+
+        log?.finishInitialization()
     }
 
     fun getAuto(): Command? {
@@ -37,29 +64,32 @@ object Output {
     }
 
     fun update() {
-        SmartDashboard.putNumber("Tuning/Shooter Speed", Shooter.wheelSpeed)
+        SmartDashboard.putNumber("Shooter Speed", Shooter.wheelSpeed)
 
-        SmartDashboard.putNumber("Tuning/Drivetrain Left Speed", Drivetrain.leftVelocity)
-        SmartDashboard.putNumber("Tuning/Drivetrain Right Speed", Drivetrain.rightVelocity)
+        SmartDashboard.putNumber("Drivetrain Left Speed", Drivetrain.leftVelocity)
+        SmartDashboard.putNumber("Drivetrain Right Speed", Drivetrain.rightVelocity)
 
-        SmartDashboard.putNumber("Tuning/Drivetrain Left Distance", Drivetrain.leftDistanceTraveled)
-        SmartDashboard.putNumber("Tuning/Drivetrain Right Distance", Drivetrain.rightDistanceTraveled)
+        SmartDashboard.putNumber("Drivetrain Left Distance", Drivetrain.leftDistanceTraveled)
+        SmartDashboard.putNumber("Drivetrain Right Distance", Drivetrain.rightDistanceTraveled)
 
-        SmartDashboard.putNumber("Tuning/Climber Static Height", Climber.staticHeight)
-        SmartDashboard.putNumber("Tuning/Climber Variable Height", Climber.variableHeight)
-        SmartDashboard.putNumber("Tuning/Climber Variable Angle", Climber.variableAngle)
+        SmartDashboard.putNumber("Climber Static Height", Climber.staticHeight)
+        SmartDashboard.putNumber("Climber Variable Height", Climber.variableHeight)
+        SmartDashboard.putNumber("Climber Variable Angle", Climber.variableAngle)
 
-        SmartDashboard.putBoolean("Tuning/Climber Static Limit", Climber.isAtBottomStatic())
-        SmartDashboard.putBoolean("Tuning/Climber Variable Limit", Climber.isAtBottomVariable())
+        SmartDashboard.putBoolean("Climber Static Limit", Climber.isAtBottomStatic())
+        SmartDashboard.putBoolean("Climber Variable Limit", Climber.isAtBottomVariable())
 
-        SmartDashboard.putString("Tuning/Climber Static Locked", Climber.isStaticLocked().toString())
-        SmartDashboard.putString("Tuning/Climber Variable Locked", Climber.isVariableLocked().toString())
+        SmartDashboard.putString("Climber Static Locked", Climber.isStaticLocked().toString())
+        SmartDashboard.putString("Climber Variable Locked", Climber.isVariableLocked().toString())
 
-        SmartDashboard.putBoolean("Tuning/Intake Full", Intake.indexerFull)
+        SmartDashboard.putBoolean("Intake Full", Intake.indexerFull)
 
-        SmartDashboard.putNumber("Tuning/Pose X", Drivetrain.pose.x)
-        SmartDashboard.putNumber("Tuning/Pose Y", Drivetrain.pose.y)
+        SmartDashboard.putNumber("Pose X", Drivetrain.pose.x)
+        SmartDashboard.putNumber("Pose Y", Drivetrain.pose.y)
 
-        SmartDashboard.putNumber("Tuning/Gyro Angle ", Drivetrain.pose.rotation.degrees)
+        SmartDashboard.putNumber("Gyro Angle ", Drivetrain.pose.rotation.degrees)
+
+        log?.updateTopics()
+        log?.log()
     }
 }
