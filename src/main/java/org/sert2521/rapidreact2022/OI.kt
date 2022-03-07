@@ -25,8 +25,6 @@ object OI {
         controlPreferences.shoot.whileHeld(shootBalls, false)
         controlPreferences.rev.whileHeld(revShooter)
 
-        //controlPreferences.startClimbMid.whenPressed(climbMid, false)
-        //controlPreferences.startClimbHigh.whenPressed(climbHigh, false)
         controlPreferences.startClimbTraversal.whenPressed(climbTraversal, false)
 
         controlPreferences.slowMode.whenPressed(InstantCommand( { slowMode = !slowMode } ))
@@ -64,6 +62,10 @@ object OI {
             climbNext = currPress
             false
         }
+    }
+
+    fun getClimbEnd(): Boolean {
+        return controlPreferences.endClimb.get()
     }
 
     fun getClimbStatic(): Double {

@@ -12,6 +12,7 @@ class ClimbUp : SequentialCommandGroup() {
                 InstantCommand( { Climber.climbing = true } ),
                 SetClimber(REACH_MID, REACH_MID, DEFAULT_ANGLE) { OI.getClimbNext() },
                 SetClimber(HIT_MID, HIT_MID, HIT_MID_ANGLE) { OI.getClimbNext() },
+                InstantCommand( { Climber.inAir = true } ),
                 InstantCommand( { Climber.loadBearingArm = Arms.BOTH } ),
                 SetClimber(HANG_HEIGHT, HANG_HEIGHT, null)
         )

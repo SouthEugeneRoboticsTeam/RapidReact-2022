@@ -8,6 +8,7 @@ import org.sert2521.rapidreact2022.subsytems.Arms
 import org.sert2521.rapidreact2022.subsytems.Climber
 import org.sert2521.rapidreact2022.subsytems.LockStates
 
+//Add overriding climb sequence with joystick
 class ClimbTraversal : SequentialCommandGroup() {
     init {
         addCommands(
@@ -25,5 +26,13 @@ class ClimbTraversal : SequentialCommandGroup() {
                 SetClimber(END, PULL_IN_NEXT, END_ANGLE),
                 InstantCommand( { Climber.lock() } )
         )
+    }
+
+    override fun isFinished(): Boolean {
+        return OI.getClimbEnd() && !Climber.climbing
+    }
+
+    override fun end(interrupted: Boolean) {
+        Climber.reset()
     }
 }

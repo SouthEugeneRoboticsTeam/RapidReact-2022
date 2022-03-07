@@ -52,6 +52,7 @@ object Climber : SubsystemBase() {
 
     var loadBearingArm = Arms.NEITHER
     var climbing = false
+    var inAir = false
 
     init {
         staticClimberMotor.inverted = Sparks.STATIC_CLIMBER.reversed
@@ -72,9 +73,6 @@ object Climber : SubsystemBase() {
         variableLocked = LockStates.NEITHER
         variableLockedUpdate = 0L
 
-        loadBearingArm = Arms.NEITHER
-        climbing = false
-
         staticClimberMotor.encoder.position = START_POS
         variableClimberMotor.encoder.position = START_POS
 
@@ -82,7 +80,7 @@ object Climber : SubsystemBase() {
         variableGoal = 0.0
         angleGoal = 0.0
 
-        startClimber.schedule(false)
+        reset()
     }
 
     val staticHeight
@@ -247,6 +245,14 @@ object Climber : SubsystemBase() {
     fun unlock() {
         setLockStatic(LockStates.UNLOCKED)
         setLockVariable(LockStates.UNLOCKED)
+    }
+
+    fun reset() {
+        loadBearingArm = Arms.NEITHER
+        climbing = false
+        inAir = false
+
+        startClimber.schedule(false)
     }
 
     fun stop() {
