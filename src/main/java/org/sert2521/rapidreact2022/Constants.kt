@@ -83,6 +83,8 @@ const val AUTO_EXIT_ACCELERATION = 1.5
 const val SHOOT_TIME = 1.5
 const val SHOOT_DELAY = 0.9
 
+const val LOG_PATH = "/media/sha1"
+
 val SHOOT_POSE = Pose2d(0.0, 0.0, Rotation2d.fromDegrees(0.0))
 
 val DOUBLE_START_POSE_LEFT = Pose2d(-0.8, -1.05, Rotation2d.fromDegrees(180.0))
