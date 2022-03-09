@@ -18,7 +18,7 @@ object Robot : TimedRobot() {
 
     override fun robotPeriodic() {
         commandScheduler.run()
-        Output.update()
+        Logging.update()
     }
 
     override fun teleopInit() {

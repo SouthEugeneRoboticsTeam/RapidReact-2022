@@ -8,7 +8,7 @@ import org.sert2521.rapidreact2022.subsytems.Intake
 import org.sert2521.rapidreact2022.subsytems.Shooter
 import java.io.File
 
-object Output {
+object Logging {
     private val log: BadLog?
 
     init {
