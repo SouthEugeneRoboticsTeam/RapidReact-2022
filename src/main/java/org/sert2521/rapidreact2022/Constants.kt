@@ -80,6 +80,8 @@ const val AUTO_TURN_ACCELERATION = 0.7
 const val AUTO_EXIT_SPEED = 1.5
 const val AUTO_EXIT_ACCELERATION = 1.5
 
+const val END_SPEED = 0.4
+
 const val SHOOT_TIME = 1.5
 const val SHOOT_DELAY = 0.9
 

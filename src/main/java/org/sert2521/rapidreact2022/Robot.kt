@@ -29,10 +29,10 @@ object Robot : TimedRobot() {
     override fun autonomousInit() {
         Input.onEnable()
         Climber.onEnable()
-        getAuto()?.schedule()
+        Input.getAuto()?.schedule()
     }
 
     override fun autonomousExit() {
-        getAuto()?.cancel()
+        Input.getAuto()?.cancel()
     }
 }

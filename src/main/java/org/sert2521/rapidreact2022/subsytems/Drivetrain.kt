@@ -39,11 +39,6 @@ object Drivetrain : SubsystemBase() {
         frontRightMotor.inverted = Talons.FRONT_RIGHT_DRIVE.reversed
         backRightMotor.inverted = Talons.BACK_RIGHT_DRIVE.reversed
 
-        frontLeftMotor.setNeutralMode(NeutralMode.Brake)
-        backLeftMotor.setNeutralMode(NeutralMode.Brake)
-        frontRightMotor.setNeutralMode(NeutralMode.Brake)
-        backRightMotor.setNeutralMode(NeutralMode.Brake)
-
         leftEncoder.distancePerPulse = Encoders.LEFT_DRIVE.encoderDistancePerPulse
         rightEncoder.distancePerPulse = Encoders.RIGHT_DRIVE.encoderDistancePerPulse
 
@@ -100,7 +95,22 @@ object Drivetrain : SubsystemBase() {
         drive.tankDrive(leftSpeed, rightSpeed)
     }
 
+    fun coastMode() {
+        frontLeftMotor.setNeutralMode(NeutralMode.Coast)
+        backLeftMotor.setNeutralMode(NeutralMode.Coast)
+        frontRightMotor.setNeutralMode(NeutralMode.Coast)
+        backRightMotor.setNeutralMode(NeutralMode.Coast)
+    }
+
+    fun brakeMode() {
+        frontLeftMotor.setNeutralMode(NeutralMode.Brake)
+        backLeftMotor.setNeutralMode(NeutralMode.Brake)
+        frontRightMotor.setNeutralMode(NeutralMode.Brake)
+        backRightMotor.setNeutralMode(NeutralMode.Brake)
+    }
+
     fun stop() {
         tankDrive(0.0, 0.0)
+        brakeMode()
     }
 }

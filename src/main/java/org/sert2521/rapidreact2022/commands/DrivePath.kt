@@ -16,11 +16,13 @@ import org.sert2521.rapidreact2022.TRACK_WIDTH
 import org.sert2521.rapidreact2022.robotPreferences
 import org.sert2521.rapidreact2022.subsytems.Drivetrain
 
-class DrivePath(speed: Double, acceleration: Double, reversed: Boolean, start: Pose2d, end: Pose2d, vararg poses: Translation2d) : SequentialCommandGroup() {
+class DrivePath(speed: Double, acceleration: Double, reversed: Boolean, start: Pose2d, end: Pose2d, endSpeed: Double = 0.0, vararg poses: Translation2d) : SequentialCommandGroup() {
     init {
         addRequirements(Drivetrain)
 
+
         val trajectoryConfig = TrajectoryConfig(speed, acceleration)
+        trajectoryConfig.endVelocity = endSpeed
         trajectoryConfig.isReversed = reversed
         val trajectory = generateTrajectory(
             start,
@@ -43,6 +45,6 @@ class DrivePath(speed: Double, acceleration: Double, reversed: Boolean, start: P
                 PIDController(drivePIDArray[0], drivePIDArray[1], drivePIDArray[2]),
                 Drivetrain::tankDriveVolts,
                 Drivetrain),
-            InstantCommand(Drivetrain::stop))
+            InstantCommand( { if(endSpeed == 0.0) { Drivetrain.coastMode() } else { Drivetrain.stop() } } ))
     }
 }

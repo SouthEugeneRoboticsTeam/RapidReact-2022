@@ -1,36 +1,17 @@
 package org.sert2521.rapidreact2022
 
 import badlog.lib.BadLog
-import edu.wpi.first.wpilibj.smartdashboard.SendableChooser
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard
-import edu.wpi.first.wpilibj2.command.Command
-import edu.wpi.first.wpilibj2.command.WaitCommand
-import jdk.nashorn.internal.runtime.regexp.joni.Config.log
-import org.sert2521.rapidreact2022.commands.*
 import org.sert2521.rapidreact2022.subsytems.Climber
 import org.sert2521.rapidreact2022.subsytems.Drivetrain
 import org.sert2521.rapidreact2022.subsytems.Intake
 import org.sert2521.rapidreact2022.subsytems.Shooter
 import java.io.File
-import java.util.*
-import java.util.function.Supplier
 
 object Output {
-    private val autoChooser = SendableChooser<Command?>()
-    private val shuffleboardOutputs = mutableMapOf<String, Supplier<Double>>()
     private val log: BadLog?
 
     init {
-        autoChooser.setDefaultOption("Nothing", null)
-        autoChooser.addOption("Drive Forward", DriveForward())
-        autoChooser.addOption("Shoot Single Right", ShootSingleRight())
-        autoChooser.addOption("Shoot Single Left", ShootSingleLeft())
-        autoChooser.addOption("Shoot Double Right", ShootDoubleRight())
-        autoChooser.addOption("Shoot Double Left", ShootDoubleLeft())
-        SmartDashboard.putData(autoChooser)
-
-        SmartDashboard.putNumber("Auto Delay", 0.0)
-
         val path = File(LOG_PATH)
         if (path.exists() && path.canWrite()) {
             log = BadLog.init(LOG_PATH + "${System.currentTimeMillis()}.bag")
@@ -53,14 +34,6 @@ object Output {
         }
 
         log?.finishInitialization()
-    }
-
-    fun getAuto(): Command? {
-        if(autoChooser.selected == null) {
-            return null
-        }
-
-        return WaitCommand(SmartDashboard.getNumber("Auto Delay", 0.0)).andThen(autoChooser.selected)
     }
 
     fun update() {
