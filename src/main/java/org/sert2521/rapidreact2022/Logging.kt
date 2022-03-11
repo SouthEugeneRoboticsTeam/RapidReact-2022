@@ -6,29 +6,32 @@ import org.sert2521.rapidreact2022.subsytems.Climber
 import org.sert2521.rapidreact2022.subsytems.Drivetrain
 import org.sert2521.rapidreact2022.subsytems.Intake
 import org.sert2521.rapidreact2022.subsytems.Shooter
-import java.io.File
+import java.lang.System.currentTimeMillis
+import java.nio.file.Files
+import java.nio.file.Paths
 
 object Logging {
     private val log: BadLog?
 
     init {
-        val path = File(LOG_PATH)
-        if (path.exists() && path.canWrite()) {
-            log = BadLog.init(LOG_PATH + "${System.currentTimeMillis()}.bag")
+        if(Files.exists(Paths.get(LOG_PATH))) {
+            log = BadLog.init("$LOG_PATH${currentTimeMillis()}.bag")
 
             BadLog.createTopic("Shooter Speed", "rpm", { Shooter.wheelSpeed })
 
-            BadLog.createTopic("Drivetrain Left Speed", "m/s", { Drivetrain.leftVelocity })
-            BadLog.createTopic("Drivetrain Right Speed", "m/s", { Drivetrain.rightVelocity })
+            BadLog.createTopic("Drivetrain/Left Speed", "m/s", { Drivetrain.leftVelocity })
+            BadLog.createTopic("Drivetrain/Right Speed", "m/s", { Drivetrain.rightVelocity })
 
-            BadLog.createTopic("Drivetrain Left Distance", "m", { Drivetrain.leftDistanceTraveled })
-            BadLog.createTopic("Drivetrain Right Distance", "m", { Drivetrain.rightDistanceTraveled })
+            BadLog.createTopic("Drivetrain/Left Distance", "m", { Drivetrain.leftDistanceTraveled })
+            BadLog.createTopic("Drivetrain/Right Distance", "m", { Drivetrain.rightDistanceTraveled })
 
-            BadLog.createTopic("Pose X", "m", { Drivetrain.pose.x })
-            BadLog.createTopic("Pose Y", "m", { Drivetrain.pose.y })
-            BadLog.createTopic("Pose Angle", "°", { Drivetrain.pose.rotation.degrees })
+            BadLog.createTopic("Drivetrain/Pose X", "m", { Drivetrain.pose.x })
+            BadLog.createTopic("Drivetrain/Pose Y", "m", { Drivetrain.pose.y })
+            BadLog.createTopic("Drivetrain/Pose Angle", "°", { Drivetrain.pose.rotation.degrees })
 
-            BadLog.createTopic("Intake Full", BadLog.UNITLESS, { if(Intake.indexerFull) { 1.0 } else { 0.0 } })
+            BadLog.createTopic("Intake/Full", BadLog.UNITLESS, { if(Intake.indexerFull) { 1.0 } else { 0.0 } })
+
+            BadLog.createTopic("Time", "s", { currentTimeMillis() / 1000.0 }, "xaxis")
         } else {
             log = null
         }

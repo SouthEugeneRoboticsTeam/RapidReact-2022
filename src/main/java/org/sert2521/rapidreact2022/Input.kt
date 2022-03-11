@@ -7,6 +7,7 @@ import edu.wpi.first.wpilibj2.command.InstantCommand
 import edu.wpi.first.wpilibj2.command.WaitCommand
 import org.sert2521.rapidreact2022.commands.*
 import org.sert2521.rapidreact2022.subsytems.Climber
+import java.util.function.Supplier
 import kotlin.math.abs
 
 object Input {
@@ -23,7 +24,7 @@ object Input {
 
     private var climbNext = false
 
-    private val autoChooser = SendableChooser<Command?>()
+    private val autoChooser = SendableChooser<Supplier<Command>>()
 
     init {
         controlPreferences.intake.whileHeld(intakeBalls, false)
@@ -37,11 +38,11 @@ object Input {
         controlPreferences.overrideIndexer.whenPressed(InstantCommand( { indexerOverride = !indexerOverride } ))
 
         autoChooser.setDefaultOption("Nothing", null)
-        autoChooser.addOption("Drive Forward", DriveForward())
-        autoChooser.addOption("Shoot Single Right", ShootSingleRight())
-        autoChooser.addOption("Shoot Single Left", ShootSingleLeft())
-        autoChooser.addOption("Shoot Double Right", ShootDoubleRight())
-        autoChooser.addOption("Shoot Double Left", ShootDoubleLeft())
+        autoChooser.addOption("Drive Forward") { DriveForward() }
+        autoChooser.addOption("Shoot Single Right") { ShootSingleRight() }
+        autoChooser.addOption("Shoot Single Left") { ShootSingleLeft() }
+        autoChooser.addOption("Shoot Double Right") { ShootDoubleRight() }
+        autoChooser.addOption("Shoot Double Left") { ShootDoubleLeft() }
         SmartDashboard.putData(autoChooser)
 
         SmartDashboard.putNumber("Auto Delay", 0.0)
@@ -103,6 +104,6 @@ object Input {
             return null
         }
 
-        return WaitCommand(SmartDashboard.getNumber("Auto Delay", 0.0)).andThen(autoChooser.selected)
+        return WaitCommand(SmartDashboard.getNumber("Auto Delay", 0.0)).andThen(autoChooser.selected.get())
     }
 }

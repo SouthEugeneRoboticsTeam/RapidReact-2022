@@ -64,6 +64,8 @@ object Drivetrain : SubsystemBase() {
         frontRightMotor.selectedSensorPosition = 0.0
 
         odometry.resetPosition(pose, gyro.rotation2d)
+
+        brakeMode()
     }
 
     val leftDistanceTraveled
