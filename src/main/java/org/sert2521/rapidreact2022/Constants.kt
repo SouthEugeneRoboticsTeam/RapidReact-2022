@@ -85,7 +85,7 @@ const val END_SPEED = 0.4
 const val SHOOT_TIME = 1.5
 const val SHOOT_DELAY = 0.9
 
-const val LOG_PATH = "/media/sdb1/"
+const val LOG_PATH = "/media/sda1/"
 
 val SHOOT_POSE = Pose2d(0.0, 0.0, Rotation2d.fromDegrees(0.0))
 
