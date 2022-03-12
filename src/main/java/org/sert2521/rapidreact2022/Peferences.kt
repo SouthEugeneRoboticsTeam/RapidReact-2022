@@ -7,7 +7,9 @@ import edu.wpi.first.wpilibj2.command.button.JoystickButton
 
 abstract class RobotPreferences {
     abstract val climberPID: Array<Double>
+    abstract val climberTrapConstraints: Array<Double>
     abstract val actuatorPID: Array<Double>
+    abstract val actuatorTrapConstraints: Array<Double>
     abstract val shooterPIDF: Array<Double>
     abstract val drivePID: Array<Double>
     abstract val driveFeedForward: Array<Double>
@@ -20,8 +22,10 @@ abstract class RobotPreferences {
 }
 
 object CompetitionPreferences : RobotPreferences() {
-    override val climberPID = arrayOf(1.8, 0.6, 0.0)
-    override val actuatorPID = arrayOf(0.06, 0.1, 0.0)
+    override val climberPID = arrayOf(3.4, 0.9, 0.0)
+    override val climberTrapConstraints = arrayOf(0.4, 0.7)
+    override val actuatorPID = arrayOf(0.14, 0.2, 0.0)
+    override val actuatorTrapConstraints = arrayOf(5.0, 5.0)
     override val shooterPIDF = arrayOf(0.00045, 0.0, 0.0, 0.00021)
     override val drivePID = arrayOf(2.773, 0.0, 0.0)
     override val driveFeedForward = arrayOf(0.72556, 2.437, 2.5888)
@@ -35,7 +39,9 @@ object CompetitionPreferences : RobotPreferences() {
 
 object PracticePreferences : RobotPreferences() {
     override val climberPID = arrayOf(0.0, 0.0, 0.0)
-    override val actuatorPID = arrayOf(0.0, 0.0, 0.0)
+    override val climberTrapConstraints = arrayOf(0.0, 0.0)
+    override val actuatorPID = arrayOf(0.00, 0.0, 0.0)
+    override val actuatorTrapConstraints = arrayOf(0.0, 0.0)
     override val shooterPIDF = arrayOf(0.00035, 0.0, 0.0, 0.00018)
     override val drivePID = arrayOf(2.773, 0.0, 0.0)
     override val driveFeedForward = arrayOf(0.72556, 2.437, 2.5888)

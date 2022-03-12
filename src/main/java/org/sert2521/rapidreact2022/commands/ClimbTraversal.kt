@@ -19,7 +19,7 @@ class ClimbTraversal : SequentialCommandGroup() {
                 ClimberHitBar(ABOVE_CURRENT, PULL_IN_NEXT) { OI.getClimbNext() },
                 ClimberHitBar(HIT_CURRENT, PULL_IN_NEXT) { OI.getClimbNext() },
                 InstantCommand( { Climber.setLockVariable(LockStates.UNLOCKED) } ),
-                WaitUntilCommand { Climber.isVariableLocked() == LockStates.UNLOCKED },
+                WaitUntilCommand { Climber.isVariableLocked() == LockStates.UNLOCKED }.deadlineWith(ClimberHitBar(HIT_CURRENT, PULL_IN_NEXT) { OI.getClimbNext() }),
                 InstantCommand( { Climber.loadBearingArm = Arms.BOTH } ),
                 SetClimber(HANG_HEIGHT, HANG_HEIGHT, null),
                 ClimbNext(),

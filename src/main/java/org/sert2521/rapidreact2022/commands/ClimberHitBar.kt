@@ -7,6 +7,7 @@ import org.sert2521.rapidreact2022.robotPreferences
 import org.sert2521.rapidreact2022.subsytems.Climber
 
 class ClimberHitBar(private val staticTarget: Double, private val variableTarget: Double,
+                    private val climberHitSpeed: Double = CLIMBER_HIT_SPEED,
                     private val isDone: () -> Boolean) : CommandBase() {
     private val staticPID: PIDController
     private val variablePID: PIDController
@@ -24,7 +25,7 @@ class ClimberHitBar(private val staticTarget: Double, private val variableTarget
         staticPID.reset()
         variablePID.reset()
 
-        Climber.setAngleSpeed(CLIMBER_HIT_SPEED)
+        Climber.setAngleSpeed(climberHitSpeed)
     }
 
     override fun execute() {
