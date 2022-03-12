@@ -22,6 +22,8 @@ class ClimbTraversal : SequentialCommandGroup() {
                 WaitUntilCommand { Climber.isVariableLocked() == LockStates.UNLOCKED }.deadlineWith(ClimberHitBar(HIT_CURRENT, PULL_IN_NEXT) { OI.getClimbNext() }),
                 InstantCommand( { Climber.loadBearingArm = Arms.BOTH } ),
                 SetClimber(HANG_HEIGHT, HANG_HEIGHT, null),
+                SetClimber(HANG_HEIGHT, LET_GO_BAR_VARIABLE, null),
+                SetClimber(HANG_HEIGHT, LET_GO_BAR_VARIABLE, PAST_NEXT_ANGLE),
                 ClimbNext(),
                 SetClimber(END, PULL_IN_NEXT, END_ANGLE),
                 InstantCommand( { Climber.lock() } )

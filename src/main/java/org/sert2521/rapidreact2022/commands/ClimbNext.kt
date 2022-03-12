@@ -12,11 +12,8 @@ class ClimbNext : SequentialCommandGroup() {
     init {
         addCommands(
                 InstantCommand( { Climber.setLockStatic(LockStates.LOCKED) } ),
-                WaitUntilCommand { Climber.isStaticLocked() == LockStates.LOCKED }.deadlineWith(SetClimber(HANG_HEIGHT, HANG_HEIGHT, null)),
-                SetClimber(HANG_HEIGHT, LET_GO_BAR_VARIABLE, null),
-                SetClimber(HANG_HEIGHT, LET_GO_BAR_VARIABLE, PAST_NEXT_ANGLE),
+                WaitUntilCommand { Climber.isStaticLocked() == LockStates.LOCKED },
                 SetClimber(HANG_HEIGHT, ABOVE_NEXT, PAST_NEXT_ANGLE),
-                //Remove
                 WaitUntilCommand { OI.getClimbNext() },
                 ClimberHitBar(HANG_HEIGHT, ABOVE_NEXT) { OI.getClimbNext() },
                 InstantCommand( { Climber.loadBearingArm = Arms.VARIABLE } ),
