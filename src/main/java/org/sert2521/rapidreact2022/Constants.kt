@@ -37,6 +37,7 @@ const val HIT_MID_SPEED = 0.3
 const val LET_GO_BAR_VARIABLE = 0.2
 const val PAST_NEXT_ANGLE = 130.0
 const val ABOVE_NEXT = 0.66
+const val HIT_NEXT = 0.5
 const val PULL_IN_NEXT = 0.4
 const val LET_GO_STATIC = 0.4
 const val GO_UNDER = 0.3
