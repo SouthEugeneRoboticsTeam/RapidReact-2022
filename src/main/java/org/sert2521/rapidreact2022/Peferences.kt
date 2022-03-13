@@ -21,15 +21,15 @@ abstract class RobotPreferences {
 object CompetitionPreferences : RobotPreferences() {
     override val climberPID = arrayOf(1.8, 0.6, 0.0)
     override val actuatorPID = arrayOf(0.06, 0.1, 0.0)
-    override val shooterPIDF = arrayOf(0.00045, 0.0, 0.0, 0.00021)
+    override val shooterPIDF = arrayOf(0.00055, 0.0, 0.0, 0.00019)
     override val drivePID = arrayOf(2.773, 0.0, 0.0)
     override val driveFeedForward = arrayOf(0.72556, 2.437, 2.5888)
 
     override val ledLength = 16
 
-    override val shooterRPM = 4440.0
-    override val shooterEnterRPM = 4440.0
-    override val shooterExitRPM = 4340.0
+    override val shooterRPM = 4600.0
+    override val shooterEnterRPM = 4600.0
+    override val shooterExitRPM = 4400.0
 }
 
 object PracticePreferences : RobotPreferences() {
@@ -41,9 +41,9 @@ object PracticePreferences : RobotPreferences() {
 
     override val ledLength = 56//58, but two are covered
 
-    override val shooterRPM = 5000.0
-    override val shooterEnterRPM = 5000.0
-    override val shooterExitRPM = 4600.0
+    override val shooterRPM = 4000.0
+    override val shooterEnterRPM = 4000.0
+    override val shooterExitRPM = 3800.0
 }
 
 abstract class ControlPreferences {
@@ -53,7 +53,6 @@ abstract class ControlPreferences {
     abstract val joystickX: () -> Double
     abstract val joystickY: () -> Double
 
-    abstract val fastMode: JoystickButton
     abstract val slowMode: JoystickButton
 
     abstract val intake: JoystickButton
@@ -67,13 +66,14 @@ abstract class ControlPreferences {
     abstract val startClimbMid: JoystickButton
     abstract val startClimbHigh: JoystickButton
     abstract val startClimbTraversal: JoystickButton
+
+    abstract val switchCameras: JoystickButton
 }
 
 object SoftwarePreferences : ControlPreferences() {
     override val joystickX = { primaryController.leftX }
     override val joystickY = { -primaryController.leftY }
 
-    override val fastMode = JoystickButton(primaryController, 6)
     override val slowMode = JoystickButton(primaryController, 5)
 
     override val intake = JoystickButton(primaryController, 3)
@@ -87,13 +87,14 @@ object SoftwarePreferences : ControlPreferences() {
     override val startClimbMid = JoystickButton(secondaryController, 6)
     override val startClimbHigh = JoystickButton(secondaryController, 7)
     override val startClimbTraversal = JoystickButton(secondaryController, 8)
+
+    override val switchCameras = JoystickButton(primaryController, 6)
 }
 
 object DriveteamPreferences : ControlPreferences() {
     override val joystickX = { primaryController.rightX }
     override val joystickY = { -primaryController.leftY }
 
-    override val fastMode = JoystickButton(primaryController, 6)
     override val slowMode = JoystickButton(primaryController, 5)
 
     override val intake = JoystickButton(secondaryController, 8)
@@ -107,6 +108,8 @@ object DriveteamPreferences : ControlPreferences() {
     override val startClimbMid = JoystickButton(secondaryController, 11)
     override val startClimbHigh = JoystickButton(secondaryController, 12)
     override val startClimbTraversal = JoystickButton(secondaryController, 13)
+
+    override val switchCameras = JoystickButton(primaryController, 6)
 }
 
 val robotPreferences = CompetitionPreferences

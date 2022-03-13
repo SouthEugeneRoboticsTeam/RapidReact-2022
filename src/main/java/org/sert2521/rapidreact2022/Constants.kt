@@ -13,10 +13,11 @@ const val THROUGH_BORE_PULSES_PER_ROTATION = 2048.0
 const val WHEEL_CIRCUMFERENCE = 0.1524 * PI
 
 const val TRACK_WIDTH = 0.5816473
-const val MAX_FAST_SPEED = 2.0
-const val MAX_SPEED = 1.5
+const val MAX_SPEED = 2.0
+const val MAX_TURN_SPEED = 1.2
 const val MAX_SLOW_SPEED = 0.5
-const val SLEW_RATE = 4.0
+const val MAX_SLOW_TURN_SPEED = 0.8
+const val SLEW_RATE = 3.0
 const val DEADBAND = 0.1
 
 const val CLIMBER_HEIGHT_PER_ROTATION = 0.00807
@@ -85,7 +86,11 @@ const val END_SPEED = 0.4
 const val SHOOT_TIME = 1.5
 const val SHOOT_DELAY = 0.9
 
-const val LOG_PATH = "/media/sda1/"
+val LOG_PATHS = listOf("/media/sda1/", "/media/sdb1/", "/media/sdc1/")
+const val FORMAT_PATTERN = "yyyy,MMM,dd,HH,mm,ss"
+
+const val CAMERA_PATH = "/Drive Switched"
+val CAMERAS = listOf("Drive 1", "Drive 2")
 
 val SHOOT_POSE = Pose2d(0.0, 0.0, Rotation2d.fromDegrees(0.0))
 

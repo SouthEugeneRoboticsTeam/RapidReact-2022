@@ -1,5 +1,6 @@
 package org.sert2521.rapidreact2022
 
+import edu.wpi.first.networktables.NetworkTableInstance
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard
 import edu.wpi.first.wpilibj2.command.Command
@@ -26,6 +27,8 @@ object Input {
 
     private val autoChooser = SendableChooser<Supplier<Command>>()
 
+    private var camera = 0
+
     init {
         controlPreferences.intake.whileHeld(intakeBalls, false)
         controlPreferences.outtake.whileHeld(outtakeBalls)
@@ -37,6 +40,8 @@ object Input {
         controlPreferences.slowMode.whenPressed(InstantCommand( { slowMode = !slowMode } ))
         controlPreferences.overrideIndexer.whenPressed(InstantCommand( { indexerOverride = !indexerOverride } ))
 
+        controlPreferences.switchCameras.whenPressed(InstantCommand( { NetworkTableInstance.getDefault().getEntry(CAMERA_PATH).setString(CAMERAS[camera]); camera++; camera %= CAMERAS.size } ))
+
         autoChooser.setDefaultOption("Nothing", null)
         autoChooser.addOption("Drive Forward") { DriveForward() }
         autoChooser.addOption("Shoot Single Right") { ShootSingleRight() }
@@ -45,7 +50,7 @@ object Input {
         autoChooser.addOption("Shoot Double Left") { ShootDoubleLeft() }
         SmartDashboard.putData(autoChooser)
 
-        SmartDashboard.putNumber("Auto Delay", 0.0)
+        SmartDashboard.putNumber("Robot/Auto Delay", 0.0)
     }
 
     fun onEnable() {
@@ -64,10 +69,6 @@ object Input {
 
     fun getSlowMode(): Boolean {
         return slowMode || Climber.climbing
-    }
-
-    fun isFast(): Boolean {
-        return controlPreferences.fastMode.get()
     }
 
     fun getClimbNext(): Boolean {
@@ -104,6 +105,6 @@ object Input {
             return null
         }
 
-        return WaitCommand(SmartDashboard.getNumber("Auto Delay", 0.0)).andThen(autoChooser.selected.get())
+        return WaitCommand(SmartDashboard.getNumber("Robot/Auto Delay", 0.0)).andThen(autoChooser.selected.get())
     }
 }

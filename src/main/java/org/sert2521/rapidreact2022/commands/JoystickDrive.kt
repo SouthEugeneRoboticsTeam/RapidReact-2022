@@ -50,19 +50,21 @@ class JoystickDrive : CommandBase() {
     //Basically just used ramsete drive code, but with user input
     override fun execute() {
         val maxSpeed = if (!Input.getSlowMode()) {
-            if (Input.isFast()) {
-                MAX_FAST_SPEED
-            } else {
-                MAX_SPEED
-            }
+            MAX_SPEED
         } else {
             MAX_SLOW_SPEED
         }
 
+        val maxTurnSpeed = if (!Input.getSlowMode()) {
+            MAX_TURN_SPEED
+        } else {
+            MAX_SLOW_TURN_SPEED
+        }
+
         val yIn = slewRateLimiterDrive.calculate(joystickToWheelPercent(Input.yAxis))
         val xIn = slewRateLimiterTurn.calculate(joystickToWheelPercent(Input.xAxis))
-        val leftSpeed = (yIn + xIn) * maxSpeed
-        val rightSpeed = (yIn - xIn) * maxSpeed
+        val leftSpeed = yIn * maxSpeed + xIn * maxTurnSpeed
+        val rightSpeed = yIn * maxSpeed - xIn * maxTurnSpeed
         val leftOutput = feedForward.calculate(leftSpeed) + pid.calculate(Drivetrain.leftVelocity, leftSpeed)
         val rightOutput = feedForward.calculate(rightSpeed) + pid.calculate(Drivetrain.rightVelocity, rightSpeed)
 

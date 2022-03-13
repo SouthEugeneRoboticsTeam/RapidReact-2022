@@ -6,6 +6,7 @@ import org.sert2521.rapidreact2022.subsytems.Intake
 import org.sert2521.rapidreact2022.subsytems.Shooter
 import java.lang.System.currentTimeMillis
 
+//Maybe make it wait till PID is steady
 class ShootBalls : CommandBase() {
     private val danceLED = DanceLED()
     private var shooting = false
