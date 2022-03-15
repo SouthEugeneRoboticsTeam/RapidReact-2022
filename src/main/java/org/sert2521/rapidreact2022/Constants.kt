@@ -129,11 +129,14 @@ enum class Sparks(val id: Int, val type: CANSparkMaxLowLevel.MotorType, val reve
     SHOOTER_BACK(11, CANSparkMaxLowLevel.MotorType.kBrushed, false)
 }
 
-enum class SparkEncoders(val conversionFactor: Double) {
+enum class SparkEncodersHall(val conversionFactor: Double) {
     SHOOTER(1.0),
-    SHOOTER_BACK(1.0),
     STATIC_CLIMBER(CLIMBER_HEIGHT_PER_ROTATION),
     VARIABLE_CLIMBER(CLIMBER_HEIGHT_PER_ROTATION)
+}
+
+enum class SparkEncodersQuadrature(val encoderPulsesPerRev: Int, val conversionFactor: Double) {
+    SHOOTER_BACK(THROUGH_BORE_PULSES_PER_ROTATION.toInt(), 1.0)
 }
 
 enum class OnOffs(val id: Int) {
