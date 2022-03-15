@@ -19,7 +19,6 @@ class ShootBalls : CommandBase() {
     override fun initialize() {
         danceLED.schedule()
 
-        Intake.setIntakeSpeed(INTAKE_SPEED)
         Shooter.setWheelSpeed(robotPreferences.shooterRPM)
         Shooter.setWheelSpeedBack(robotPreferences.shooterBackRPM)
 
@@ -46,8 +45,10 @@ class ShootBalls : CommandBase() {
 
         if(delayActive() || !Intake.indexerFull) {
             Intake.setIndexerSpeed(INDEXER_SPEED)
+            Intake.setIntakeSpeed(INTAKE_SPEED)
         }else{
             Intake.setIndexerSpeed(0.0)
+            Intake.setIntakeSpeed(0.0)
         }
     }
 

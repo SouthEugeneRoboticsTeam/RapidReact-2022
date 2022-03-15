@@ -27,13 +27,13 @@ object Shooter : SubsystemBase() {
         motor.pidController.ff = robotPreferences.shooterPIDF[3]
     }
 
-    private fun getBackSpeed(error: Double): Double {
-        return motorBackPID.calculate(error) + error * robotPreferences.shooterBackPIDF[3]
+    private fun getBackSpeed(): Double {
+        return motorBackPID.calculate(wheelSpeedBack, motorBackGoal) + (motorBackGoal * robotPreferences.shooterBackPIDF[3])
     }
 
     override fun periodic() {
         if(!motorBackStopped) {
-            motorBack.set(getBackSpeed(motorBackGoal - motorBackEncoder.velocity))
+            motorBack.set(getBackSpeed())
         }
     }
 
