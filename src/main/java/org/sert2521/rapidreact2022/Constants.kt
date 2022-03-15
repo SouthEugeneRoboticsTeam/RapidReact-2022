@@ -86,6 +86,7 @@ const val END_SPEED = 0.4
 const val SHOOT_TIME = 1.5
 const val SHOOT_DELAY = 0.9
 
+//fix
 val LOG_PATHS = listOf("/media/sda1/", "/media/sdb1/", "/media/sdc1/")
 const val FORMAT_PATTERN = "yyyy,MMM,dd,HH,mm,ss"
 
@@ -96,7 +97,7 @@ val SHOOT_POSE = Pose2d(0.0, 0.0, Rotation2d.fromDegrees(0.0))
 
 val DOUBLE_START_POSE_LEFT = Pose2d(-0.8, -1.05, Rotation2d.fromDegrees(180.0))
 val PICKUP_POSE_LEFT = Pose2d(-2.55, -1.05, Rotation2d.fromDegrees(205.0))
-val ENTRY_POSE_LEFT = Pose2d(-2.8, 0.0, Rotation2d.fromDegrees(0.0))
+val ENTRY_POSE_LEFT = Pose2d(-1.55, 0.8, Rotation2d.fromDegrees(-90.0))
 val END_POSE_SINGLE_LEFT = Pose2d(-1.85, -2.0, Rotation2d.fromDegrees(35.0))
 
 val DOUBLE_START_POSE_RIGHT = Pose2d(-0.8, 1.05, Rotation2d.fromDegrees(180.0))
@@ -124,11 +125,13 @@ enum class Talons(val id: Int, val reversed: Boolean) {
 enum class Sparks(val id: Int, val type: CANSparkMaxLowLevel.MotorType, val reversed: Boolean) {
     STATIC_CLIMBER(8, CANSparkMaxLowLevel.MotorType.kBrushless, true),
     VARIABLE_CLIMBER(9, CANSparkMaxLowLevel.MotorType.kBrushless, false),
-    SHOOTER(10, CANSparkMaxLowLevel.MotorType.kBrushless, true)
+    SHOOTER(10, CANSparkMaxLowLevel.MotorType.kBrushless, true),
+    SHOOTER_BACK(11, CANSparkMaxLowLevel.MotorType.kBrushed, false)
 }
 
 enum class SparkEncoders(val conversionFactor: Double) {
     SHOOTER(1.0),
+    SHOOTER_BACK(1.0),
     STATIC_CLIMBER(CLIMBER_HEIGHT_PER_ROTATION),
     VARIABLE_CLIMBER(CLIMBER_HEIGHT_PER_ROTATION)
 }
@@ -144,8 +147,8 @@ enum class Potentiometers(val id: Int, val maxAngle: Double, val zeroAngle: Doub
 }
 
 enum class Encoders(val idA: Int, val idB: Int, val reversed: Boolean, val encodingType: CounterBase.EncodingType, val encoderDistancePerPulse: Double, val maxPeriod: Double, val minRate: Double, val samples: Int) {
-    LEFT_DRIVE(0, 1, true, CounterBase.EncodingType.k2X, WHEEL_CIRCUMFERENCE / THROUGH_BORE_PULSES_PER_ROTATION, 0.1, 10.0, 5),
-    RIGHT_DRIVE(2, 3, false, CounterBase.EncodingType.k2X, WHEEL_CIRCUMFERENCE / THROUGH_BORE_PULSES_PER_ROTATION, 0.1, 10.0, 5),
+    LEFT_DRIVE(0, 1, true, CounterBase.EncodingType.k2X, WHEEL_CIRCUMFERENCE / THROUGH_BORE_PULSES_PER_ROTATION, 0.1, 0.01, 5),
+    RIGHT_DRIVE(2, 3, false, CounterBase.EncodingType.k2X, WHEEL_CIRCUMFERENCE / THROUGH_BORE_PULSES_PER_ROTATION, 0.1, 0.01, 5),
 }
 
 enum class PWMS(val id: Int) {
