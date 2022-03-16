@@ -198,7 +198,7 @@ object Climber : SubsystemBase() {
             maintain += CLIMBER_MAINTAIN / 2.0
         }
 
-        /*if(isStaticLocked() == LockStates.LOCKED) {
+        if(isStaticLocked() == LockStates.LOCKED) {
             staticClimberMotor.set(0.0)
         } else {
             if(isStaticLocked() == LockStates.NEITHER || (staticGoal < 0.0 && isAtBottomStatic()) || (staticGoal > 0.0 && staticHeight >= MAX_CLIMBER_HEIGHT)) {
@@ -206,8 +206,7 @@ object Climber : SubsystemBase() {
             } else {
                 staticClimberMotor.set(staticGoal + maintain)
             }
-        }*/
-        staticClimberMotor.set(0.0)
+        }
     }
 
     private fun variableUpdate() {
@@ -228,7 +227,7 @@ object Climber : SubsystemBase() {
             maintain += CLIMBER_MAINTAIN / 2.0
         }
 
-        /*if(isVariableLocked() == LockStates.LOCKED) {
+        if(isVariableLocked() == LockStates.LOCKED) {
             variableClimberMotor.set(0.0)
         } else {
             if(isVariableLocked() == LockStates.NEITHER || (variableGoal < 0.0 && isAtBottomVariable()) || (variableGoal > 0.0 && variableHeight >= MAX_CLIMBER_HEIGHT)) {
@@ -236,17 +235,15 @@ object Climber : SubsystemBase() {
             } else {
                 variableClimberMotor.set(variableGoal + maintain)
             }
-        }*/
-        variableClimberMotor.set(0.0)
+        }
     }
 
     private fun angleUpdate() {
-        /*if((angleGoal < 0.0 && variableAngle <= MIN_CLIMBER_ANGLE) || (angleGoal > 0.0 && variableAngle >= MAX_CLIMBER_ANGLE)) {
+        if((angleGoal < 0.0 && variableAngle <= MIN_CLIMBER_ANGLE) || (angleGoal > 0.0 && variableAngle >= MAX_CLIMBER_ANGLE)) {
             variableActuator.set(0.0)
         } else {
             variableActuator.set(angleGoal)
-        }*/
-        variableActuator.set(0.0)
+        }
     }
 
     fun lock() {
