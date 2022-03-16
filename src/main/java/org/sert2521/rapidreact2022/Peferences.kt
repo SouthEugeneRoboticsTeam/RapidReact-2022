@@ -44,18 +44,18 @@ object PracticePreferences : RobotPreferences() {
     override val climberPID = arrayOf(0.0, 0.0, 0.0)
     override val actuatorPID = arrayOf(0.0, 0.0, 0.0)
     override val shooterPIDF = arrayOf(0.00035, 0.0, 0.0, 0.00018)
-    override val shooterBackPIDF = arrayOf(0.000019, 0.0, 0.0, 0.000069)
+    override val shooterBackPIDF = arrayOf(0.000068, 0.0, 0.0, 0.000148)
     override val drivePID = arrayOf(2.773, 0.0, 0.0)
     override val driveFeedForward = arrayOf(0.72556, 2.437, 2.5888)
 
     override val ledLength = 56//58, but two are covered
 
-    override val shooterRPM = 3600.0
-    override val shooterEnterRPM = 3600.0
-    override val shooterExitRPM = 3400.0
+    override val shooterRPM = 3500.0
+    override val shooterEnterRPM = 3400.0
+    override val shooterExitRPM = 3200.0
 
-    override val shooterBackRPM = 3600.0
-    override val shooterBackEnterRPM = 3400.0
+    override val shooterBackRPM = 4000.0
+    override val shooterBackEnterRPM = 3800.0
 }
 
 abstract class ControlPreferences {

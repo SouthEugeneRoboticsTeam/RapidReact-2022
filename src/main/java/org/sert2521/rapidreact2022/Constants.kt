@@ -7,7 +7,8 @@ import edu.wpi.first.wpilibj.CounterBase
 import edu.wpi.first.wpilibj.SPI
 import kotlin.math.PI
 
-const val THROUGH_BORE_PULSES_PER_ROTATION = 2048.0
+const val THROUGH_BORE_CYCLES_PER_ROTATION = 2048
+const val THROUGH_BORE_COUNTS_PER_ROTATION = 8192
 
 //6 inches is 0.1524 meters
 const val WHEEL_CIRCUMFERENCE = 0.1524 * PI
@@ -83,8 +84,8 @@ const val AUTO_EXIT_ACCELERATION = 1.5
 
 const val END_SPEED = 0.4
 
-const val SHOOT_TIME = 1.5
-const val SHOOT_DELAY = 0.9
+const val SHOOT_TIME = 1.0
+const val SHOOT_DELAY = 0.5
 
 //fix
 val LOG_PATHS = listOf("/media/sda1/", "/media/sdb1/", "/media/sdc1/")
@@ -130,13 +131,14 @@ enum class Sparks(val id: Int, val type: CANSparkMaxLowLevel.MotorType, val reve
 }
 
 enum class SparkEncodersHall(val conversionFactor: Double) {
+    //maybe fix ratio it is like 15 to 18 or something ask someone
     SHOOTER(1.0),
     STATIC_CLIMBER(CLIMBER_HEIGHT_PER_ROTATION),
     VARIABLE_CLIMBER(CLIMBER_HEIGHT_PER_ROTATION)
 }
 
 enum class SparkEncodersQuadrature(val encoderPulsesPerRev: Int, val conversionFactor: Double) {
-    SHOOTER_BACK(THROUGH_BORE_PULSES_PER_ROTATION.toInt(), 1.0)
+    SHOOTER_BACK(THROUGH_BORE_COUNTS_PER_ROTATION, 1.0)
 }
 
 enum class OnOffs(val id: Int) {
@@ -150,8 +152,8 @@ enum class Potentiometers(val id: Int, val maxAngle: Double, val zeroAngle: Doub
 }
 
 enum class Encoders(val idA: Int, val idB: Int, val reversed: Boolean, val encodingType: CounterBase.EncodingType, val encoderDistancePerPulse: Double, val maxPeriod: Double, val minRate: Double, val samples: Int) {
-    LEFT_DRIVE(0, 1, true, CounterBase.EncodingType.k2X, WHEEL_CIRCUMFERENCE / THROUGH_BORE_PULSES_PER_ROTATION, 0.1, 0.01, 5),
-    RIGHT_DRIVE(2, 3, false, CounterBase.EncodingType.k2X, WHEEL_CIRCUMFERENCE / THROUGH_BORE_PULSES_PER_ROTATION, 0.1, 0.01, 5),
+    LEFT_DRIVE(0, 1, true, CounterBase.EncodingType.k2X, WHEEL_CIRCUMFERENCE / THROUGH_BORE_CYCLES_PER_ROTATION, 0.1, 0.01, 5),
+    RIGHT_DRIVE(2, 3, false, CounterBase.EncodingType.k2X, WHEEL_CIRCUMFERENCE / THROUGH_BORE_CYCLES_PER_ROTATION, 0.1, 0.01, 5),
 }
 
 enum class PWMS(val id: Int) {

@@ -26,7 +26,7 @@ class ShootBalls : CommandBase() {
         lastShot = 0L
     }
 
-    private fun delayActive(): Boolean {
+    private fun shouldShoot(): Boolean {
         return shooting && currentTimeMillis() - lastShot >= SHOOT_DELAY * 1000
     }
 
@@ -36,14 +36,14 @@ class ShootBalls : CommandBase() {
         }
 
         if(robotPreferences.shooterExitRPM >= Shooter.wheelSpeed) {
-            if(delayActive()) {
+            if(shouldShoot()) {
                 lastShot = currentTimeMillis()
             }
 
             shooting = false
         }
 
-        if(delayActive() || !Intake.indexerFull) {
+        if(shouldShoot() || !Intake.indexerFull) {
             Intake.setIndexerSpeed(INDEXER_SPEED)
             Intake.setIntakeSpeed(INTAKE_SPEED)
         }else{

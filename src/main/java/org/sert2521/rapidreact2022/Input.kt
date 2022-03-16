@@ -50,7 +50,7 @@ object Input {
         autoChooser.addOption("Shoot Double Left") { ShootDoubleLeft() }
         SmartDashboard.putData(autoChooser)
 
-        SmartDashboard.putNumber("Robot/Auto Delay", 0.0)
+        SmartDashboard.putNumber("Auto Delay", 0.0)
     }
 
     fun onEnable() {
