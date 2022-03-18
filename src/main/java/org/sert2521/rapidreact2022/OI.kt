@@ -5,6 +5,7 @@ import org.sert2521.rapidreact2022.commands.*
 import org.sert2521.rapidreact2022.subsytems.Climber
 import kotlin.math.abs
 
+//Add lock button
 object OI {
     private val intakeBalls = IntakeBalls()
     private val outtakeBalls = OuttakeBalls()

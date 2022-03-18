@@ -10,9 +10,9 @@ class ClimbNext : SequentialCommandGroup() {
     init {
         addCommands(
                 SetClimber(HANG_HEIGHT, ABOVE_NEXT, PAST_NEXT_ANGLE),
-                ClimberHitBar(HANG_HEIGHT, ABOVE_NEXT) { OI.getClimbNext() },
+                ClimberHitBar(HANG_HEIGHT, ABOVE_NEXT, Arms.VARIABLE) { OI.getClimbNext() },
                 InstantCommand( { Climber.loadBearingArm = Arms.BOTH } ),
-                ClimberHitBar(HANG_HEIGHT, HIT_NEXT),
+                ClimberHitBar(HANG_HEIGHT, HIT_NEXT, Arms.VARIABLE),
                 InstantCommand( { Climber.loadBearingArm = Arms.VARIABLE } ),
                 SetClimber(LET_GO_STATIC, PULL_IN_NEXT, null)
         )

@@ -31,29 +31,30 @@ const val DEFAULT_ANGLE = 134.0
 const val HANG_HEIGHT = 0.0
 
 const val REACH_MID = 0.64
-const val HIT_MID = 0.6
-const val HIT_MID_SPEED = 0.3
 
 const val LET_GO_BAR_VARIABLE = 0.2
 const val PAST_NEXT_ANGLE = 115.0
 const val ABOVE_NEXT = 0.66
 const val HIT_NEXT = 0.57
-const val PULL_IN_NEXT = 0.5
-const val LET_GO_STATIC = 0.5
-const val GO_UNDER = 0.3
+const val PULL_IN_NEXT = 0.46
+const val LET_GO_STATIC = 0.61
 
-const val PAST_CURRENT_ANGLE = 140.0
+const val GO_UNDER_ANGLE = 130.0
+const val GO_UNDER = 0.1
+const val PAST_CURRENT_ANGLE = 146.0
 const val ABOVE_CURRENT = 0.64
-const val HIT_CURRENT = 0.4
 
 const val END = 0.2
-const val END_ANGLE = 106.0
+const val END_ANGLE = 150.0
 
 const val DEFAULT_TOLERANCE = 0.015
+const val HANG_TOLERANCE = 0.045
 const val DEFAULT_TOLERANCE_ANGLE = 1.5
 
-const val CLIMBER_MAINTAIN = -0.2
+const val CLIMBER_MAINTAIN = -0.1
 const val CLIMBER_HIT_SPEED = 0.35
+const val FILTER_TAPS = 30
+const val STOP_TOLERANCE = 0.5
 const val CLIMBER_RESET_SPEED = -0.6
 
 const val SERVO_UNLOCK_STATIC = 0.1
