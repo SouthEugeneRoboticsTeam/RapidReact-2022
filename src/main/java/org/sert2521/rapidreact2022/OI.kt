@@ -12,13 +12,14 @@ object OI {
     private val shootBalls = ShootBalls()
     private val revShooter = RevShooter()
 
-    private val climbTraversal = ClimbTraversal()
+    private val climb = Climb()
 
     private var slowMode = false
 
     private var indexerOverride = false
 
     private var climbNext = false
+    private var climbLocked = false
 
     init {
         controlPreferences.intake.whileHeld(intakeBalls, false)
@@ -26,7 +27,8 @@ object OI {
         controlPreferences.shoot.whileHeld(shootBalls, false)
         controlPreferences.rev.whileHeld(revShooter)
 
-        controlPreferences.startClimbTraversal.whenPressed(climbTraversal, false)
+        controlPreferences.startClimbTraversal.whenPressed(climb, false)
+        controlPreferences.lockOne.and(controlPreferences.lockTwo).whenActive(InstantCommand( { climbLocked = true } ))
 
         controlPreferences.slowMode.whenPressed(InstantCommand( { slowMode = !slowMode } ))
         controlPreferences.overrideIndexer.whenPressed(InstantCommand( { indexerOverride = !indexerOverride } ))
@@ -34,8 +36,8 @@ object OI {
 
     fun onEnable() {
         slowMode = false
-
         indexerOverride = false
+        climbLocked = false
     }
 
     fun getIndexerOverride(): Boolean {
@@ -67,6 +69,10 @@ object OI {
 
     fun getClimbEnd(): Boolean {
         return controlPreferences.endClimb.get()
+    }
+
+    fun getClimbLocked(): Boolean {
+        return climbLocked
     }
 
     fun getClimbStatic(): Double {

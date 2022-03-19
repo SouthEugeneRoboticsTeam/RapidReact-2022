@@ -3,24 +3,27 @@ package org.sert2521.rapidreact2022.commands
 import edu.wpi.first.math.controller.PIDController
 import edu.wpi.first.wpilibj2.command.CommandBase
 import org.sert2521.rapidreact2022.subsytems.Climber
-import edu.wpi.first.math.filter.LinearFilter
 import edu.wpi.first.math.filter.MedianFilter
 import org.sert2521.rapidreact2022.*
-import org.sert2521.rapidreact2022.subsytems.Arms
 import org.sert2521.rapidreact2022.subsytems.LockStates
 import kotlin.math.abs
 
+enum class Directions {
+    FORWARD,
+    BACKWARD,
+}
+
 class ClimberHitBar(private val staticTarget: Double, private val variableTarget: Double,
-                    private val arms: Arms,
+                    private val direction: Directions,
                     private val climberHitSpeed: Double = CLIMBER_HIT_SPEED,
                     private val taps: Int = FILTER_TAPS,
                     private val stopTolerance: Double = STOP_TOLERANCE,
                     private val isDone: () -> Boolean) : CommandBase() {
-    constructor(staticTarget: Double, variableTarget: Double, arm: Arms,
+    constructor(staticTarget: Double, variableTarget: Double, direction: Directions,
                 staticTolerance: Double = DEFAULT_TOLERANCE, variableTolerance: Double = DEFAULT_TOLERANCE) :
-            this(staticTarget, variableTarget, arm,
+            this(staticTarget, variableTarget, direction,
                 isDone = { ((staticTarget - Climber.staticHeight in -staticTolerance..staticTolerance) || (Climber.isStaticLocked() == LockStates.LOCKED)) &&
-                        (variableTarget - Climber.variableHeight in -variableTolerance..variableTolerance || (Climber.isVariableLocked() == LockStates.LOCKED)) } )
+                (variableTarget - Climber.variableHeight in -variableTolerance..variableTolerance || (Climber.isVariableLocked() == LockStates.LOCKED)) } )
     private val staticPID: PIDController
     private val variablePID: PIDController
     private val filter = MedianFilter(taps)
@@ -46,7 +49,7 @@ class ClimberHitBar(private val staticTarget: Double, private val variableTarget
         Climber.setStaticSpeed(staticPID.calculate(Climber.staticHeight, staticTarget))
         Climber.setVariableSpeed(variablePID.calculate(Climber.variableHeight, variableTarget))
 
-        if(arms == Arms.STATIC) {
+        if(direction == Directions.BACKWARD) {
             val angleOut = filter.calculate(Climber.variableAngle)
             tapsBeforeStart += 1
 
@@ -57,7 +60,7 @@ class ClimberHitBar(private val staticTarget: Double, private val variableTarget
             }
         }
 
-        if(arms == Arms.VARIABLE) {
+        if(direction == Directions.FORWARD) {
             Climber.setAngleSpeed(climberHitSpeed)
         }
     }

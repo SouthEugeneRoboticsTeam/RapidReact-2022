@@ -7,9 +7,7 @@ import edu.wpi.first.wpilibj2.command.button.JoystickButton
 
 abstract class RobotPreferences {
     abstract val climberPID: Array<Double>
-    abstract val climberTrapConstraints: Array<Double>
     abstract val actuatorPID: Array<Double>
-    abstract val actuatorTrapConstraints: Array<Double>
     abstract val shooterPIDF: Array<Double>
     abstract val drivePID: Array<Double>
     abstract val driveFeedForward: Array<Double>
@@ -23,9 +21,7 @@ abstract class RobotPreferences {
 
 object CompetitionPreferences : RobotPreferences() {
     override val climberPID = arrayOf(3.4, 0.9, 0.0)
-    override val climberTrapConstraints = arrayOf(0.4, 0.7)
-    override val actuatorPID = arrayOf(0.14, 0.2, 0.0)
-    override val actuatorTrapConstraints = arrayOf(5.0, 5.0)
+    override val actuatorPID = arrayOf(0.10, 0.1, 0.0)
     override val shooterPIDF = arrayOf(0.00045, 0.0, 0.0, 0.00021)
     override val drivePID = arrayOf(2.773, 0.0, 0.0)
     override val driveFeedForward = arrayOf(0.72556, 2.437, 2.5888)
@@ -39,9 +35,7 @@ object CompetitionPreferences : RobotPreferences() {
 
 object PracticePreferences : RobotPreferences() {
     override val climberPID = arrayOf(0.0, 0.0, 0.0)
-    override val climberTrapConstraints = arrayOf(0.0, 0.0)
     override val actuatorPID = arrayOf(0.00, 0.0, 0.0)
-    override val actuatorTrapConstraints = arrayOf(0.0, 0.0)
     override val shooterPIDF = arrayOf(0.00035, 0.0, 0.0, 0.00018)
     override val drivePID = arrayOf(2.773, 0.0, 0.0)
     override val driveFeedForward = arrayOf(0.72556, 2.437, 2.5888)
@@ -72,6 +66,8 @@ abstract class ControlPreferences {
 
     abstract val climbNext: JoystickButton
     abstract val endClimb: JoystickButton
+    abstract val lockOne: JoystickButton
+    abstract val lockTwo: JoystickButton
     abstract val startClimbTraversal: JoystickButton
 }
 
@@ -91,6 +87,8 @@ object SoftwarePreferences : ControlPreferences() {
 
     override val climbNext = JoystickButton(secondaryController, 5)
     override val endClimb = JoystickButton(secondaryController, 6)
+    override val lockOne = JoystickButton(secondaryController, 1)
+    override val lockTwo = JoystickButton(secondaryController, 2)
     override val startClimbTraversal = JoystickButton(secondaryController, 8)
 }
 
@@ -110,6 +108,8 @@ object DriveteamPreferences : ControlPreferences() {
 
     override val climbNext = JoystickButton(secondaryController, 5)
     override val endClimb = JoystickButton(secondaryController, 11)
+    override val lockOne = JoystickButton(secondaryController, 1)
+    override val lockTwo = JoystickButton(secondaryController, 2)
     override val startClimbTraversal = JoystickButton(secondaryController, 13)
 }
 
