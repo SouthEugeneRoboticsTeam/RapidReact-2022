@@ -2,6 +2,7 @@ package org.sert2521.rapidreact2022.commands
 
 import edu.wpi.first.wpilibj2.command.InstantCommand
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup
+import edu.wpi.first.wpilibj2.command.WaitUntilCommand
 import org.sert2521.rapidreact2022.*
 import org.sert2521.rapidreact2022.subsytems.Arms
 import org.sert2521.rapidreact2022.subsytems.Climber
@@ -21,7 +22,7 @@ class Climb : SequentialCommandGroup() {
                 ClimberHitBar(HANG_HEIGHT, HIT_HIGH, Directions.FORWARD),
                 InstantCommand( { Climber.loadBearingArm = Arms.VARIABLE } ),
                 SetClimber(HANG_HEIGHT, PULL_IN_HIGH, null),
-                SetClimber(LET_GO_MID, PULL_IN_HIGH, null, maxAcceleration = CLIMBER_LET_GO_ACCELERATION),
+                SetClimber(LET_GO_MID, PULL_IN_HIGH, null, maxSpeed = CLIMBER_LET_GO_SPEED, maxAcceleration = CLIMBER_LET_GO_ACCELERATION),
                 SetClimber(GO_UNDER, PULL_IN_HIGH, GO_UNDER_ANGLE),
                 SetClimber(GO_UNDER, PULL_IN_HIGH, PAST_CURRENT_ANGLE),
                 SetClimber(ABOVE_CURRENT, PULL_IN_HIGH, PAST_CURRENT_ANGLE),
@@ -35,11 +36,12 @@ class Climb : SequentialCommandGroup() {
                 ClimberHitBar(HANG_HEIGHT, HIT_TRAVERSAL, Directions.FORWARD),
                 InstantCommand( { Climber.loadBearingArm = Arms.VARIABLE } ),
                 SetClimber(HANG_HEIGHT, PULL_IN_TRAVERSAL, null),
-                SetClimber(LET_GO_HIGH, PULL_IN_TRAVERSAL, null, maxAcceleration = CLIMBER_LET_GO_ACCELERATION),
+                SetClimber(LET_GO_HIGH, PULL_IN_TRAVERSAL, null, maxSpeed = CLIMBER_LET_GO_SPEED, maxAcceleration = CLIMBER_LET_GO_ACCELERATION),
                 SetClimber(LET_GO_HIGH, PULL_IN_TRAVERSAL, LET_GO_ANGLE),
                 SetClimber(END, PULL_IN_TRAVERSAL, LET_GO_ANGLE),
                 SetClimber(END, PULL_IN_TRAVERSAL, END_ANGLE),
-                InstantCommand( { Climber.lock() } )
+                InstantCommand( { Climber.lock() } ),
+                WaitUntilCommand(180.0),
         )
     }
 

@@ -24,8 +24,6 @@ enum class Arms {
     NEITHER
 }
 
-//Make birds work at start
-//Make it stop if the angle isn't changing
 object Climber : SubsystemBase() {
     private val staticClimberMotor = CANSparkMax(Sparks.STATIC_CLIMBER.id, Sparks.STATIC_CLIMBER.type)
     private val variableClimberMotor = CANSparkMax(Sparks.VARIABLE_CLIMBER.id, Sparks.VARIABLE_CLIMBER.type)
@@ -90,7 +88,7 @@ object Climber : SubsystemBase() {
         get() = variableClimberMotor.encoder.position
 
     val variableAngle
-        get() = potentiometer.get()
+        get() = potentiometer.get() - CLIMBER_ANGLE_OFFSET
 
     fun isAtBottomStatic(): Boolean {
         return !staticDownLimitSwitch.get()
