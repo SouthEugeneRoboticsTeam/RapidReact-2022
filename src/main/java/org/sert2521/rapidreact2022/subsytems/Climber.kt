@@ -1,7 +1,8 @@
 package org.sert2521.rapidreact2022.subsytems
 
 import com.ctre.phoenix.motorcontrol.NeutralMode
-import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX
+import com.ctre.phoenix.motorcontrol.TalonSRXControlMode
+import com.ctre.phoenix.motorcontrol.can.TalonSRX
 import com.revrobotics.CANSparkMax
 import edu.wpi.first.wpilibj.AnalogPotentiometer
 import edu.wpi.first.wpilibj.DigitalInput
@@ -24,12 +25,10 @@ enum class Arms {
     NEITHER
 }
 
-//Make hold pos while doing the birds
-//Make it stop if the angle isn't changing
 object Climber : SubsystemBase() {
     private val staticClimberMotor = CANSparkMax(Sparks.STATIC_CLIMBER.id, Sparks.STATIC_CLIMBER.type)
     private val variableClimberMotor = CANSparkMax(Sparks.VARIABLE_CLIMBER.id, Sparks.VARIABLE_CLIMBER.type)
-    private val variableActuator = WPI_TalonSRX(Talons.VARIABLE_ACTUATOR.id)
+    private val variableActuator = TalonSRX(Talons.VARIABLE_ACTUATOR.id)
 
     private var staticGoal = 0.0
     private var variableGoal = 0.0
@@ -48,12 +47,12 @@ object Climber : SubsystemBase() {
     private var variableLocked = LockStates.NEITHER
     private var variableLockedUpdate = 0L
 
-    private var forceLocked = false
-
     private val startClimber = StartClimber()
 
     var loadBearingArm = Arms.NEITHER
     var climbing = false
+    var inAir = false
+    private var calibratedAngle = false
 
     init {
         staticClimberMotor.inverted = Sparks.STATIC_CLIMBER.reversed
@@ -64,8 +63,10 @@ object Climber : SubsystemBase() {
         variableClimberMotor.idleMode = CANSparkMax.IdleMode.kBrake
         variableActuator.setNeutralMode(NeutralMode.Brake)
 
-        staticClimberMotor.encoder.positionConversionFactor = SparkEncodersHall.STATIC_CLIMBER.conversionFactor
-        variableClimberMotor.encoder.positionConversionFactor = SparkEncodersHall.VARIABLE_CLIMBER.conversionFactor
+        staticClimberMotor.encoder.positionConversionFactor = SparkEncoders.STATIC_CLIMBER.conversionFactor
+        variableClimberMotor.encoder.positionConversionFactor = SparkEncoders.VARIABLE_CLIMBER.conversionFactor
+
+        variableActuator.configSelectedFeedbackSensor(TalonEncoders.ACTUATOR_MOTOR.device.toFeedbackDevice())
     }
 
     fun onEnable() {
@@ -74,9 +75,6 @@ object Climber : SubsystemBase() {
         variableLocked = LockStates.NEITHER
         variableLockedUpdate = 0L
 
-        loadBearingArm = Arms.NEITHER
-        climbing = false
-
         staticClimberMotor.encoder.position = START_POS
         variableClimberMotor.encoder.position = START_POS
 
@@ -84,8 +82,9 @@ object Climber : SubsystemBase() {
         variableGoal = 0.0
         angleGoal = 0.0
 
-        forceLocked = false
-        startClimber.schedule(false)
+        calibratedAngle = false
+
+        reset()
     }
 
     val staticHeight
@@ -94,8 +93,16 @@ object Climber : SubsystemBase() {
     val variableHeight
         get() = variableClimberMotor.encoder.position
 
-    val variableAngle
-        get() = potentiometer.get()
+    val variableAngleArm
+        get() = potentiometer.get() - CLIMBER_ANGLE_OFFSET
+
+    val variableAngleMotor
+        get() = -variableActuator.selectedSensorPosition * TalonEncoders.ACTUATOR_MOTOR.encoderDistanceFactor
+
+    fun calibrateAngleMotor() {
+        variableActuator.selectedSensorPosition = 0.0
+        calibratedAngle = true
+    }
 
     fun isAtBottomStatic(): Boolean {
         return !staticDownLimitSwitch.get()
@@ -136,33 +143,29 @@ object Climber : SubsystemBase() {
     }
 
     fun setLockStatic(lock: LockStates) {
-        if(!forceLocked && lock != LockStates.NEITHER) {
-            if(lock == LockStates.LOCKED) {
-                servoStatic?.set(SERVO_LOCK_STATIC)
-            } else {
-                servoStatic?.set(SERVO_UNLOCK_STATIC)
-            }
-
-            if(staticLocked != lock) {
-                staticLockedUpdate = currentTimeMillis()
-            }
-            staticLocked = lock
+        if(lock == LockStates.LOCKED) {
+            servoStatic?.set(SERVO_LOCK_STATIC)
+        } else {
+            servoStatic?.set(SERVO_UNLOCK_STATIC)
         }
+
+        if(staticLocked != lock) {
+            staticLockedUpdate = currentTimeMillis()
+        }
+        staticLocked = lock
     }
 
     fun setLockVariable(lock: LockStates) {
-        if(!forceLocked && lock != LockStates.NEITHER) {
-            if(lock == LockStates.LOCKED) {
-                servoVariable?.set(SERVO_LOCK_VARIABLE)
-            } else {
-                servoVariable?.set(SERVO_UNLOCK_VARIABLE)
-            }
-
-            if(variableLocked != lock) {
-                variableLockedUpdate = currentTimeMillis()
-            }
-            variableLocked = lock
+        if(lock == LockStates.LOCKED) {
+            servoVariable?.set(SERVO_LOCK_VARIABLE)
+        } else {
+            servoVariable?.set(SERVO_UNLOCK_VARIABLE)
         }
+
+        if(variableLocked != lock) {
+            variableLockedUpdate = currentTimeMillis()
+        }
+        variableLocked = lock
     }
 
     fun setStaticSpeed(amount: Double) {
@@ -239,10 +242,10 @@ object Climber : SubsystemBase() {
     }
 
     private fun angleUpdate() {
-        if((angleGoal < 0.0 && variableAngle <= MIN_CLIMBER_ANGLE) || (angleGoal > 0.0 && variableAngle >= MAX_CLIMBER_ANGLE)) {
-            variableActuator.set(0.0)
+        if(calibratedAngle && ((angleGoal < 0.0 && variableAngleMotor <= MIN_CLIMBER_ANGLE_VALUE) || (angleGoal > 0.0 && variableAngleMotor >= MAX_CLIMBER_ANGLE_VALUE))) {
+            variableActuator.set(TalonSRXControlMode.PercentOutput, 0.0)
         } else {
-            variableActuator.set(angleGoal)
+            variableActuator.set(TalonSRXControlMode.PercentOutput, angleGoal)
         }
     }
 
@@ -254,6 +257,14 @@ object Climber : SubsystemBase() {
     fun unlock() {
         setLockStatic(LockStates.UNLOCKED)
         setLockVariable(LockStates.UNLOCKED)
+    }
+
+    fun reset() {
+        loadBearingArm = Arms.NEITHER
+        climbing = false
+        inAir = false
+
+        startClimber.schedule(false)
     }
 
     fun stop() {

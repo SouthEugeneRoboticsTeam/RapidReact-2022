@@ -23,7 +23,7 @@ abstract class RobotPreferences {
 }
 
 object CompetitionPreferences : RobotPreferences() {
-    override val climberPID = arrayOf(1.8, 0.6, 0.0)
+    override val climberPID = arrayOf(3.4, 0.9, 0.0)
     override val actuatorPID = arrayOf(0.06, 0.1, 0.0)
     override val shooterPIDF = arrayOf(0.00055, 0.0, 0.0, 0.00019)
     override val shooterBackPIDF = arrayOf(0.0, 0.0, 0.0, 0.0)
@@ -42,7 +42,7 @@ object CompetitionPreferences : RobotPreferences() {
 
 object PracticePreferences : RobotPreferences() {
     override val climberPID = arrayOf(0.0, 0.0, 0.0)
-    override val actuatorPID = arrayOf(0.0, 0.0, 0.0)
+    override val actuatorPID = arrayOf(0.00, 0.0, 0.0)
     override val shooterPIDF = arrayOf(0.00035, 0.0, 0.0, 0.00018)
     override val shooterBackPIDF = arrayOf(0.000068, 0.0, 0.0, 0.000148)
     override val drivePID = arrayOf(2.773, 0.0, 0.0)
@@ -75,8 +75,9 @@ abstract class ControlPreferences {
     abstract val rev: JoystickButton
 
     abstract val climbNext: JoystickButton
-    abstract val startClimbMid: JoystickButton
-    abstract val startClimbHigh: JoystickButton
+    abstract val endClimb: JoystickButton
+    abstract val lockOne: JoystickButton
+    abstract val lockTwo: JoystickButton
     abstract val startClimbTraversal: JoystickButton
 
     abstract val switchCameras: JoystickButton
@@ -96,8 +97,9 @@ object SoftwarePreferences : ControlPreferences() {
     override val rev = JoystickButton(primaryController, -3)
 
     override val climbNext = JoystickButton(secondaryController, 5)
-    override val startClimbMid = JoystickButton(secondaryController, 6)
-    override val startClimbHigh = JoystickButton(secondaryController, 7)
+    override val endClimb = JoystickButton(secondaryController, 6)
+    override val lockOne = JoystickButton(secondaryController, 1)
+    override val lockTwo = JoystickButton(secondaryController, 2)
     override val startClimbTraversal = JoystickButton(secondaryController, 8)
 
     override val switchCameras = JoystickButton(primaryController, 6)
@@ -117,8 +119,9 @@ object DriveteamPreferences : ControlPreferences() {
     override val rev = JoystickButton(secondaryController, 15)
 
     override val climbNext = JoystickButton(secondaryController, 5)
-    override val startClimbMid = JoystickButton(secondaryController, 11)
-    override val startClimbHigh = JoystickButton(secondaryController, 12)
+    override val endClimb = JoystickButton(secondaryController, 11)
+    override val lockOne = JoystickButton(secondaryController, 1)
+    override val lockTwo = JoystickButton(secondaryController, 2)
     override val startClimbTraversal = JoystickButton(secondaryController, 13)
 
     override val switchCameras = JoystickButton(primaryController, 6)
