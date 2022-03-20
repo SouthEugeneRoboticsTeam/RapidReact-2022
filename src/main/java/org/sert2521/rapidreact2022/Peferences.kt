@@ -127,5 +127,5 @@ object DriveteamPreferences : ControlPreferences() {
     override val switchCameras = JoystickButton(primaryController, 6)
 }
 
-val robotPreferences = PracticePreferences
+val robotPreferences = CompetitionPreferences
 val controlPreferences = DriveteamPreferences
