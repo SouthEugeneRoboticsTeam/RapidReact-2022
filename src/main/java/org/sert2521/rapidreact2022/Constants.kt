@@ -138,7 +138,7 @@ enum class Sparks(val id: Int, val type: CANSparkMaxLowLevel.MotorType, val reve
 }
 
 enum class SparkEncodersHall(val conversionFactor: Double) {
-    //maybe fix ratio it is like 16 to 18 or something ask someone
+    //maybe fix ratio it is 8 to 9
     SHOOTER(1.0),
     STATIC_CLIMBER(CLIMBER_HEIGHT_PER_ROTATION),
     VARIABLE_CLIMBER(CLIMBER_HEIGHT_PER_ROTATION)
