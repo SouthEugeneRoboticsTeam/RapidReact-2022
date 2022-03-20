@@ -12,12 +12,12 @@ class Climb : SequentialCommandGroup() {
     init {
         addCommands(
                 InstantCommand( { Climber.climbing = true } ),
-                SetClimber(REACH_MID, ABOVE_HIGH, PAST_HIGH_ANGLE) { OI.getClimbNext() },
+                SetClimber(REACH_MID, ABOVE_HIGH, PAST_HIGH_ANGLE) { Input.getClimbNext() },
                 InstantCommand( { Climber.inAir = true } ),
                 InstantCommand( { Climber.loadBearingArm = Arms.STATIC } ),
                 SetClimber(HANG_HEIGHT, ABOVE_HIGH, PAST_HIGH_ANGLE),
                 SetClimber(HANG_HEIGHT, ABOVE_HIGH, PAST_HIGH_ANGLE),
-                ClimberHitBar(HANG_HEIGHT, ABOVE_HIGH, Directions.FORWARD) { OI.getClimbNext() },
+                ClimberHitBar(HANG_HEIGHT, ABOVE_HIGH, Directions.FORWARD) { Input.getClimbNext() },
                 InstantCommand( { Climber.loadBearingArm = Arms.BOTH } ),
                 ClimberHitBar(HANG_HEIGHT, HIT_HIGH, Directions.FORWARD),
                 InstantCommand( { Climber.loadBearingArm = Arms.VARIABLE } ),
@@ -26,10 +26,10 @@ class Climb : SequentialCommandGroup() {
                 SetClimber(GO_UNDER_HIGH, PULL_IN_HIGH, GO_UNDER_ANGLE),
                 SetClimber(GO_UNDER_HIGH, PULL_IN_HIGH, PAST_CURRENT_ANGLE),
                 SetClimber(ABOVE_CURRENT, PULL_IN_HIGH, PAST_CURRENT_ANGLE),
-                ClimberHitBar(ABOVE_CURRENT, PULL_IN_HIGH, Directions.BACKWARD) { OI.getClimbNext() },
+                ClimberHitBar(ABOVE_CURRENT, PULL_IN_HIGH, Directions.BACKWARD) { Input.getClimbNext() },
                 InstantCommand( { Climber.loadBearingArm = Arms.STATIC } ),
                 SetClimber(HANG_HEIGHT, REACH_TRAVERSAL, REACH_TRAVERSAL_ANGLE),
-                ClimberHitBar(HANG_HEIGHT, REACH_TRAVERSAL, Directions.BACKWARD) { OI.getClimbNext() },
+                ClimberHitBar(HANG_HEIGHT, REACH_TRAVERSAL, Directions.BACKWARD) { Input.getClimbNext() },
                 InstantCommand( { Climber.loadBearingArm = Arms.BOTH } ),
                 ClimberHitBar(HANG_HEIGHT, HIT_TRAVERSAL, Directions.BACKWARD),
                 InstantCommand( { Climber.loadBearingArm = Arms.VARIABLE } ),
@@ -39,19 +39,19 @@ class Climb : SequentialCommandGroup() {
                 SetClimber(GO_UNDER_TRAVERSAL, PULL_IN_TRAVERSAL, LET_GO_ANGLE),
                 SetClimber(END, PULL_IN_TRAVERSAL, END_ANGLE),
                 InstantCommand( { Climber.lock() } ),
-                //Remove
-                WaitUntilCommand(180.0)
+                //Only here to fix wpilib bug
+                WaitUntilCommand(150.0)
         )
     }
 
     override fun isFinished(): Boolean {
-        if(OI.getClimbLocked()) {
+        if(Input.getClimbLocked()) {
             Climber.lock()
             Climber.stop()
             return true
         }
 
-        if(OI.getClimbEnd() && !Climber.inAir) {
+        if(Input.getClimbEnd() && !Climber.inAir) {
             Climber.reset()
             return true
         }

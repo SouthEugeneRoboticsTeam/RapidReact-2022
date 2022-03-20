@@ -75,7 +75,8 @@ object Logging {
 
         SmartDashboard.putNumber("Robot/Climber Static Height", Climber.staticHeight)
         SmartDashboard.putNumber("Robot/Climber Variable Height", Climber.variableHeight)
-        SmartDashboard.putNumber("Robot/Climber Variable Angle", Climber.variableAngle)
+        SmartDashboard.putNumber("Robot/Climber Variable Angle Arm", Climber.variableAngleArm)
+        SmartDashboard.putNumber("Robot/Climber Variable Angle Motor", Climber.variableAngleMotor)
 
         SmartDashboard.putBoolean("Robot/Climber Static Limit", Climber.isAtBottomStatic())
         SmartDashboard.putBoolean("Robot/Climber Variable Limit", Climber.isAtBottomVariable())

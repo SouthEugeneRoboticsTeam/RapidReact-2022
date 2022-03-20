@@ -63,8 +63,8 @@ object Climber : SubsystemBase() {
         variableClimberMotor.idleMode = CANSparkMax.IdleMode.kBrake
         variableActuator.setNeutralMode(NeutralMode.Brake)
 
-        staticClimberMotor.encoder.positionConversionFactor = SparkEncoders.STATIC_CLIMBER.conversionFactor
-        variableClimberMotor.encoder.positionConversionFactor = SparkEncoders.VARIABLE_CLIMBER.conversionFactor
+        staticClimberMotor.encoder.positionConversionFactor = SparkEncodersHall.STATIC_CLIMBER.conversionFactor
+        variableClimberMotor.encoder.positionConversionFactor = SparkEncodersHall.VARIABLE_CLIMBER.conversionFactor
 
         variableActuator.configSelectedFeedbackSensor(TalonEncoders.ACTUATOR_MOTOR.device.toFeedbackDevice())
     }
