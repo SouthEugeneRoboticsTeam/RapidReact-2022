@@ -50,10 +50,10 @@ class ClimberHitBar(private val staticTarget: Double, private val variableTarget
         Climber.setVariableSpeed(variablePID.calculate(Climber.variableHeight, variableTarget))
 
         if(direction == Directions.BACKWARD) {
-            val angleOut = filter.calculate(Climber.variableAngle)
+            val angleOut = filter.calculate(Climber.variableAngleArm)
             tapsBeforeStart += 1
 
-            if(tapsBeforeStart < taps || abs(angleOut - Climber.variableAngle) > stopTolerance) {
+            if(tapsBeforeStart < taps || abs(angleOut - Climber.variableAngleArm) > stopTolerance) {
                 Climber.setAngleSpeed(-climberHitSpeed)
             } else {
                 Climber.setAngleSpeed(0.0)

@@ -19,7 +19,7 @@ class SetClimber(staticTarget: Double, variableTarget: Double, private val angle
                 maxSpeed, maxAcceleration,
                 { ((staticTarget - Climber.staticHeight in -staticTolerance..staticTolerance) || (Climber.isStaticLocked() == LockStates.LOCKED)) &&
                 (variableTarget - Climber.variableHeight in -variableTolerance..variableTolerance || (Climber.isVariableLocked() == LockStates.LOCKED)) &&
-                (angleTarget == null || angleTarget - Climber.variableAngle in -angleTolerance..angleTolerance) } )
+                (angleTarget == null || angleTarget - Climber.variableAngleArm in -angleTolerance..angleTolerance) } )
     private val staticPID: PIDController
     private val variablePID: PIDController
     private val anglePID: PIDController
@@ -63,7 +63,7 @@ class SetClimber(staticTarget: Double, variableTarget: Double, private val angle
         Climber.setStaticSpeed(staticPID.calculate(Climber.staticHeight, staticProfile.calculate(time).position))
         Climber.setVariableSpeed(variablePID.calculate(Climber.variableHeight, variableProfile.calculate(time).position))
         if(angleTarget != null) {
-            Climber.setAngleSpeed(anglePID.calculate(Climber.variableAngle, angleProfile!!.calculate(time).position))
+            Climber.setAngleSpeed(anglePID.calculate(Climber.variableAngleArm, angleProfile!!.calculate(time).position))
         } else {
             Climber.setAngleSpeed(0.0)
         }

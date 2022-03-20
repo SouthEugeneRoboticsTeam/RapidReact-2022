@@ -1,7 +1,8 @@
 package org.sert2521.rapidreact2022.subsytems
 
 import com.ctre.phoenix.motorcontrol.NeutralMode
-import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX
+import com.ctre.phoenix.motorcontrol.TalonSRXControlMode
+import com.ctre.phoenix.motorcontrol.can.TalonSRX
 import com.revrobotics.CANSparkMax
 import edu.wpi.first.wpilibj.AnalogPotentiometer
 import edu.wpi.first.wpilibj.DigitalInput
@@ -27,7 +28,7 @@ enum class Arms {
 object Climber : SubsystemBase() {
     private val staticClimberMotor = CANSparkMax(Sparks.STATIC_CLIMBER.id, Sparks.STATIC_CLIMBER.type)
     private val variableClimberMotor = CANSparkMax(Sparks.VARIABLE_CLIMBER.id, Sparks.VARIABLE_CLIMBER.type)
-    private val variableActuator = WPI_TalonSRX(Talons.VARIABLE_ACTUATOR.id)
+    private val variableActuator = TalonSRX(Talons.VARIABLE_ACTUATOR.id)
 
     private var staticGoal = 0.0
     private var variableGoal = 0.0
@@ -51,6 +52,7 @@ object Climber : SubsystemBase() {
     var loadBearingArm = Arms.NEITHER
     var climbing = false
     var inAir = false
+    private var calibratedAngle = false
 
     init {
         staticClimberMotor.inverted = Sparks.STATIC_CLIMBER.reversed
@@ -63,6 +65,8 @@ object Climber : SubsystemBase() {
 
         staticClimberMotor.encoder.positionConversionFactor = SparkEncoders.STATIC_CLIMBER.conversionFactor
         variableClimberMotor.encoder.positionConversionFactor = SparkEncoders.VARIABLE_CLIMBER.conversionFactor
+
+        variableActuator.configSelectedFeedbackSensor(TalonEncoders.ACTUATOR_MOTOR.device.toFeedbackDevice())
     }
 
     fun onEnable() {
@@ -78,6 +82,8 @@ object Climber : SubsystemBase() {
         variableGoal = 0.0
         angleGoal = 0.0
 
+        calibratedAngle = false
+
         reset()
     }
 
@@ -87,8 +93,16 @@ object Climber : SubsystemBase() {
     val variableHeight
         get() = variableClimberMotor.encoder.position
 
-    val variableAngle
+    val variableAngleArm
         get() = potentiometer.get() - CLIMBER_ANGLE_OFFSET
+
+    val variableAngleMotor
+        get() = -variableActuator.selectedSensorPosition * TalonEncoders.ACTUATOR_MOTOR.encoderDistanceFactor
+
+    fun calibrateAngleMotor() {
+        variableActuator.selectedSensorPosition = 0.0
+        calibratedAngle = true
+    }
 
     fun isAtBottomStatic(): Boolean {
         return !staticDownLimitSwitch.get()
@@ -228,10 +242,10 @@ object Climber : SubsystemBase() {
     }
 
     private fun angleUpdate() {
-        if((angleGoal < 0.0 && variableAngle <= MIN_CLIMBER_ANGLE) || (angleGoal > 0.0 && variableAngle >= MAX_CLIMBER_ANGLE)) {
-            variableActuator.set(0.0)
+        if(calibratedAngle && ((angleGoal < 0.0 && variableAngleMotor <= MIN_CLIMBER_ANGLE_VALUE) || (angleGoal > 0.0 && variableAngleMotor >= MAX_CLIMBER_ANGLE_VALUE))) {
+            variableActuator.set(TalonSRXControlMode.PercentOutput, 0.0)
         } else {
-            variableActuator.set(angleGoal)
+            variableActuator.set(TalonSRXControlMode.PercentOutput, angleGoal)
         }
     }
 

@@ -23,25 +23,24 @@ class Climb : SequentialCommandGroup() {
                 InstantCommand( { Climber.loadBearingArm = Arms.VARIABLE } ),
                 SetClimber(HANG_HEIGHT, PULL_IN_HIGH, null),
                 SetClimber(LET_GO_MID, PULL_IN_HIGH, null, maxSpeed = CLIMBER_LET_GO_SPEED, maxAcceleration = CLIMBER_LET_GO_ACCELERATION),
-                SetClimber(GO_UNDER, PULL_IN_HIGH, GO_UNDER_ANGLE),
-                SetClimber(GO_UNDER, PULL_IN_HIGH, PAST_CURRENT_ANGLE),
+                SetClimber(GO_UNDER_HIGH, PULL_IN_HIGH, GO_UNDER_ANGLE),
+                SetClimber(GO_UNDER_HIGH, PULL_IN_HIGH, PAST_CURRENT_ANGLE),
                 SetClimber(ABOVE_CURRENT, PULL_IN_HIGH, PAST_CURRENT_ANGLE),
                 ClimberHitBar(ABOVE_CURRENT, PULL_IN_HIGH, Directions.BACKWARD) { OI.getClimbNext() },
                 InstantCommand( { Climber.loadBearingArm = Arms.STATIC } ),
-                SetClimber(HANG_HEIGHT, GO_UNDER_TRAVERSAL, null),
-                SetClimber(HANG_HEIGHT, GO_UNDER_TRAVERSAL, REACH_TRAVERSAL_ANGLE),
                 SetClimber(HANG_HEIGHT, REACH_TRAVERSAL, REACH_TRAVERSAL_ANGLE),
-                ClimberHitBar(HANG_HEIGHT, REACH_TRAVERSAL, Directions.FORWARD) { OI.getClimbNext() },
+                ClimberHitBar(HANG_HEIGHT, REACH_TRAVERSAL, Directions.BACKWARD) { OI.getClimbNext() },
                 InstantCommand( { Climber.loadBearingArm = Arms.BOTH } ),
-                ClimberHitBar(HANG_HEIGHT, HIT_TRAVERSAL, Directions.FORWARD),
+                ClimberHitBar(HANG_HEIGHT, HIT_TRAVERSAL, Directions.BACKWARD),
                 InstantCommand( { Climber.loadBearingArm = Arms.VARIABLE } ),
                 SetClimber(HANG_HEIGHT, PULL_IN_TRAVERSAL, null),
                 SetClimber(LET_GO_HIGH, PULL_IN_TRAVERSAL, null, maxSpeed = CLIMBER_LET_GO_SPEED, maxAcceleration = CLIMBER_LET_GO_ACCELERATION),
                 SetClimber(LET_GO_HIGH, PULL_IN_TRAVERSAL, LET_GO_ANGLE),
-                SetClimber(END, PULL_IN_TRAVERSAL, LET_GO_ANGLE),
+                SetClimber(GO_UNDER_TRAVERSAL, PULL_IN_TRAVERSAL, LET_GO_ANGLE),
                 SetClimber(END, PULL_IN_TRAVERSAL, END_ANGLE),
                 InstantCommand( { Climber.lock() } ),
-                WaitUntilCommand(180.0),
+                //Remove
+                WaitUntilCommand(180.0)
         )
     }
 

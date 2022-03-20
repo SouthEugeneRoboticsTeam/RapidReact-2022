@@ -38,7 +38,8 @@ object SmartDashboardManager {
 
         SmartDashboard.putNumber("Tuning/Climber Static Height", Climber.staticHeight)
         SmartDashboard.putNumber("Tuning/Climber Variable Height", Climber.variableHeight)
-        SmartDashboard.putNumber("Tuning/Climber Variable Angle", Climber.variableAngle)
+        SmartDashboard.putNumber("Tuning/Climber Variable Arm", Climber.variableAngleArm)
+        SmartDashboard.putNumber("Tuning/Climber Variable Motor", Climber.variableAngleMotor)
 
         SmartDashboard.putBoolean("Tuning/Climber Static Limit", Climber.isAtBottomStatic())
         SmartDashboard.putBoolean("Tuning/Climber Variable Limit", Climber.isAtBottomVariable())

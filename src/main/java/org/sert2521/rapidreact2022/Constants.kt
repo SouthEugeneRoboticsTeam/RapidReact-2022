@@ -1,5 +1,6 @@
 package org.sert2521.rapidreact2022
 
+import com.ctre.phoenix.motorcontrol.TalonSRXFeedbackDevice
 import com.revrobotics.CANSparkMaxLowLevel
 import edu.wpi.first.math.geometry.Pose2d
 import edu.wpi.first.math.geometry.Rotation2d
@@ -21,9 +22,8 @@ const val DEADBAND = 0.1
 
 const val CLIMBER_HEIGHT_PER_ROTATION = 0.004842
 const val CLIMBER_ANGLE_OFFSET = 122.0
-
-const val MAX_CLIMBER_ANGLE = 64.0
-const val MIN_CLIMBER_ANGLE = 0.0
+const val MAX_CLIMBER_ANGLE_VALUE = 24750
+const val MIN_CLIMBER_ANGLE_VALUE = -27618
 const val START_POS = 1.0
 const val MAX_CLIMBER_HEIGHT = 0.66
 const val MIN_CLIMBER_HEIGHT = 0.0
@@ -31,26 +31,26 @@ const val MIN_CLIMBER_HEIGHT = 0.0
 const val DEFAULT_ANGLE = 30.0
 const val HANG_HEIGHT = 0.0
 const val REACH_MID = 0.64
-const val PAST_HIGH_ANGLE = 11.0
+const val PAST_HIGH_ANGLE = 9.0
 const val ABOVE_HIGH = 0.66
 const val HIT_HIGH = 0.57
 const val PULL_IN_HIGH = 0.46
 const val LET_GO_MID = 0.6
 const val GO_UNDER_ANGLE = 16.0
-const val GO_UNDER = 0.35
+const val GO_UNDER_HIGH = 0.35
 const val PAST_CURRENT_ANGLE = 42.0
 const val ABOVE_CURRENT = 0.64
-const val GO_UNDER_TRAVERSAL = 0.3
 const val REACH_TRAVERSAL = 0.66
-const val REACH_TRAVERSAL_ANGLE = 3.0
+const val REACH_TRAVERSAL_ANGLE = 25.0
 const val LET_GO_HIGH = 0.6
 const val HIT_TRAVERSAL = 0.56
 const val PULL_IN_TRAVERSAL = 0.46
 const val LET_GO_ANGLE = 26.0
-const val END = 0.2
+const val GO_UNDER_TRAVERSAL = 0.3
+const val END = 0.1
 const val END_ANGLE = 46.0
 
-const val DEFAULT_TOLERANCE = 0.015
+const val DEFAULT_TOLERANCE = 0.02
 const val DEFAULT_TOLERANCE_ANGLE = 3.0
 
 const val CLIMBER_MAINTAIN = -0.1
@@ -61,8 +61,8 @@ const val CLIMBER_RESET_SPEED = -0.6
 
 const val CLIMBER_LET_GO_ACCELERATION = 0.005
 const val CLIMBER_LET_GO_SPEED = 0.05
-const val CLIMBER_MAX_SPEED = 0.3
-const val CLIMBER_MAX_ACCELERATION = 0.6
+const val CLIMBER_MAX_SPEED = 0.4
+const val CLIMBER_MAX_ACCELERATION = 0.7
 const val CLIMBER_ACTUATOR_MAX_SPEED = 5.0
 const val CLIMBER_ACTUATOR_MAX_ACCELERATION = 5.0
 
@@ -72,8 +72,8 @@ const val SERVO_LOCK_STATIC = 0.75
 const val SERVO_LOCK_VARIABLE = 0.0
 const val LOCK_TIME_STATIC = 1.0
 const val LOCK_TIME_VARIABLE = 1.5
-const val UNSTICK_SPEED_DOWN = -0.05
-const val UNSTICK_SPEED_CLIMB = -0.25
+const val UNSTICK_SPEED_DOWN = 0.0//-0.05
+const val UNSTICK_SPEED_CLIMB = 0.0//-0.25
 
 const val INTAKE_SPEED = 0.8
 const val INDEXER_SPEED = 0.8
@@ -143,6 +143,10 @@ enum class Potentiometers(val id: Int, val maxAngle: Double, val zeroAngle: Doub
 enum class Encoders(val idA: Int, val idB: Int, val reversed: Boolean, val encodingType: CounterBase.EncodingType, val encoderDistancePerPulse: Double, val maxPeriod: Double, val minRate: Double, val samples: Int) {
     LEFT_DRIVE(0, 1, true, CounterBase.EncodingType.k2X, WHEEL_CIRCUMFERENCE / THROUGH_BORE_PULSES_PER_ROTATION, 0.1, 10.0, 5),
     RIGHT_DRIVE(2, 3, false, CounterBase.EncodingType.k2X, WHEEL_CIRCUMFERENCE / THROUGH_BORE_PULSES_PER_ROTATION, 0.1, 10.0, 5),
+}
+
+enum class TalonEncoders(val device: TalonSRXFeedbackDevice, val encoderDistanceFactor: Double) {
+    ACTUATOR_MOTOR(TalonSRXFeedbackDevice.QuadEncoder, 1.0)
 }
 
 enum class PWMS(val id: Int) {

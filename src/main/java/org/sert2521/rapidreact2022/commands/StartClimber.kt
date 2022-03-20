@@ -2,10 +2,7 @@ package org.sert2521.rapidreact2022.commands
 
 import edu.wpi.first.math.controller.PIDController
 import edu.wpi.first.wpilibj2.command.CommandBase
-import org.sert2521.rapidreact2022.CLIMBER_RESET_SPEED
-import org.sert2521.rapidreact2022.DEFAULT_ANGLE
-import org.sert2521.rapidreact2022.MIN_CLIMBER_HEIGHT
-import org.sert2521.rapidreact2022.robotPreferences
+import org.sert2521.rapidreact2022.*
 import org.sert2521.rapidreact2022.subsytems.Climber
 
 class StartClimber : CommandBase() {
@@ -27,14 +24,15 @@ class StartClimber : CommandBase() {
     }
 
     override fun execute() {
-        Climber.setAngleSpeed(anglePID.calculate(Climber.variableAngle, DEFAULT_ANGLE))
+        Climber.setAngleSpeed(anglePID.calculate(Climber.variableAngleArm, DEFAULT_ANGLE))
     }
 
     override fun isFinished(): Boolean {
-        return Climber.isAtBottomStatic() && Climber.isAtBottomVariable()
+        return Climber.isAtBottomStatic() && Climber.isAtBottomVariable() && (Climber.variableAngleArm - DEFAULT_ANGLE) in -DEFAULT_TOLERANCE_ANGLE..DEFAULT_TOLERANCE_ANGLE
     }
 
     override fun end(interrupted: Boolean) {
+        Climber.calibrateAngleMotor()
         SetClimber(MIN_CLIMBER_HEIGHT, MIN_CLIMBER_HEIGHT, DEFAULT_ANGLE) { false }.schedule()
         Climber.stop()
     }
