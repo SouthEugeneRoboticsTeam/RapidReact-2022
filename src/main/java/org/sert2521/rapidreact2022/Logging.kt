@@ -54,8 +54,9 @@ object Logging {
     }
 
     private fun initJoystickLogging() {
-        BadLog.createTopic("Input/X", BadLog.UNITLESS, { controlPreferences.joystickX() })
-        BadLog.createTopic("Input/Y", BadLog.UNITLESS, { controlPreferences.joystickY() })
+        BadLog.createTopic("Input/X", BadLog.UNITLESS, controlPreferences.joystickX)
+        BadLog.createTopic("Input/Y", BadLog.UNITLESS, controlPreferences.joystickY)
+        BadLog.createTopic("Input/Speed Increase", BadLog.UNITLESS, controlPreferences.speedIncrease)
 
         BadLog.createTopic("Input/Intake", BadLog.UNITLESS, { boolToDouble(controlPreferences.intake.get()) })
         BadLog.createTopic("Input/Outtake", BadLog.UNITLESS, { boolToDouble(controlPreferences.outtake.get()) })

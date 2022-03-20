@@ -71,6 +71,7 @@ abstract class ControlPreferences {
     abstract val joystickX: () -> Double
     abstract val joystickY: () -> Double
 
+    abstract val speedIncrease: () -> Double
     abstract val slowMode: JoystickButton
 
     abstract val intake: JoystickButton
@@ -93,6 +94,7 @@ object SoftwarePreferences : ControlPreferences() {
     override val joystickX = { primaryController.leftX }
     override val joystickY = { -primaryController.leftY }
 
+    override val speedIncrease = { primaryController.rightTriggerAxis }
     override val slowMode = JoystickButton(primaryController, 5)
 
     override val intake = JoystickButton(primaryController, 3)
@@ -115,6 +117,7 @@ object DriveteamPreferences : ControlPreferences() {
     override val joystickX = { primaryController.rightX }
     override val joystickY = { -primaryController.leftY }
 
+    override val speedIncrease = { primaryController.rightTriggerAxis }
     override val slowMode = JoystickButton(primaryController, 5)
 
     override val intake = JoystickButton(secondaryController, 8)

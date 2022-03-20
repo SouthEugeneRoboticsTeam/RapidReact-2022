@@ -97,6 +97,9 @@ object Input {
     val yAxis
         get() = controlPreferences.joystickY()
 
+    val speedIncrease
+        get() = controlPreferences.speedIncrease
+
     fun getAuto(): Command? {
         if(autoChooser.selected == null) {
             return null

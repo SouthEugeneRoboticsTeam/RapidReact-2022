@@ -15,6 +15,7 @@ const val THROUGH_BORE_COUNTS_PER_ROTATION = 8192
 const val WHEEL_CIRCUMFERENCE = 0.1524 * PI
 
 const val TRACK_WIDTH = 0.5816473
+const val MAX_SPEED_ADDON = 1.0
 const val MAX_SPEED = 2.0
 const val MAX_TURN_SPEED = 1.2
 const val MAX_SLOW_SPEED = 0.5
