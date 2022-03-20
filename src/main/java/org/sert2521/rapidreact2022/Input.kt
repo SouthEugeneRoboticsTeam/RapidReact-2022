@@ -9,7 +9,6 @@ import edu.wpi.first.wpilibj2.command.WaitCommand
 import org.sert2521.rapidreact2022.commands.*
 import org.sert2521.rapidreact2022.subsytems.Climber
 import java.util.function.Supplier
-import kotlin.math.abs
 
 object Input {
     private val intakeBalls = IntakeBalls()
@@ -36,7 +35,7 @@ object Input {
         controlPreferences.shoot.whileHeld(shootBalls, false)
         controlPreferences.rev.whileHeld(revShooter)
 
-        controlPreferences.startClimbTraversal.whenPressed(climb, false)
+        controlPreferences.climb.whenPressed(climb, false)
         controlPreferences.lockOne.and(controlPreferences.lockTwo).whenActive(InstantCommand( { climbLocked = true } ))
 
         controlPreferences.slowMode.whenPressed(InstantCommand( { slowMode = !slowMode } ))
@@ -90,18 +89,6 @@ object Input {
 
     fun getClimbLocked(): Boolean {
         return climbLocked
-    }
-
-    fun getClimbStatic(): Double {
-        return controlPreferences.primaryController.rightY * abs(controlPreferences.primaryController.rightY)
-    }
-
-    fun getClimbVariable(): Double {
-        return controlPreferences.primaryController.leftY * abs(controlPreferences.primaryController.leftY)
-    }
-
-    fun getClimbActuate(): Double {
-        return controlPreferences.secondaryController.y
     }
 
     val xAxis

@@ -85,7 +85,7 @@ object Drivetrain : SubsystemBase() {
         get() = leftEncoder.rate
 
     val rightVelocity
-        get() = leftEncoder.rate
+        get() = rightEncoder.rate
 
     fun tankDriveVolts(leftVoltage: Double, rightVoltage: Double) {
         leftMotors.setVoltage(leftVoltage)

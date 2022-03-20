@@ -21,8 +21,8 @@ object Logging {
             try {
                 log = BadLog.init("$logPath${LocalDateTime.now().format(DateTimeFormatter.ofPattern(FORMAT_PATTERN))}.bag")
 
-                //Maybe log joystick
                 initMetaInfoLogging()
+                initJoystickLogging()
                 initRobotLogging()
 
                 log?.finishInitialization()
@@ -36,14 +36,42 @@ object Logging {
 
     private fun initMetaInfoLogging() {
         startTime = nanoTime()
-        BadLog.createTopic("Info/Time Nano", "ns", { (nanoTime() - startTime).toDouble() })
-        BadLog.createTopic("Info/Time", "s", { (nanoTime() - startTime).toDouble() / 1.0e9 }, "xaxis")
+        BadLog.createTopic("Info/Time Nano", "ns", { (nanoTime() - startTime).toDouble() }, "xaxis")
         BadLog.createTopic("Info/Match Time", "s", { DriverStation.getMatchTime() })
 
         BadLog.createTopic("Info/Match Color", BadLog.UNITLESS, { when(DriverStation.getAlliance()) { DriverStation.Alliance.Blue -> 1.0; DriverStation.Alliance.Invalid -> 0.0; DriverStation.Alliance.Red -> -1.0; null -> 0.0 } })
         BadLog.createTopic("Info/Match Number", BadLog.UNITLESS, { DriverStation.getMatchNumber().toDouble() })
 
         BadLog.createTopic("Info/Mode", BadLog.UNITLESS, { if(Robot.isEnabled) { if(Robot.isAutonomous) { 2.0 } else { 1.0 } } else { 0.0 } })
+    }
+
+    private fun boolToDouble(bool: Boolean): Double {
+        return if(bool) {
+            1.0
+        } else {
+            0.0
+        }
+    }
+
+    private fun initJoystickLogging() {
+        BadLog.createTopic("Input/X", BadLog.UNITLESS, { controlPreferences.joystickX() })
+        BadLog.createTopic("Input/Y", BadLog.UNITLESS, { controlPreferences.joystickY() })
+
+        BadLog.createTopic("Input/Intake", BadLog.UNITLESS, { boolToDouble(controlPreferences.intake.get()) })
+        BadLog.createTopic("Input/Outtake", BadLog.UNITLESS, { boolToDouble(controlPreferences.outtake.get()) })
+        BadLog.createTopic("Input/Override Indexer", BadLog.UNITLESS, { boolToDouble(controlPreferences.overrideIndexer.get()) })
+        BadLog.createTopic("Input/Run Indexer", BadLog.UNITLESS, { boolToDouble(controlPreferences.runIndexer.get()) })
+
+        BadLog.createTopic("Input/Climb Next", BadLog.UNITLESS, { boolToDouble(controlPreferences.climbNext.get()) })
+        BadLog.createTopic("Input/End Climb", BadLog.UNITLESS, { boolToDouble(controlPreferences.endClimb.get()) })
+        BadLog.createTopic("Input/Climb", BadLog.UNITLESS, { boolToDouble(controlPreferences.climb.get()) })
+        BadLog.createTopic("Input/Lock One", BadLog.UNITLESS, { boolToDouble(controlPreferences.lockOne.get()) })
+        BadLog.createTopic("Input/Lock Two", BadLog.UNITLESS, { boolToDouble(controlPreferences.lockTwo.get()) })
+
+        BadLog.createTopic("Input/Rev", BadLog.UNITLESS, { boolToDouble(controlPreferences.rev.get()) })
+        BadLog.createTopic("Input/Shoot", BadLog.UNITLESS, { boolToDouble(controlPreferences.shoot.get()) })
+
+        BadLog.createTopic("Input/Slow Mode", BadLog.UNITLESS, { boolToDouble(controlPreferences.slowMode.get()) })
     }
 
     private fun initRobotLogging() {
