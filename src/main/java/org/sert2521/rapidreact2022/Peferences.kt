@@ -20,24 +20,28 @@ abstract class RobotPreferences {
 
     abstract val shooterBackRPM: Double
     abstract val shooterBackEnterRPM: Double
+
+    abstract val shooterAveragePoints: Int
 }
 
 object CompetitionPreferences : RobotPreferences() {
     override val climberPID = arrayOf(3.4, 0.9, 0.0)
     override val actuatorPID = arrayOf(0.06, 0.1, 0.0)
     override val shooterPIDF = arrayOf(0.00055, 0.0, 0.0, 0.00019)
-    override val shooterBackPIDF = arrayOf(0.0, 0.0, 0.0, 0.0)
+    override val shooterBackPIDF = arrayOf(0.000068, 0.0, 0.0, 0.000148)
     override val drivePID = arrayOf(2.773, 0.0, 0.0)
     override val driveFeedForward = arrayOf(0.72556, 2.437, 2.5888)
 
     override val ledLength = 16
 
-    override val shooterRPM = 4600.0
-    override val shooterEnterRPM = 4600.0
-    override val shooterExitRPM = 4400.0
+    override val shooterRPM = 2900.0
+    override val shooterEnterRPM = 2800.0
+    override val shooterExitRPM = 2600.0
 
-    override val shooterBackRPM = 0.0
-    override val shooterBackEnterRPM = 0.0
+    override val shooterBackRPM = 4400.0
+    override val shooterBackEnterRPM = 4200.0
+
+    override val shooterAveragePoints = 10
 }
 
 object PracticePreferences : RobotPreferences() {
@@ -50,12 +54,14 @@ object PracticePreferences : RobotPreferences() {
 
     override val ledLength = 56//58, but two are covered
 
-    override val shooterRPM = 3500.0
-    override val shooterEnterRPM = 3400.0
-    override val shooterExitRPM = 3200.0
+    override val shooterRPM = 3100.0
+    override val shooterEnterRPM = 3000.0
+    override val shooterExitRPM = 2800.0
 
-    override val shooterBackRPM = 4000.0
-    override val shooterBackEnterRPM = 3800.0
+    override val shooterBackRPM = 4400.0
+    override val shooterBackEnterRPM = 4200.0
+
+    override val shooterAveragePoints = 20
 }
 
 abstract class ControlPreferences {
@@ -127,5 +133,5 @@ object DriveteamPreferences : ControlPreferences() {
     override val switchCameras = JoystickButton(primaryController, 6)
 }
 
-val robotPreferences = PracticePreferences
+val robotPreferences = CompetitionPreferences
 val controlPreferences = DriveteamPreferences

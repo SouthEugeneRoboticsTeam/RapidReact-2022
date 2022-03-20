@@ -1,5 +1,6 @@
 package org.sert2521.rapidreact2022.commands
 
+import edu.wpi.first.math.filter.LinearFilter
 import edu.wpi.first.wpilibj2.command.CommandBase
 import org.sert2521.rapidreact2022.*
 import org.sert2521.rapidreact2022.subsytems.Intake
@@ -11,6 +12,9 @@ class ShootBalls : CommandBase() {
     private val danceLED = DanceLED()
     private var shooting = false
     private var lastShot = 0L
+    //Maybe make based on stability
+    private val shooterFilter = LinearFilter.movingAverage(robotPreferences.shooterAveragePoints)
+    private val shooterBackFilter = LinearFilter.movingAverage(robotPreferences.shooterAveragePoints)
 
     init {
         addRequirements(Intake, Shooter)
@@ -24,6 +28,8 @@ class ShootBalls : CommandBase() {
 
         shooting = false
         lastShot = 0L
+
+        shooterFilter.reset()
     }
 
     private fun shouldShoot(): Boolean {
@@ -31,7 +37,10 @@ class ShootBalls : CommandBase() {
     }
 
     override fun execute() {
-        if(robotPreferences.shooterEnterRPM <= Shooter.wheelSpeed && robotPreferences.shooterBackEnterRPM <= Shooter.wheelSpeedBack) {
+        val speed = shooterFilter.calculate(Shooter.wheelSpeed)
+        val backSpeed = shooterBackFilter.calculate(Shooter.wheelSpeedBack)
+
+        if(robotPreferences.shooterEnterRPM <= speed && robotPreferences.shooterBackEnterRPM <= backSpeed) {
             shooting = true
         }
 
