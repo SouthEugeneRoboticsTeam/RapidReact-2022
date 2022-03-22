@@ -16,6 +16,10 @@ import org.sert2521.rapidreact2022.subsytems.Climber
 object Robot : TimedRobot() {
     private val commandScheduler = CommandScheduler.getInstance()
 
+    override fun robotInit() {
+        Input.onInit()
+    }
+
     override fun robotPeriodic() {
         commandScheduler.run()
         Logging.update()

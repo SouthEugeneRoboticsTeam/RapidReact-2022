@@ -1,6 +1,5 @@
 package org.sert2521.rapidreact2022.commands
 
-import edu.wpi.first.math.filter.LinearFilter
 import edu.wpi.first.wpilibj2.command.CommandBase
 import org.sert2521.rapidreact2022.*
 import org.sert2521.rapidreact2022.subsytems.Intake
@@ -12,9 +11,6 @@ class ShootBalls : CommandBase() {
     private val danceLED = DanceLED()
     private var shooting = false
     private var lastShot = 0L
-    //Maybe make based on stability
-    private val shooterFilter = LinearFilter.movingAverage(robotPreferences.shooterAveragePoints)
-    private val shooterBackFilter = LinearFilter.movingAverage(robotPreferences.shooterAveragePoints)
 
     init {
         addRequirements(Intake, Shooter)
@@ -28,19 +24,18 @@ class ShootBalls : CommandBase() {
 
         shooting = false
         lastShot = 0L
-
-        shooterFilter.reset()
     }
 
     private fun shouldShoot(): Boolean {
         return shooting && currentTimeMillis() - lastShot >= SHOOT_DELAY * 1000
     }
 
-    override fun execute() {
-        val speed = shooterFilter.calculate(Shooter.wheelSpeed)
-        val backSpeed = shooterBackFilter.calculate(Shooter.wheelSpeedBack)
+    private fun inTolerance(): Boolean {
+        return robotPreferences.shooterRPM - Shooter.wheelSpeed in -robotPreferences.shooterRPMTolerance..robotPreferences.shooterRPMTolerance && robotPreferences.shooterBackRPM - Shooter.wheelSpeedBack in -robotPreferences.shooterBackRPMTolerance..robotPreferences.shooterBackRPMTolerance
+    }
 
-        if(robotPreferences.shooterEnterRPM <= speed && robotPreferences.shooterBackEnterRPM <= backSpeed) {
+    override fun execute() {
+        if(inTolerance() && Shooter.getAverageSpeed() <= robotPreferences.shooterStability && Shooter.getAverageSpeedBack() <= robotPreferences.shooterBackStability) {
             shooting = true
         }
 

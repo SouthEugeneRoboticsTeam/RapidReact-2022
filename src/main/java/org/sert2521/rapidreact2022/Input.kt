@@ -42,7 +42,9 @@ object Input {
         controlPreferences.overrideIndexer.whenPressed(InstantCommand( { indexerOverride = !indexerOverride } ))
 
         controlPreferences.switchCameras.whenPressed(InstantCommand( { NetworkTableInstance.getDefault().getEntry(CAMERA_PATH).setString(CAMERAS[camera]); camera++; camera %= CAMERAS.size } ))
+    }
 
+    fun onInit() {
         autoChooser.setDefaultOption("Nothing", null)
         autoChooser.addOption("Drive Forward") { DriveForward() }
         autoChooser.addOption("Shoot Single Right") { ShootSingleRight() }

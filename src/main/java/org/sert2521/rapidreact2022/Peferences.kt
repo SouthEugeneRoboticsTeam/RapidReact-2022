@@ -15,11 +15,13 @@ abstract class RobotPreferences {
     abstract val ledLength: Int
 
     abstract val shooterRPM: Double
-    abstract val shooterEnterRPM: Double
+    abstract val shooterRPMTolerance: Double
+    abstract val shooterStability: Double
     abstract val shooterExitRPM: Double
 
     abstract val shooterBackRPM: Double
-    abstract val shooterBackEnterRPM: Double
+    abstract val shooterBackStability: Double
+    abstract val shooterBackRPMTolerance: Double
 
     abstract val shooterAveragePoints: Int
 }
@@ -27,21 +29,23 @@ abstract class RobotPreferences {
 object CompetitionPreferences : RobotPreferences() {
     override val climberPID = arrayOf(3.4, 0.9, 0.0)
     override val actuatorPID = arrayOf(0.06, 0.1, 0.0)
-    override val shooterPIDF = arrayOf(0.00055, 0.0, 0.0, 0.00019)
-    override val shooterBackPIDF = arrayOf(0.000068, 0.0, 0.0, 0.000148)
+    override val shooterPIDF = arrayOf(0.00040, 0.0, 0.0, 0.0002)
+    override val shooterBackPIDF = arrayOf(0.000065, 0.0, 0.0, 0.000134)
     override val drivePID = arrayOf(2.773, 0.0, 0.0)
     override val driveFeedForward = arrayOf(0.72556, 2.437, 2.5888)
 
     override val ledLength = 16
 
-    override val shooterRPM = 2900.0
-    override val shooterEnterRPM = 2800.0
+    override val shooterRPM = 2700.0
+    override val shooterStability = 1800.0
+    override val shooterRPMTolerance = 270.0
     override val shooterExitRPM = 2600.0
 
-    override val shooterBackRPM = 4400.0
-    override val shooterBackEnterRPM = 4200.0
+    override val shooterBackRPM = 4700.0
+    override val shooterBackStability = 1400.0
+    override val shooterBackRPMTolerance = 270.0
 
-    override val shooterAveragePoints = 10
+    override val shooterAveragePoints = 5
 }
 
 object PracticePreferences : RobotPreferences() {
@@ -55,13 +59,15 @@ object PracticePreferences : RobotPreferences() {
     override val ledLength = 56//58, but two are covered
 
     override val shooterRPM = 3100.0
-    override val shooterEnterRPM = 3000.0
+    override val shooterRPMTolerance = 50.0
+    override val shooterStability = 10.0
     override val shooterExitRPM = 2800.0
 
     override val shooterBackRPM = 4400.0
-    override val shooterBackEnterRPM = 4200.0
+    override val shooterBackStability = 10.0
+    override val shooterBackRPMTolerance = 100.0
 
-    override val shooterAveragePoints = 20
+    override val shooterAveragePoints = 5
 }
 
 abstract class ControlPreferences {

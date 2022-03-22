@@ -79,6 +79,9 @@ object Logging {
         BadLog.createTopic("Shooter/Shooter Speed", "rpm", { Shooter.wheelSpeed })
         BadLog.createTopic("Shooter/Shooter Back Speed", "rpm", { Shooter.wheelSpeedBack })
 
+        BadLog.createTopic("Shooter/Shooter Speed Average", "rpm", { Shooter.getAverageSpeed() })
+        BadLog.createTopic("Shooter/Shooter Back Speed Average", "rpm", { Shooter.getAverageSpeedBack() })
+
         BadLog.createTopic("Drivetrain/Left Speed", "m/s", { Drivetrain.leftVelocity })
         BadLog.createTopic("Drivetrain/Right Speed", "m/s", { Drivetrain.rightVelocity })
 
@@ -95,6 +98,9 @@ object Logging {
     fun update() {
         SmartDashboard.putNumber("Robot/Shooter Speed", Shooter.wheelSpeed)
         SmartDashboard.putNumber("Robot/Shooter Back Speed", Shooter.wheelSpeedBack)
+
+        SmartDashboard.putNumber("Robot/Shooter Speed Average", Shooter.getAverageSpeed())
+        SmartDashboard.putNumber("Robot/Shooter Back Speed Average", Shooter.getAverageSpeedBack())
 
         SmartDashboard.putNumber("Robot/Drivetrain Left Speed", Drivetrain.leftVelocity)
         SmartDashboard.putNumber("Robot/Drivetrain Right Speed", Drivetrain.rightVelocity)

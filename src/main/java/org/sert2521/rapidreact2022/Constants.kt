@@ -8,6 +8,9 @@ import edu.wpi.first.wpilibj.CounterBase
 import edu.wpi.first.wpilibj.SPI
 import kotlin.math.PI
 
+//Maybe add to other motors
+const val DEFAULT_VOLTAGE = 12.0
+
 const val THROUGH_BORE_CYCLES_PER_ROTATION = 2048
 const val THROUGH_BORE_COUNTS_PER_ROTATION = 8192
 
@@ -92,7 +95,7 @@ const val AUTO_EXIT_ACCELERATION = 1.5
 
 const val END_SPEED = 0.4
 
-const val SHOOT_TIME = 1.0
+const val SHOOT_TIME = 2.0
 const val SHOOT_DELAY = 0.5
 
 //fix
@@ -104,15 +107,15 @@ val CAMERAS = listOf("Drive 1", "Drive 2")
 
 val SHOOT_POSE = Pose2d(0.0, 0.0, Rotation2d.fromDegrees(0.0))
 
-val DOUBLE_START_POSE_LEFT = Pose2d(-0.8, -1.05, Rotation2d.fromDegrees(180.0))
-val PICKUP_POSE_LEFT = Pose2d(-2.55, -1.05, Rotation2d.fromDegrees(205.0))
-val ENTRY_POSE_LEFT = Pose2d(-1.55, 0.8, Rotation2d.fromDegrees(-90.0))
-val END_POSE_SINGLE_LEFT = Pose2d(-1.85, -2.0, Rotation2d.fromDegrees(35.0))
+val DOUBLE_START_POSE_LEFT = Pose2d(-0.8, -0.45, Rotation2d.fromDegrees(190.0))
+val PICKUP_POSE_LEFT = Pose2d(-2.55, -0.75, Rotation2d.fromDegrees(205.0))
+val ENTRY_POSE_LEFT = Pose2d(-1.6, -0.95, Rotation2d.fromDegrees(80.0))
+val END_POSE_SINGLE_LEFT = Pose2d(-2.0, -1.8, Rotation2d.fromDegrees(20.0))
 
-val DOUBLE_START_POSE_RIGHT = Pose2d(-0.8, 1.05, Rotation2d.fromDegrees(180.0))
-val PICKUP_POSE_RIGHT = Pose2d(-2.8, 1.05, Rotation2d.fromDegrees(180.0))
-val ENTRY_POSE_RIGHT = Pose2d(-2.8, 0.0, Rotation2d.fromDegrees(0.0))
-val END_POSE_SINGLE_RIGHT = Pose2d(-1.85, 2.0, Rotation2d.fromDegrees(-35.0))
+val DOUBLE_START_POSE_RIGHT = Pose2d(-0.8, 0.45, Rotation2d.fromDegrees(-190.0))
+val PICKUP_POSE_RIGHT = Pose2d(-2.55, 0.75, Rotation2d.fromDegrees(-205.0))
+val ENTRY_POSE_RIGHT = Pose2d(-1.6, 0.95, Rotation2d.fromDegrees(-80.0))
+val END_POSE_SINGLE_RIGHT = Pose2d(-2.0, 1.8, Rotation2d.fromDegrees(-20.0))
 
 const val DRIVE_FORWARD_DISTANCE = 1.75
 
