@@ -74,6 +74,10 @@ object Input {
         return slowMode || Climber.climbing
     }
 
+    fun forceShoot(): Boolean {
+        return controlPreferences.forceShoot .get()
+    }
+
     fun getClimbNext(): Boolean {
         val currPress = controlPreferences.climbNext.get()
         return if (!climbNext) {

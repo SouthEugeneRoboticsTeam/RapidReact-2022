@@ -35,7 +35,7 @@ class ShootBalls : CommandBase() {
     }
 
     override fun execute() {
-        if(inTolerance() && Shooter.getAverageSpeed() <= robotPreferences.shooterStability && Shooter.getAverageSpeedBack() <= robotPreferences.shooterBackStability) {
+        if(Input.forceShoot() || (inTolerance() && Shooter.getAverageSpeed() <= robotPreferences.shooterStability && Shooter.getAverageSpeedBack() <= robotPreferences.shooterBackStability)) {
             shooting = true
         }
 

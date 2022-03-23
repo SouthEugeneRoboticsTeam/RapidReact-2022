@@ -71,6 +71,7 @@ object Logging {
 
         BadLog.createTopic("Input/Rev", BadLog.UNITLESS, { boolToDouble(controlPreferences.rev.get()) })
         BadLog.createTopic("Input/Shoot", BadLog.UNITLESS, { boolToDouble(controlPreferences.shoot.get()) })
+        BadLog.createTopic("Input/Force Shoot", BadLog.UNITLESS, { boolToDouble(controlPreferences.forceShoot.get()) })
 
         BadLog.createTopic("Input/Slow Mode", BadLog.UNITLESS, { boolToDouble(controlPreferences.slowMode.get()) })
     }
