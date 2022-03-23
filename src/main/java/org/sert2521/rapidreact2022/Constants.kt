@@ -20,7 +20,7 @@ const val WHEEL_CIRCUMFERENCE = 0.1524 * PI
 const val TRACK_WIDTH = 0.5816473
 const val MAX_SPEED_ADDON = 1.0
 const val MAX_SPEED = 2.0
-const val MAX_TURN_SPEED = 1.2
+const val MAX_TURN_SPEED = 1.8
 const val MAX_SLOW_SPEED = 0.5
 const val MAX_SLOW_TURN_SPEED = 0.8
 const val SLEW_RATE = 3.0
@@ -96,7 +96,7 @@ const val AUTO_EXIT_ACCELERATION = 1.5
 const val END_SPEED = 0.4
 
 const val SHOOT_TIME = 2.0
-const val SHOOT_DELAY = 0.35
+const val SHOOT_DELAY = 0.5
 
 //fix
 val LOG_PATHS = listOf("/media/sda1/", "/media/sdb1/", "/media/sdc1/")

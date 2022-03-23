@@ -3,10 +3,7 @@ package org.sert2521.rapidreact2022
 import badlog.lib.BadLog
 import edu.wpi.first.wpilibj.DriverStation
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard
-import org.sert2521.rapidreact2022.subsytems.Climber
-import org.sert2521.rapidreact2022.subsytems.Drivetrain
-import org.sert2521.rapidreact2022.subsytems.Intake
-import org.sert2521.rapidreact2022.subsytems.Shooter
+import org.sert2521.rapidreact2022.subsytems.*
 import java.lang.Exception
 import java.lang.System.nanoTime
 import java.time.LocalDateTime
@@ -94,6 +91,17 @@ object Logging {
         BadLog.createTopic("Drivetrain/Pose Angle", "deg", { Drivetrain.pose.rotation.degrees })
 
         BadLog.createTopic("Intake/Full", BadLog.UNITLESS, { if(Intake.indexerFull) { 1.0 } else { 0.0 } })
+
+        BadLog.createTopic("Climber/Static Height", "m", { Climber.staticHeight })
+        BadLog.createTopic("Climber/Variable Height", "m", { Climber.variableHeight })
+        BadLog.createTopic("Climber/Variable Angle Arm", BadLog.UNITLESS, { Climber.variableAngleArm })
+        BadLog.createTopic("Climber/Variable Angle Motor", BadLog.UNITLESS, { Climber.variableAngleMotor })
+
+        BadLog.createTopic("Climber/Static Limit", BadLog.UNITLESS, { boolToDouble(Climber.isAtBottomStatic()) })
+        BadLog.createTopic("Climber/Variable Limit", BadLog.UNITLESS, { boolToDouble(Climber.isAtBottomVariable()) })
+
+        BadLog.createTopic("Climber/Static Locked", BadLog.UNITLESS, { when(Climber.isStaticLocked()) { LockStates.LOCKED -> 1.0; LockStates.NEITHER -> 0.0; LockStates.UNLOCKED -> -1.0 } })
+        BadLog.createTopic("Climber/Variable Locked", BadLog.UNITLESS, { when(Climber.isVariableLocked()) { LockStates.LOCKED -> 1.0; LockStates.NEITHER -> 0.0; LockStates.UNLOCKED -> -1.0 } })
     }
 
     fun update() {
