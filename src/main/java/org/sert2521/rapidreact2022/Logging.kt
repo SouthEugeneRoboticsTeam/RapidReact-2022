@@ -140,6 +140,7 @@ object Logging {
 
         SmartDashboard.putNumber("Robot/Gyro Angle ", Drivetrain.pose.rotation.degrees)
 
+        //fix
         if (log != null) {
             if (!Path(path).exists()) {
                 log = null
