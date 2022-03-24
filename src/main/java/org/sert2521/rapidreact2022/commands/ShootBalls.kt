@@ -39,7 +39,7 @@ class ShootBalls : CommandBase() {
             shooting = true
         }
 
-        if(robotPreferences.shooterExitRPM >= Shooter.wheelSpeed) {
+        if(robotPreferences.shooterRPM - robotPreferences.shooterExitRPMDrop >= Shooter.wheelSpeed) {
             if(shouldShoot()) {
                 lastShot = currentTimeMillis()
             }

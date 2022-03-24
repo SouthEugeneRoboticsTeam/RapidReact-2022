@@ -96,10 +96,10 @@ const val AUTO_EXIT_ACCELERATION = 1.5
 const val END_SPEED = 0.4
 
 const val SHOOT_TIME = 2.0
-const val SHOOT_DELAY = 0.5
+const val SHOOT_DELAY = 0.6
 
 //fix
-val LOG_PATHS = listOf("/media/sda1/", "/media/sdb1/", "/media/sdc1/")
+val LOG_PATHS = listOf("/media/sda1/", "/media/sdb1/", "/media/sdc1/", "/media/sdd1/", "/media/sde1/", "/media/sdf1/")
 const val FORMAT_PATTERN = "yyyy,MMM,dd,HH,mm,ss"
 
 const val CAMERA_PATH = "/Drive Switched"

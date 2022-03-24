@@ -17,7 +17,7 @@ abstract class RobotPreferences {
     abstract val shooterRPM: Double
     abstract val shooterRPMTolerance: Double
     abstract val shooterStability: Double
-    abstract val shooterExitRPM: Double
+    abstract val shooterExitRPMDrop: Double
 
     abstract val shooterBackRPM: Double
     abstract val shooterBackStability: Double
@@ -36,12 +36,12 @@ object CompetitionPreferences : RobotPreferences() {
 
     override val ledLength = 16
 
-    override val shooterRPM = 2200.0
+    override val shooterRPM = 2500.0
     override val shooterStability = 700.0
     override val shooterRPMTolerance = 400.0
-    override val shooterExitRPM = 2100.0
+    override val shooterExitRPMDrop = 100.0
 
-    override val shooterBackRPM = 4300.0
+    override val shooterBackRPM = 4500.0
     override val shooterBackStability = 400.0
     override val shooterBackRPMTolerance = 400.0
 
@@ -61,7 +61,7 @@ object PracticePreferences : RobotPreferences() {
     override val shooterRPM = 3100.0
     override val shooterRPMTolerance = 50.0
     override val shooterStability = 10.0
-    override val shooterExitRPM = 2800.0
+    override val shooterExitRPMDrop = 2800.0
 
     override val shooterBackRPM = 4400.0
     override val shooterBackStability = 10.0
