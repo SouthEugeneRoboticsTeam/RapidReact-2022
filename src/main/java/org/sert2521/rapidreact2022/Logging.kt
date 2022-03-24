@@ -8,15 +8,20 @@ import java.lang.Exception
 import java.lang.System.nanoTime
 import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
+import kotlin.io.path.Path
+import kotlin.io.path.exists
 
 object Logging {
     private var log: BadLog? = null
     private var startTime = 0L
+    private var path = ""
 
     init {
+        //Maybe add it initing at any time
         for(logPath in LOG_PATHS) {
             try {
-                log = BadLog.init("$logPath${LocalDateTime.now().format(DateTimeFormatter.ofPattern(FORMAT_PATTERN))}.bag")
+                path = "$logPath${LocalDateTime.now().format(DateTimeFormatter.ofPattern(FORMAT_PATTERN))}.bag"
+                log = BadLog.init(path)
 
                 initMetaInfoLogging()
                 initJoystickLogging()
@@ -135,13 +140,13 @@ object Logging {
 
         SmartDashboard.putNumber("Robot/Gyro Angle ", Drivetrain.pose.rotation.degrees)
 
-        //fix not catching errors
-        try {
-            log?.updateTopics()
-            log?.log()
-        } catch(e: Exception) {
-            log = null
-            println(e)
+        if (log != null) {
+            if (!Path(path).exists()) {
+                log = null
+            }
         }
+
+        log?.updateTopics()
+        log?.log()
     }
 }
