@@ -30,6 +30,8 @@ object Input {
     private var camera = 0
 
     init {
+        NetworkTableInstance.getDefault().getEntry(CAMERA_PATH).setString(CAMERAS[camera])
+
         controlPreferences.intake.whileHeld(intakeBalls, false)
         controlPreferences.outtake.whileHeld(outtakeBalls)
         controlPreferences.shoot.whileHeld(shootBalls, false)
@@ -38,7 +40,7 @@ object Input {
         controlPreferences.climb.whenPressed(climb, false)
         controlPreferences.lockOne.and(controlPreferences.lockTwo).whenActive(InstantCommand( { climbLocked = true } ))
 
-        controlPreferences.slowMode.whenPressed(InstantCommand( { slowMode = !slowMode } ))
+        //controlPreferences.slowMode.whenPressed(InstantCommand( { slowMode = !slowMode } ))
         controlPreferences.overrideIndexer.whenPressed(InstantCommand( { indexerOverride = !indexerOverride } ))
 
         controlPreferences.switchCameras.whenPressed(InstantCommand( { NetworkTableInstance.getDefault().getEntry(CAMERA_PATH).setString(CAMERAS[camera]); camera++; camera %= CAMERAS.size } ))
