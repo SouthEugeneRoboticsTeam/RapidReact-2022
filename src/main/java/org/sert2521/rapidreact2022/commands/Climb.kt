@@ -10,18 +10,20 @@ import org.sert2521.rapidreact2022.subsytems.Climber
 //Add AI confirm climber next
 class Climb : SequentialCommandGroup() {
     init {
+        //Make less hackish
+        //Make easier to undo climb
         addCommands(
                 InstantCommand( { Climber.climbing = true } ),
                 SetClimber(REACH_MID, ABOVE_HIGH, PAST_HIGH_ANGLE) { Input.getClimbNext() },
                 InstantCommand( { Climber.inAir = true } ),
                 InstantCommand( { Climber.loadBearingArm = Arms.STATIC } ),
-                SetClimber(HANG_HEIGHT, ABOVE_HIGH, PAST_HIGH_ANGLE),
-                SetClimber(HANG_HEIGHT, ABOVE_HIGH, PAST_HIGH_ANGLE),
+                SetClimber(HANG_HEIGHT - 0.04, ABOVE_HIGH, PAST_HIGH_ANGLE, staticTolerance = 0.05),
+                SetClimber(HANG_HEIGHT - 0.04, ABOVE_HIGH, PAST_HIGH_ANGLE, staticTolerance = 0.05),
                 ClimberHitBar(HANG_HEIGHT, ABOVE_HIGH, Directions.FORWARD) { Input.getClimbNext() },
                 InstantCommand( { Climber.loadBearingArm = Arms.BOTH } ),
-                ClimberHitBar(HANG_HEIGHT, HIT_HIGH, Directions.FORWARD),
+                ClimberHitBar(HANG_HEIGHT - 0.04, HIT_HIGH, Directions.FORWARD, staticTolerance = 0.05),
                 InstantCommand( { Climber.loadBearingArm = Arms.VARIABLE } ),
-                SetClimber(HANG_HEIGHT, PULL_IN_HIGH, null),
+                SetClimber(HANG_HEIGHT - 0.04, PULL_IN_HIGH, null, staticTolerance = 0.05),
                 SetClimber(LET_GO_MID, PULL_IN_HIGH, null, maxSpeed = CLIMBER_LET_GO_SPEED, maxAcceleration = CLIMBER_LET_GO_ACCELERATION),
                 SetClimber(GO_UNDER_HIGH, PULL_IN_HIGH, GO_UNDER_ANGLE),
                 SetClimber(GO_UNDER_HIGH, PULL_IN_HIGH, PAST_CURRENT_ANGLE),

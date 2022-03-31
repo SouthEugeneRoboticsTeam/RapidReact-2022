@@ -27,7 +27,7 @@ const val SLEW_RATE = 3.0
 const val DEADBAND = 0.1
 
 const val CLIMBER_HEIGHT_PER_ROTATION = 0.004842
-const val CLIMBER_ANGLE_OFFSET = 122.0
+const val CLIMBER_ANGLE_OFFSET = 115.5
 const val MAX_CLIMBER_ANGLE_VALUE = 24750
 const val MIN_CLIMBER_ANGLE_VALUE = -27618
 const val START_POS = 1.0
@@ -37,7 +37,7 @@ const val MIN_CLIMBER_HEIGHT = 0.0
 const val DEFAULT_ANGLE = 30.0
 const val HANG_HEIGHT = 0.0
 const val REACH_MID = 0.64
-const val PAST_HIGH_ANGLE = 7.5
+const val PAST_HIGH_ANGLE = 6.5
 const val ABOVE_HIGH = 0.66
 const val HIT_HIGH = 0.57
 const val PULL_IN_HIGH = 0.46
@@ -84,6 +84,14 @@ const val UNSTICK_SPEED_CLIMB = 0.0//-0.25
 const val INTAKE_SPEED = 0.8
 const val INDEXER_SPEED = 0.8
 
+const val AUTO_TRIPLE_SPEED = 2.7
+const val AUTO_TRIPLE_ACCELERATION = 2.2
+
+const val AUTO_TRIPLE_TURN_SPEED = 1.2
+const val AUTO_TRIPLE_TURN_ACCELERATION = 1.5
+
+const val END_SPEED_TRIPLE = 0.5
+
 const val AUTO_SPEED = 1.2
 const val AUTO_ACCELERATION = 1.2
 
@@ -95,8 +103,8 @@ const val AUTO_EXIT_ACCELERATION = 1.5
 
 const val END_SPEED = 0.4
 
-const val SHOOT_TIME = 2.0
-const val SHOOT_DELAY = 0.6
+const val SHOOT_DONE_DELAY = 0.1
+const val SHOOT_BETWEEN_DELAY = 0.5
 
 //fix
 val LOG_PATHS = listOf("/media/sda1/", "/media/sdb1/", "/media/sdc1/", "/media/sdd1/", "/media/sde1/", "/media/sdf1/")
@@ -107,14 +115,23 @@ val CAMERAS = listOf("Drive 1", "Drive 2")
 
 val SHOOT_POSE = Pose2d(0.0, 0.0, Rotation2d.fromDegrees(0.0))
 
-val DOUBLE_START_POSE_LEFT = Pose2d(-0.8, -0.45, Rotation2d.fromDegrees(190.0))
-val PICKUP_POSE_LEFT = Pose2d(-2.55, -0.75, Rotation2d.fromDegrees(205.0))
-val ENTRY_POSE_LEFT = Pose2d(-1.6, -0.95, Rotation2d.fromDegrees(80.0))
+val DOUBLE_START_POSE_LEFT = Pose2d(-0.65, -0.8, Rotation2d.fromDegrees(190.0))
+val PICKUP_POSE_LEFT_DOUBLE = Pose2d(-2.2, -1.15, Rotation2d.fromDegrees(215.0))
+val ENTRY_POSE_LEFT = Pose2d(-1.45, -1.3, Rotation2d.fromDegrees(80.0))
+
 val END_POSE_SINGLE_LEFT = Pose2d(-2.0, -1.8, Rotation2d.fromDegrees(20.0))
 
-val DOUBLE_START_POSE_RIGHT = Pose2d(-0.8, 0.45, Rotation2d.fromDegrees(-190.0))
-val PICKUP_POSE_RIGHT = Pose2d(-2.55, 0.75, Rotation2d.fromDegrees(-205.0))
-val ENTRY_POSE_RIGHT = Pose2d(-1.6, 0.95, Rotation2d.fromDegrees(-80.0))
+val TO_PICKUP_ONE = Pose2d(-1.1, 0.7, Rotation2d.fromDegrees(220.0))
+val PICKUP_POSE_ONE_TRIPLE = Pose2d(-1.85, -0.8, Rotation2d.fromDegrees(200.0))
+val ENTRY_POSE_LEFT_ONE_TRIPLE = Pose2d(-1.45, -1.15, Rotation2d.fromDegrees(80.0))
+val PICKUP_POSE_TWO_TRIPLE = Pose2d(-1.9, 1.8, Rotation2d.fromDegrees(80.0))
+val ENTRY_POSE_LEFT_TWO_TRIPLE = Pose2d(-2.1, 0.0, Rotation2d.fromDegrees(10.0))
+val END_POSE_TRIPLE = Pose2d(-0.2, 0.15, Rotation2d.fromDegrees(0.0))
+
+val DOUBLE_START_POSE_RIGHT = Pose2d(-0.65, 0.8, Rotation2d.fromDegrees(-190.0))
+val PICKUP_POSE_RIGHT = Pose2d(-2.2, 1.15, Rotation2d.fromDegrees(-215.0))
+val ENTRY_POSE_RIGHT = Pose2d(-1.45, 1.3, Rotation2d.fromDegrees(-80.0))
+
 val END_POSE_SINGLE_RIGHT = Pose2d(-2.0, 1.8, Rotation2d.fromDegrees(-20.0))
 
 const val DRIVE_FORWARD_DISTANCE = 1.75

@@ -9,7 +9,7 @@ class ShootSingleLeft : SequentialCommandGroup() {
     init {
         addCommands(
             InstantCommand( { Drivetrain.reset(SHOOT_POSE) } ),
-            ShootBalls().withTimeout(SHOOT_TIME),
+            ShootBalls(1),
             DrivePath(AUTO_EXIT_SPEED, AUTO_EXIT_ACCELERATION, true, SHOOT_POSE, END_POSE_SINGLE_LEFT)
         )
     }

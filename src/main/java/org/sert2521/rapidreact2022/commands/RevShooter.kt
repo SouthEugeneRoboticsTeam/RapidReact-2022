@@ -10,7 +10,7 @@ class RevShooter : CommandBase() {
     }
 
     override fun initialize() {
-        Shooter.setWheelSpeed(robotPreferences.shooterRPM)
+        Shooter.setWheelSpeedFront(robotPreferences.shooterFrontRPM)
         Shooter.setWheelSpeedBack(robotPreferences.shooterBackRPM)
     }
 

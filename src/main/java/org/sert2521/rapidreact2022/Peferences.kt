@@ -4,20 +4,31 @@ import edu.wpi.first.wpilibj.Joystick
 import edu.wpi.first.wpilibj.XboxController
 import edu.wpi.first.wpilibj2.command.button.JoystickButton
 
+/*
+Shooter
+Ks = 0.17134
+Kv = 0.12403
+Ka = 0.0050043
+Kp = 0.19242
+Kd = 0
+*/
+
 abstract class RobotPreferences {
     abstract val climberPID: Array<Double>
     abstract val actuatorPID: Array<Double>
-    abstract val shooterPIDF: Array<Double>
-    abstract val shooterBackPIDF: Array<Double>
+    abstract val shooterPID: Array<Double>
+    abstract val shooterFeedForward: Array<Double>
+    abstract val shooterBackPID: Array<Double>
+    abstract val shooterBackFeedForward: Array<Double>
     abstract val drivePID: Array<Double>
     abstract val driveFeedForward: Array<Double>
 
     abstract val ledLength: Int
 
-    abstract val shooterRPM: Double
+    abstract val shooterFrontRPM: Double
     abstract val shooterRPMTolerance: Double
-    abstract val shooterStability: Double
-    abstract val shooterExitRPMDrop: Double
+    abstract val shooterFrontStability: Double
+    abstract val shooterFrontExitRPMDrop: Double
 
     abstract val shooterBackRPM: Double
     abstract val shooterBackStability: Double
@@ -29,21 +40,23 @@ abstract class RobotPreferences {
 object CompetitionPreferences : RobotPreferences() {
     override val climberPID = arrayOf(3.4, 0.9, 0.0)
     override val actuatorPID = arrayOf(0.06, 0.1, 0.0)
-    override val shooterPIDF = arrayOf(0.00024, 0.0, 0.0, 0.000193)
-    override val shooterBackPIDF = arrayOf(0.000063, 0.0, 0.0, 0.000131)
-    override val drivePID = arrayOf(2.773, 0.0, 0.0)
-    override val driveFeedForward = arrayOf(0.72556, 2.437, 2.5888)
+    override val shooterPID = arrayOf(0.001117, 0.0, 0.0)
+    override val shooterFeedForward = arrayOf(0.15936, 0.00206466666, 0.00008552666)
+    override val shooterBackPID = arrayOf(0.0012681, 0.0, 0.0)
+    override val shooterBackFeedForward = arrayOf(0.659, 0.00134198333, 0.00006685)
+    override val drivePID = arrayOf(4.9479, 0.0, 0.0)
+    override val driveFeedForward = arrayOf(0.3455, 3.1133, 0.0)//9.9377
 
     override val ledLength = 16
 
-    override val shooterRPM = 2500.0
-    override val shooterStability = 700.0
-    override val shooterRPMTolerance = 400.0
-    override val shooterExitRPMDrop = 100.0
+    override val shooterFrontRPM = 2500.0
+    override val shooterFrontStability = 1200.0
+    override val shooterRPMTolerance = 200.0
+    override val shooterFrontExitRPMDrop = 80.0
 
     override val shooterBackRPM = 4500.0
-    override val shooterBackStability = 400.0
-    override val shooterBackRPMTolerance = 400.0
+    override val shooterBackStability = 1200.0
+    override val shooterBackRPMTolerance = 200.0
 
     override val shooterAveragePoints = 5
 }
@@ -51,17 +64,19 @@ object CompetitionPreferences : RobotPreferences() {
 object PracticePreferences : RobotPreferences() {
     override val climberPID = arrayOf(0.0, 0.0, 0.0)
     override val actuatorPID = arrayOf(0.00, 0.0, 0.0)
-    override val shooterPIDF = arrayOf(0.00035, 0.0, 0.0, 0.00018)
-    override val shooterBackPIDF = arrayOf(0.000068, 0.0, 0.0, 0.000148)
+    override val shooterPID = arrayOf(0.00035, 0.0, 0.0, 0.00018)
+    override val shooterFeedForward = arrayOf(0.0, 0.0, 0.0)
+    override val shooterBackPID = arrayOf(0.000068, 0.0, 0.0, 0.000148)
+    override val shooterBackFeedForward = arrayOf(0.0, 0.0, 0.0)
     override val drivePID = arrayOf(2.773, 0.0, 0.0)
     override val driveFeedForward = arrayOf(0.72556, 2.437, 2.5888)
 
     override val ledLength = 56//58, but two are covered
 
-    override val shooterRPM = 3100.0
+    override val shooterFrontRPM = 3100.0
     override val shooterRPMTolerance = 50.0
-    override val shooterStability = 10.0
-    override val shooterExitRPMDrop = 2800.0
+    override val shooterFrontStability = 10.0
+    override val shooterFrontExitRPMDrop = 2800.0
 
     override val shooterBackRPM = 4400.0
     override val shooterBackStability = 10.0

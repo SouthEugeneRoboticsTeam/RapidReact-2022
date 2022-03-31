@@ -25,7 +25,7 @@ object Input {
     private var climbNext = false
     private var climbLocked = false
 
-    private val autoChooser = SendableChooser<Supplier<Command>>()
+    private val autoChooser = SendableChooser<Command>()
 
     private var camera = 0
 
@@ -48,11 +48,12 @@ object Input {
 
     fun onInit() {
         autoChooser.setDefaultOption("Nothing", null)
-        autoChooser.addOption("Drive Forward") { DriveForward() }
-        autoChooser.addOption("Shoot Single Right") { ShootSingleRight() }
-        autoChooser.addOption("Shoot Single Left") { ShootSingleLeft() }
-        autoChooser.addOption("Shoot Double Right") { ShootDoubleRight() }
-        autoChooser.addOption("Shoot Double Left") { ShootDoubleLeft() }
+        autoChooser.addOption("Drive Forward", DriveForward())
+        autoChooser.addOption("Shoot Single Right", ShootSingleRight())
+        autoChooser.addOption("Shoot Single Left", ShootSingleLeft())
+        autoChooser.addOption("Shoot Double Right", ShootDoubleRight())
+        autoChooser.addOption("Shoot Double Left", ShootDoubleLeft())
+        autoChooser.addOption("Shoot Triple Left", ShootTripleLeft())
         SmartDashboard.putData(autoChooser)
 
         SmartDashboard.putNumber("Auto Delay", 0.0)
@@ -113,6 +114,6 @@ object Input {
             return null
         }
 
-        return WaitCommand(SmartDashboard.getNumber("Robot/Auto Delay", 0.0)).andThen(autoChooser.selected.get())
+        return WaitCommand(SmartDashboard.getNumber("Robot/Auto Delay", 0.0)).andThen(InstantCommand( { autoChooser.selected.schedule() } ))
     }
 }

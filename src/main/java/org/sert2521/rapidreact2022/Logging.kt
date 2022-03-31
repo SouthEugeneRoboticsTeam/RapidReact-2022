@@ -9,6 +9,9 @@ import java.lang.System.nanoTime
 import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
 
+//Make on enable and log match data not date
+//File system logs date
+//Fix errors causing packet problems
 object Logging {
     private var log: BadLog? = null
     private var startTime = 0L
@@ -74,10 +77,10 @@ object Logging {
     }
 
     private fun initRobotLogging() {
-        BadLog.createTopic("Shooter/Shooter Speed", "rpm", { Shooter.wheelSpeed })
+        BadLog.createTopic("Shooter/Shooter Speed", "rpm", { Shooter.wheelSpeedFront })
         BadLog.createTopic("Shooter/Shooter Back Speed", "rpm", { Shooter.wheelSpeedBack })
 
-        BadLog.createTopic("Shooter/Shooter Speed Average", "rpm", { Shooter.getAverageSpeed() })
+        BadLog.createTopic("Shooter/Shooter Speed Average", "rpm", { Shooter.getAverageFrontSpeed() })
         BadLog.createTopic("Shooter/Shooter Back Speed Average", "rpm", { Shooter.getAverageSpeedBack() })
 
         BadLog.createTopic("Drivetrain/Left Speed", "m/s", { Drivetrain.leftVelocity })
@@ -105,10 +108,10 @@ object Logging {
     }
 
     fun update() {
-        SmartDashboard.putNumber("Robot/Shooter Speed", Shooter.wheelSpeed)
+        SmartDashboard.putNumber("Robot/Shooter Speed", Shooter.wheelSpeedFront)
         SmartDashboard.putNumber("Robot/Shooter Back Speed", Shooter.wheelSpeedBack)
 
-        SmartDashboard.putNumber("Robot/Shooter Speed Average", Shooter.getAverageSpeed())
+        SmartDashboard.putNumber("Robot/Shooter Speed Average", Shooter.getAverageFrontSpeed())
         SmartDashboard.putNumber("Robot/Shooter Back Speed Average", Shooter.getAverageSpeedBack())
 
         SmartDashboard.putNumber("Robot/Drivetrain Left Speed", Drivetrain.leftVelocity)
