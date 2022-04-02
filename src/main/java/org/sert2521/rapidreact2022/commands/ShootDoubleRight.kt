@@ -12,7 +12,7 @@ class ShootDoubleRight : SequentialCommandGroup() {
             DrivePath(AUTO_SPEED, AUTO_ACCELERATION, false, DOUBLE_START_POSE_RIGHT, PICKUP_POSE_RIGHT).deadlineWith(IntakeBalls()),
             DrivePath(AUTO_TURN_SPEED, AUTO_TURN_ACCELERATION, true, PICKUP_POSE_RIGHT, ENTRY_POSE_RIGHT).deadlineWith(IntakeBalls().withTimeout(0.5)),
             DrivePath(AUTO_SPEED, AUTO_ACCELERATION, false, ENTRY_POSE_RIGHT, SHOOT_POSE, endSpeed = END_SPEED).deadlineWith(RevShooter()),
-            ShootBalls(2),
+            ShootBalls().withTimeout(SHOOT_TIME),
             InstantCommand( { Drivetrain.stop() } )
         )
     }

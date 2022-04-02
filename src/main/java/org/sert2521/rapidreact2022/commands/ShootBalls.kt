@@ -6,8 +6,8 @@ import org.sert2521.rapidreact2022.subsytems.Intake
 import org.sert2521.rapidreact2022.subsytems.Shooter
 import java.lang.System.currentTimeMillis
 
-//Remove ballsToShoot
-class ShootBalls(private val ballsToShoot: Int? = null, private val stable: Boolean = false) : CommandBase() {
+//Remove ballsToShoot or fix because it doesn't always work
+class ShootBalls(private val stable: Boolean = false) : CommandBase() {
     private val danceLED = DanceLED()
     private var shooting = false
     private var lastShot = 0L
@@ -25,8 +25,6 @@ class ShootBalls(private val ballsToShoot: Int? = null, private val stable: Bool
 
         shooting = false
         lastShot = 0L
-
-        ballsShot = 0
     }
 
     private fun shouldShoot(): Boolean {
@@ -58,16 +56,6 @@ class ShootBalls(private val ballsToShoot: Int? = null, private val stable: Bool
             Intake.setIndexerSpeed(0.0)
             Intake.setIntakeSpeed(0.0)
         }
-    }
-
-    override fun isFinished(): Boolean {
-        if(ballsToShoot != null) {
-            if(ballsShot >= ballsToShoot && currentTimeMillis() - lastShot >= SHOOT_DONE_DELAY * 1000) {
-                return true
-            }
-        }
-
-        return false
     }
 
     override fun end(interrupted: Boolean) {

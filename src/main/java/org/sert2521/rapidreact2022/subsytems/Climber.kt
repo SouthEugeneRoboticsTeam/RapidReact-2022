@@ -205,7 +205,7 @@ object Climber : SubsystemBase() {
             staticClimberMotor.set(0.0)
         } else {
             if(isStaticLocked() == LockStates.NEITHER || (staticGoal < 0.0 && isAtBottomStatic()) || (staticGoal > 0.0 && staticHeight >= MAX_CLIMBER_HEIGHT)) {
-                staticClimberMotor.set(unstick)
+                staticClimberMotor.set(unstick + maintain)
             } else {
                 staticClimberMotor.set(staticGoal + maintain)
             }
@@ -234,7 +234,7 @@ object Climber : SubsystemBase() {
             variableClimberMotor.set(0.0)
         } else {
             if(isVariableLocked() == LockStates.NEITHER || (variableGoal < 0.0 && isAtBottomVariable()) || (variableGoal > 0.0 && variableHeight >= MAX_CLIMBER_HEIGHT)) {
-                variableClimberMotor.set(unstick)
+                variableClimberMotor.set(unstick + maintain)
             } else {
                 variableClimberMotor.set(variableGoal + maintain)
             }

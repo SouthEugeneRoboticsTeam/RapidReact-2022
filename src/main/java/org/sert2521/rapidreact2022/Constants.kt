@@ -27,7 +27,8 @@ const val SLEW_RATE = 3.0
 const val DEADBAND = 0.1
 
 const val CLIMBER_HEIGHT_PER_ROTATION = 0.004842
-const val CLIMBER_ANGLE_OFFSET = 115.5
+//Maybe could do with just potentiometer init
+const val CLIMBER_ANGLE_OFFSET = 106.0
 const val MAX_CLIMBER_ANGLE_VALUE = 24750
 const val MIN_CLIMBER_ANGLE_VALUE = -27618
 const val START_POS = 1.0
@@ -41,36 +42,28 @@ const val PAST_HIGH_ANGLE = 6.5
 const val ABOVE_HIGH = 0.66
 const val HIT_HIGH = 0.57
 const val PULL_IN_HIGH = 0.46
-const val LET_GO_MID = 0.6
-const val GO_UNDER_ANGLE = 16.0
+const val LET_GO_MID = 0.52
 const val GO_UNDER_HIGH = 0.35
-const val PAST_CURRENT_ANGLE = 42.0
+const val PAST_CURRENT_ANGLE = 50.0
 const val ABOVE_CURRENT = 0.64
 const val REACH_TRAVERSAL = 0.66
-const val REACH_TRAVERSAL_ANGLE = 25.0
-const val LET_GO_HIGH = 0.6
+const val REACH_TRAVERSAL_ANGLE = 3.0
+const val LET_GO_HIGH = 0.52
 const val HIT_TRAVERSAL = 0.56
 const val PULL_IN_TRAVERSAL = 0.46
-const val LET_GO_ANGLE = 26.0
-const val GO_UNDER_TRAVERSAL = 0.3
 const val END = 0.1
 const val END_ANGLE = 46.0
 
 const val DEFAULT_TOLERANCE = 0.02
 const val DEFAULT_TOLERANCE_ANGLE = 3.0
 
-const val CLIMBER_MAINTAIN = -0.1
+const val CLIMBER_MAINTAIN = -0.15
 const val CLIMBER_HIT_SPEED = 0.35
-const val FILTER_TAPS = 20
-const val STOP_TOLERANCE = 0.5
 const val CLIMBER_RESET_SPEED = -0.6
 
-const val CLIMBER_LET_GO_ACCELERATION = 0.005
-const val CLIMBER_LET_GO_SPEED = 0.05
-const val CLIMBER_MAX_SPEED = 0.4
-const val CLIMBER_MAX_ACCELERATION = 0.7
-const val CLIMBER_ACTUATOR_MAX_SPEED = 5.0
-const val CLIMBER_ACTUATOR_MAX_ACCELERATION = 5.0
+const val CLIMBER_UNHOOK_SPEED = 0.55
+const val CLIMBER_LOOSE_TOLERANCE = 0.07
+const val CLIMBER_LOOSE_TOLERANCE_ANGLE = 7.0
 
 const val SERVO_UNLOCK_STATIC = 0.1
 const val SERVO_UNLOCK_VARIABLE = 0.75
@@ -103,7 +96,7 @@ const val AUTO_EXIT_ACCELERATION = 1.5
 
 const val END_SPEED = 0.4
 
-const val SHOOT_DONE_DELAY = 0.1
+const val SHOOT_TIME = 1.4
 const val SHOOT_BETWEEN_DELAY = 0.5
 
 //fix

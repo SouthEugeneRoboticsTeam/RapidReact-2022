@@ -16,8 +16,6 @@ enum class Directions {
 class ClimberHitBar(private val staticTarget: Double, private val variableTarget: Double,
                     private val direction: Directions,
                     private val climberHitSpeed: Double = CLIMBER_HIT_SPEED,
-                    private val taps: Int = FILTER_TAPS,
-                    private val stopTolerance: Double = STOP_TOLERANCE,
                     private val isDone: () -> Boolean) : CommandBase() {
     constructor(staticTarget: Double, variableTarget: Double, direction: Directions,
                 staticTolerance: Double = DEFAULT_TOLERANCE, variableTolerance: Double = DEFAULT_TOLERANCE) :
@@ -26,8 +24,6 @@ class ClimberHitBar(private val staticTarget: Double, private val variableTarget
                 (variableTarget - Climber.variableHeight in -variableTolerance..variableTolerance || (Climber.isVariableLocked() == LockStates.LOCKED)) } )
     private val staticPID: PIDController
     private val variablePID: PIDController
-    private val filter = MedianFilter(taps)
-    private var tapsBeforeStart = 0
 
     init {
         addRequirements(Climber)
@@ -41,28 +37,19 @@ class ClimberHitBar(private val staticTarget: Double, private val variableTarget
     override fun initialize() {
         staticPID.reset()
         variablePID.reset()
-        filter.reset()
-        tapsBeforeStart = 0
-    }
-
-    override fun execute() {
-        Climber.setStaticSpeed(staticPID.calculate(Climber.staticHeight, staticTarget))
-        Climber.setVariableSpeed(variablePID.calculate(Climber.variableHeight, variableTarget))
 
         if(direction == Directions.BACKWARD) {
-            val angleOut = filter.calculate(Climber.variableAngleArm)
-            tapsBeforeStart += 1
-
-            if(tapsBeforeStart < taps || abs(angleOut - Climber.variableAngleArm) > stopTolerance) {
-                Climber.setAngleSpeed(-climberHitSpeed)
-            } else {
-                Climber.setAngleSpeed(0.0)
-            }
+            Climber.setAngleSpeed(-climberHitSpeed)
         }
 
         if(direction == Directions.FORWARD) {
             Climber.setAngleSpeed(climberHitSpeed)
         }
+    }
+
+    override fun execute() {
+        Climber.setStaticSpeed(staticPID.calculate(Climber.staticHeight, staticTarget))
+        Climber.setVariableSpeed(variablePID.calculate(Climber.variableHeight, variableTarget))
     }
 
     override fun isFinished(): Boolean {

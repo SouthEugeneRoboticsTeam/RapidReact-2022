@@ -10,35 +10,29 @@ import org.sert2521.rapidreact2022.subsytems.Climber
 //Add AI confirm climber next
 class Climb : SequentialCommandGroup() {
     init {
-        //Make less hackish
         //Make easier to undo climb
         addCommands(
                 InstantCommand( { Climber.climbing = true } ),
                 SetClimber(REACH_MID, ABOVE_HIGH, PAST_HIGH_ANGLE) { Input.getClimbNext() },
                 InstantCommand( { Climber.inAir = true } ),
                 InstantCommand( { Climber.loadBearingArm = Arms.STATIC } ),
-                SetClimber(HANG_HEIGHT - 0.04, ABOVE_HIGH, PAST_HIGH_ANGLE, staticTolerance = 0.05),
-                SetClimber(HANG_HEIGHT - 0.04, ABOVE_HIGH, PAST_HIGH_ANGLE, staticTolerance = 0.05),
+                SetClimber(HANG_HEIGHT, ABOVE_HIGH, PAST_HIGH_ANGLE),
                 ClimberHitBar(HANG_HEIGHT, ABOVE_HIGH, Directions.FORWARD) { Input.getClimbNext() },
                 InstantCommand( { Climber.loadBearingArm = Arms.BOTH } ),
-                ClimberHitBar(HANG_HEIGHT - 0.04, HIT_HIGH, Directions.FORWARD, staticTolerance = 0.05),
+                ClimberHitBar(HANG_HEIGHT, HIT_HIGH, Directions.FORWARD),
                 InstantCommand( { Climber.loadBearingArm = Arms.VARIABLE } ),
-                SetClimber(HANG_HEIGHT - 0.04, PULL_IN_HIGH, null, staticTolerance = 0.05),
-                SetClimber(LET_GO_MID, PULL_IN_HIGH, null, maxSpeed = CLIMBER_LET_GO_SPEED, maxAcceleration = CLIMBER_LET_GO_ACCELERATION),
-                SetClimber(GO_UNDER_HIGH, PULL_IN_HIGH, GO_UNDER_ANGLE),
-                SetClimber(GO_UNDER_HIGH, PULL_IN_HIGH, PAST_CURRENT_ANGLE),
-                SetClimber(ABOVE_CURRENT, PULL_IN_HIGH, PAST_CURRENT_ANGLE),
+                SetClimber(LET_GO_MID, PULL_IN_HIGH, null, maxStatic = CLIMBER_UNHOOK_SPEED),
+                SetClimber(GO_UNDER_HIGH, PULL_IN_HIGH, PAST_CURRENT_ANGLE, staticTolerance = CLIMBER_LOOSE_TOLERANCE, angleTolerance = CLIMBER_LOOSE_TOLERANCE_ANGLE),
+                SetClimber(ABOVE_CURRENT, PULL_IN_HIGH, PAST_CURRENT_ANGLE, angleTolerance = CLIMBER_LOOSE_TOLERANCE_ANGLE),
                 ClimberHitBar(ABOVE_CURRENT, PULL_IN_HIGH, Directions.BACKWARD) { Input.getClimbNext() },
                 InstantCommand( { Climber.loadBearingArm = Arms.STATIC } ),
                 SetClimber(HANG_HEIGHT, REACH_TRAVERSAL, REACH_TRAVERSAL_ANGLE),
-                ClimberHitBar(HANG_HEIGHT, REACH_TRAVERSAL, Directions.BACKWARD) { Input.getClimbNext() },
+                ClimberHitBar(HANG_HEIGHT, REACH_TRAVERSAL, Directions.FORWARD) { Input.getClimbNext() },
                 InstantCommand( { Climber.loadBearingArm = Arms.BOTH } ),
-                ClimberHitBar(HANG_HEIGHT, HIT_TRAVERSAL, Directions.BACKWARD),
+                ClimberHitBar(HANG_HEIGHT, HIT_TRAVERSAL, Directions.FORWARD),
                 InstantCommand( { Climber.loadBearingArm = Arms.VARIABLE } ),
                 SetClimber(HANG_HEIGHT, PULL_IN_TRAVERSAL, null),
-                SetClimber(LET_GO_HIGH, PULL_IN_TRAVERSAL, null, maxSpeed = CLIMBER_LET_GO_SPEED, maxAcceleration = CLIMBER_LET_GO_ACCELERATION),
-                SetClimber(LET_GO_HIGH, PULL_IN_TRAVERSAL, LET_GO_ANGLE),
-                SetClimber(GO_UNDER_TRAVERSAL, PULL_IN_TRAVERSAL, LET_GO_ANGLE),
+                SetClimber(LET_GO_HIGH, PULL_IN_TRAVERSAL, null, maxStatic = CLIMBER_UNHOOK_SPEED),
                 SetClimber(END, PULL_IN_TRAVERSAL, END_ANGLE),
                 InstantCommand( { Climber.lock() } ),
                 //Only here to fix wpilib bug
