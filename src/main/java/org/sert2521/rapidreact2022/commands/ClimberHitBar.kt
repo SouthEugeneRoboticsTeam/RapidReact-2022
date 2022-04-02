@@ -15,13 +15,16 @@ enum class Directions {
 
 class ClimberHitBar(private val staticTarget: Double, private val variableTarget: Double,
                     private val direction: Directions,
+                    private val minAngleMotor: Double = Double.NEGATIVE_INFINITY,
                     private val climberHitSpeed: Double = CLIMBER_HIT_SPEED,
                     private val isDone: () -> Boolean) : CommandBase() {
     constructor(staticTarget: Double, variableTarget: Double, direction: Directions,
+                minAngleMotor: Double = Double.NEGATIVE_INFINITY,
                 staticTolerance: Double = DEFAULT_TOLERANCE, variableTolerance: Double = DEFAULT_TOLERANCE) :
             this(staticTarget, variableTarget, direction,
-                isDone = { ((staticTarget - Climber.staticHeight in -staticTolerance..staticTolerance) || (Climber.isStaticLocked() == LockStates.LOCKED)) &&
-                (variableTarget - Climber.variableHeight in -variableTolerance..variableTolerance || (Climber.isVariableLocked() == LockStates.LOCKED)) } )
+                    minAngleMotor,
+                    isDone = { ((staticTarget - Climber.staticHeight in -staticTolerance..staticTolerance) || (Climber.isStaticLocked() == LockStates.LOCKED)) &&
+                            (variableTarget - Climber.variableHeight in -variableTolerance..variableTolerance || (Climber.isVariableLocked() == LockStates.LOCKED)) } )
     private val staticPID: PIDController
     private val variablePID: PIDController
 
@@ -37,19 +40,24 @@ class ClimberHitBar(private val staticTarget: Double, private val variableTarget
     override fun initialize() {
         staticPID.reset()
         variablePID.reset()
+    }
+
+    override fun execute() {
+        //Has trouble fully pulling up without dumb if
+        Climber.setStaticSpeed(staticPID.calculate(Climber.staticHeight, staticTarget) + if(staticTarget == HANG_HEIGHT) { PULL_SPEED } else { 0.0 })
+        Climber.setVariableSpeed(variablePID.calculate(Climber.variableHeight, variableTarget) + if(variableTarget == HANG_HEIGHT) { PULL_SPEED } else { 0.0 })
 
         if(direction == Directions.BACKWARD) {
-            Climber.setAngleSpeed(-climberHitSpeed)
+            if(Climber.variableAngleMotor >= minAngleMotor) {
+                Climber.setAngleSpeed(-climberHitSpeed)
+            } else {
+                Climber.setAngleSpeed(0.0)
+            }
         }
 
         if(direction == Directions.FORWARD) {
             Climber.setAngleSpeed(climberHitSpeed)
         }
-    }
-
-    override fun execute() {
-        Climber.setStaticSpeed(staticPID.calculate(Climber.staticHeight, staticTarget))
-        Climber.setVariableSpeed(variablePID.calculate(Climber.variableHeight, variableTarget))
     }
 
     override fun isFinished(): Boolean {

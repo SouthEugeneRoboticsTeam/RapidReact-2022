@@ -40,8 +40,9 @@ class SetClimber(private val staticTarget: Double, private val variableTarget: D
     }
 
     override fun execute() {
-        Climber.setStaticSpeed(staticPID.calculate(Climber.staticHeight, staticTarget).coerceIn(-maxStatic, maxStatic))
-        Climber.setVariableSpeed(variablePID.calculate(Climber.variableHeight, variableTarget).coerceIn(-maxVariable, maxVariable))
+        //Has trouble fully pulling up without dumb if
+        Climber.setStaticSpeed(staticPID.calculate(Climber.staticHeight, staticTarget).coerceIn(-maxStatic, maxStatic) + if(staticTarget == HANG_HEIGHT) { PULL_SPEED } else { 0.0 })
+        Climber.setVariableSpeed(variablePID.calculate(Climber.variableHeight, variableTarget).coerceIn(-maxVariable, maxVariable) + if(variableTarget == HANG_HEIGHT) { PULL_SPEED } else { 0.0 })
         if(angleTarget != null) {
             Climber.setAngleSpeed(anglePID.calculate(Climber.variableAngleArm, angleTarget))
         } else {

@@ -51,7 +51,7 @@ object Climber : SubsystemBase() {
 
     var loadBearingArm = Arms.NEITHER
     var climbing = false
-    var inAir = false
+    var committed = false
     private var calibratedAngle = false
 
     init {
@@ -205,7 +205,7 @@ object Climber : SubsystemBase() {
             staticClimberMotor.set(0.0)
         } else {
             if(isStaticLocked() == LockStates.NEITHER || (staticGoal < 0.0 && isAtBottomStatic()) || (staticGoal > 0.0 && staticHeight >= MAX_CLIMBER_HEIGHT)) {
-                staticClimberMotor.set(unstick + maintain)
+                staticClimberMotor.set(unstick)
             } else {
                 staticClimberMotor.set(staticGoal + maintain)
             }
@@ -234,7 +234,7 @@ object Climber : SubsystemBase() {
             variableClimberMotor.set(0.0)
         } else {
             if(isVariableLocked() == LockStates.NEITHER || (variableGoal < 0.0 && isAtBottomVariable()) || (variableGoal > 0.0 && variableHeight >= MAX_CLIMBER_HEIGHT)) {
-                variableClimberMotor.set(unstick + maintain)
+                variableClimberMotor.set(unstick)
             } else {
                 variableClimberMotor.set(variableGoal + maintain)
             }
@@ -262,7 +262,7 @@ object Climber : SubsystemBase() {
     fun reset() {
         loadBearingArm = Arms.NEITHER
         climbing = false
-        inAir = false
+        committed = false
 
         startClimber.schedule(false)
     }
