@@ -4,15 +4,6 @@ import edu.wpi.first.wpilibj.Joystick
 import edu.wpi.first.wpilibj.XboxController
 import edu.wpi.first.wpilibj2.command.button.JoystickButton
 
-/*
-Shooter
-Ks = 0.17134
-Kv = 0.12403
-Ka = 0.0050043
-Kp = 0.19242
-Kd = 0
-*/
-
 abstract class RobotPreferences {
     abstract val climberPID: Array<Double>
     abstract val actuatorPID: Array<Double>
@@ -28,11 +19,11 @@ abstract class RobotPreferences {
     abstract val shooterFrontRPM: Double
     abstract val shooterRPMTolerance: Double
     abstract val shooterFrontStability: Double
-    abstract val shooterFrontExitRPMDrop: Double
 
     abstract val shooterBackRPM: Double
     abstract val shooterBackStability: Double
     abstract val shooterBackRPMTolerance: Double
+    abstract val shooterBackExitRPMDrop: Double
 
     abstract val shooterAveragePoints: Int
 }
@@ -52,11 +43,11 @@ object CompetitionPreferences : RobotPreferences() {
     override val shooterFrontRPM = 2500.0
     override val shooterFrontStability = 1200.0
     override val shooterRPMTolerance = 200.0
-    override val shooterFrontExitRPMDrop = 120.0
 
     override val shooterBackRPM = 4500.0
     override val shooterBackStability = 1200.0
     override val shooterBackRPMTolerance = 200.0
+    override val shooterBackExitRPMDrop = 200.0
 
     override val shooterAveragePoints = 5
 }
@@ -76,11 +67,11 @@ object PracticePreferences : RobotPreferences() {
     override val shooterFrontRPM = 3100.0
     override val shooterRPMTolerance = 50.0
     override val shooterFrontStability = 10.0
-    override val shooterFrontExitRPMDrop = 2800.0
 
     override val shooterBackRPM = 4400.0
     override val shooterBackStability = 10.0
     override val shooterBackRPMTolerance = 100.0
+    override val shooterBackExitRPMDrop = 200.0
 
     override val shooterAveragePoints = 5
 }
@@ -158,7 +149,7 @@ object DriveteamPreferences : ControlPreferences() {
     override val endClimb = JoystickButton(secondaryController, 11)
     override val lockOne = JoystickButton(secondaryController, 1)
     override val lockTwo = JoystickButton(secondaryController, 2)
-    override val climb = JoystickButton(secondaryController, 13)
+    override val climb = JoystickButton(secondaryController, 6)
 
     override val switchCameras = JoystickButton(primaryController, 6)
 }

@@ -21,22 +21,26 @@ object Robot : TimedRobot() {
         Drivetrain.brakeMode()
         Input.onEnable()
         Climber.onEnable()
+        Logging.onEnable()
     }
 
     override fun teleopExit() {
         //Add before comp
         //Drivetrain.coastMode()
+        Logging.onDisable()
     }
 
     override fun autonomousInit() {
         Drivetrain.brakeMode()
         Input.onEnable()
         Climber.onEnable()
+        Logging.onEnable()
         Input.getAuto()?.schedule()
     }
 
     override fun autonomousExit() {
         Input.getAuto()?.cancel()
+        Logging.onDisable()
     }
 
     override fun testInit() {

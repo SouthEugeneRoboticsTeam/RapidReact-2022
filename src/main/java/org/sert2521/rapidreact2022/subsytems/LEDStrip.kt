@@ -6,6 +6,7 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase
 import org.sert2521.rapidreact2022.PWMS
 import org.sert2521.rapidreact2022.commands.SpiralLED
 import org.sert2521.rapidreact2022.robotPreferences
+import kotlin.math.abs
 import java.lang.System.currentTimeMillis
 
 object LEDStrip : SubsystemBase() {
@@ -32,7 +33,7 @@ object LEDStrip : SubsystemBase() {
     fun cycle(frequency: Double) {
         val newBuffer = AddressableLEDBuffer(robotPreferences.ledLength)
         for (i in 0 until robotPreferences.ledLength) {
-            newBuffer.setLED(i, buffer.getLED(((i + ((currentTimeMillis() * frequency) / 1000)) % robotPreferences.ledLength).toInt()))
+            newBuffer.setLED(i, buffer.getLED(abs(((i + ((-currentTimeMillis() * frequency) / 1000))) % robotPreferences.ledLength).toInt()))
         }
 
         addressableLED.setData(newBuffer)

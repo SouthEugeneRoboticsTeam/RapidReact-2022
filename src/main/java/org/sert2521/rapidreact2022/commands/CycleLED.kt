@@ -13,7 +13,7 @@ class CycleLED : CommandBase() {
 
     override fun initialize() {
         for (i in 0 until robotPreferences.ledLength) {
-            LEDStrip.setLEDHSV(i, 275, 94, (((sin(i * 2 * PI / 20) + 1) * 0.5) * 50).toInt())
+            LEDStrip.setLEDHSV(i, 300, 255, (((sin(i * 2 * PI / 20) + 1) * 0.5) * 255).toInt())//s94 v scalar 50
         }
     }
 

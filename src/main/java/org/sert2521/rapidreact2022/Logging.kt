@@ -9,30 +9,10 @@ import java.lang.System.nanoTime
 import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
 
-//Make on enable and log match data not date
-//File system logs date
-//Fix errors causing packet problems
 object Logging {
     private var log: BadLog? = null
     private var startTime = 0L
-
-    init {
-        for(logPath in LOG_PATHS) {
-            try {
-                log = BadLog.init("$logPath${LocalDateTime.now().format(DateTimeFormatter.ofPattern(FORMAT_PATTERN))}.bag")
-
-                initMetaInfoLogging()
-                initJoystickLogging()
-                initRobotLogging()
-
-                log?.finishInitialization()
-                break
-            } catch(e: Exception) {
-                log = null
-                println(e)
-            }
-        }
-    }
+    private var path = ""
 
     private fun initMetaInfoLogging() {
         startTime = nanoTime()
@@ -40,7 +20,6 @@ object Logging {
         BadLog.createTopic("Info/Match Time", "s", { DriverStation.getMatchTime() })
 
         BadLog.createTopic("Info/Match Color", BadLog.UNITLESS, { when(DriverStation.getAlliance()) { DriverStation.Alliance.Blue -> 1.0; DriverStation.Alliance.Invalid -> 0.0; DriverStation.Alliance.Red -> -1.0; null -> 0.0 } })
-        BadLog.createTopic("Info/Match Number", BadLog.UNITLESS, { DriverStation.getMatchNumber().toDouble() })
 
         BadLog.createTopic("Info/Mode", BadLog.UNITLESS, { if(Robot.isEnabled) { if(Robot.isAutonomous) { 2.0 } else { 1.0 } } else { 0.0 } })
     }
@@ -107,6 +86,35 @@ object Logging {
         BadLog.createTopic("Climber/Variable Locked", BadLog.UNITLESS, { when(Climber.isVariableLocked()) { LockStates.LOCKED -> 1.0; LockStates.NEITHER -> 0.0; LockStates.UNLOCKED -> -1.0 } })
     }
 
+    fun onEnable() {
+        for(logPath in LOG_PATHS) {
+            try {
+                path = if (DriverStation.isFMSAttached()) {
+                    "${logPath}Match ${DriverStation.getMatchNumber()}, Time ${LocalDateTime.now().format(DateTimeFormatter.ofPattern(FORMAT_PATTERN))}.bag"
+                } else {
+                    "${logPath}Testing, Time ${LocalDateTime.now().format(DateTimeFormatter.ofPattern(FORMAT_PATTERN))}.bag"
+                }
+
+                log = BadLog.init(path)
+
+                initMetaInfoLogging()
+                initJoystickLogging()
+                initRobotLogging()
+
+                log?.finishInitialization()
+
+                break
+            } catch(e: Exception) {
+                log = null
+                println(e)
+            }
+        }
+    }
+
+    fun onDisable() {
+        log = null
+    }
+
     fun update() {
         SmartDashboard.putNumber("Robot/Shooter Speed", Shooter.wheelSpeedFront)
         SmartDashboard.putNumber("Robot/Shooter Back Speed", Shooter.wheelSpeedBack)
@@ -138,13 +146,12 @@ object Logging {
 
         SmartDashboard.putNumber("Robot/Gyro Angle ", Drivetrain.pose.rotation.degrees)
 
-        //fix not catching errors
-        try {
+        //Fix it always being false
+        /*if(Path(path).toFile().exists()) {
             log?.updateTopics()
             log?.log()
-        } catch(e: Exception) {
+        } else {
             log = null
-            println(e)
-        }
+        }*/
     }
 }

@@ -11,7 +11,7 @@ class DanceLED : CommandBase() {
 
     override fun initialize() {
         for (i in 0 until robotPreferences.ledLength) {
-            LEDStrip.setLEDHSV(i, 275, 94, (i % 2) * 50)
+            LEDStrip.setLEDHSV(i, 300, 255, ((i % 2) * 255))//s=94 v=50
         }
     }
 

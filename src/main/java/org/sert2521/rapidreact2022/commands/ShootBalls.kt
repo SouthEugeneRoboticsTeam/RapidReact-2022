@@ -40,7 +40,7 @@ class ShootBalls(private val stable: Boolean = false) : CommandBase() {
             shooting = true
         }
 
-        if(robotPreferences.shooterFrontRPM - robotPreferences.shooterFrontExitRPMDrop >= Shooter.wheelSpeedFront) {
+        if(robotPreferences.shooterBackRPM - robotPreferences.shooterBackExitRPMDrop >= Shooter.wheelSpeedBack) {
             if(shouldShoot()) {
                 lastShot = currentTimeMillis()
                 ballsShot += 1
