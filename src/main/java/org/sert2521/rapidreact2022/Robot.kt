@@ -25,9 +25,7 @@ object Robot : TimedRobot() {
     }
 
     override fun teleopExit() {
-        //Add before comp
-        //Drivetrain.coastMode()
-        Logging.onDisable()
+        Drivetrain.coastMode()
     }
 
     override fun autonomousInit() {
@@ -40,6 +38,9 @@ object Robot : TimedRobot() {
 
     override fun autonomousExit() {
         Input.getAuto()?.cancel()
+    }
+
+    override fun disabledInit() {
         Logging.onDisable()
     }
 

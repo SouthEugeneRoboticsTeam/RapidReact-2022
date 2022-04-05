@@ -8,6 +8,8 @@ import java.lang.Exception
 import java.lang.System.nanoTime
 import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
+import kotlin.io.path.Path
+import kotlin.io.path.exists
 
 object Logging {
     private var log: BadLog? = null
@@ -20,8 +22,6 @@ object Logging {
         BadLog.createTopic("Info/Match Time", "s", { DriverStation.getMatchTime() })
 
         BadLog.createTopic("Info/Match Color", BadLog.UNITLESS, { when(DriverStation.getAlliance()) { DriverStation.Alliance.Blue -> 1.0; DriverStation.Alliance.Invalid -> 0.0; DriverStation.Alliance.Red -> -1.0; null -> 0.0 } })
-
-        BadLog.createTopic("Info/Mode", BadLog.UNITLESS, { if(Robot.isEnabled) { if(Robot.isAutonomous) { 2.0 } else { 1.0 } } else { 0.0 } })
     }
 
     private fun boolToDouble(bool: Boolean): Double {
@@ -90,9 +90,9 @@ object Logging {
         for(logPath in LOG_PATHS) {
             try {
                 path = if (DriverStation.isFMSAttached()) {
-                    "${logPath}Match ${DriverStation.getMatchNumber()}, Time ${LocalDateTime.now().format(DateTimeFormatter.ofPattern(FORMAT_PATTERN))}.bag"
+                    "${logPath}Match ${DriverStation.getMatchNumber()}, ${if(Robot.isEnabled) { if(Robot.isAutonomous) { "Mode Autonomous, " } else { "Mode Teleop, " } } else { "" }}Time ${LocalDateTime.now().format(DateTimeFormatter.ofPattern(FORMAT_PATTERN))}.bag"
                 } else {
-                    "${logPath}Testing, Time ${LocalDateTime.now().format(DateTimeFormatter.ofPattern(FORMAT_PATTERN))}.bag"
+                    "${logPath}Testing, ${if(Robot.isEnabled) { if(Robot.isAutonomous) { "Mode Autonomous, " } else { "Mode Teleop, " } } else { "" }}Time ${LocalDateTime.now().format(DateTimeFormatter.ofPattern(FORMAT_PATTERN))}.bag"
                 }
 
                 log = BadLog.init(path)
@@ -146,12 +146,12 @@ object Logging {
 
         SmartDashboard.putNumber("Robot/Gyro Angle ", Drivetrain.pose.rotation.degrees)
 
-        //Fix it always being false
-        /*if(Path(path).toFile().exists()) {
+        //Fix
+        if(Path(path).exists()) {
             log?.updateTopics()
             log?.log()
         } else {
             log = null
-        }*/
+        }
     }
 }
