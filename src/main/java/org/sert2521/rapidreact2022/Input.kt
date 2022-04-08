@@ -8,7 +8,6 @@ import edu.wpi.first.wpilibj2.command.InstantCommand
 import edu.wpi.first.wpilibj2.command.WaitCommand
 import org.sert2521.rapidreact2022.commands.*
 import org.sert2521.rapidreact2022.subsytems.Climber
-import java.util.function.Supplier
 
 object Input {
     private val intakeBalls = IntakeBalls()
@@ -48,6 +47,7 @@ object Input {
 
     fun onInit() {
         autoChooser.setDefaultOption("Nothing", null)
+        autoChooser.addOption("Shoot No Move", ShootBalls().withTimeout(SHOOT_TIME))
         autoChooser.addOption("Drive Forward", DriveForward())
         autoChooser.addOption("Shoot Single Right", ShootSingleRight())
         autoChooser.addOption("Shoot Single Left", ShootSingleLeft())
@@ -109,11 +109,15 @@ object Input {
     val speedIncrease
         get() = controlPreferences.speedIncrease
 
+    fun getSelectedAuto(): Command? {
+        return autoChooser.selected
+    }
+
     fun getAuto(): Command? {
         if(autoChooser.selected == null) {
             return null
         }
 
-        return WaitCommand(SmartDashboard.getNumber("Robot/Auto Delay", 0.0)).andThen(InstantCommand( { autoChooser.selected.schedule() } ))
+        return WaitCommand(SmartDashboard.getNumber("Auto Delay", 0.0)).andThen(InstantCommand( { autoChooser.selected.schedule() } ))
     }
 }

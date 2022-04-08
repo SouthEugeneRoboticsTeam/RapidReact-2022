@@ -37,7 +37,7 @@ object Robot : TimedRobot() {
     }
 
     override fun autonomousExit() {
-        Input.getAuto()?.cancel()
+        Input.getSelectedAuto()?.cancel()
     }
 
     override fun disabledInit() {

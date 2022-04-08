@@ -26,7 +26,8 @@ const val MAX_SLOW_TURN_SPEED = 0.8
 const val SLEW_RATE = 3.0
 const val DEADBAND = 0.1
 
-const val CLIMBER_HEIGHT_PER_ROTATION = 0.004842
+const val STATIC_HEIGHT_PER_ROTATION = 0.005
+const val VARIABLE_HEIGHT_PER_ROTATION = 0.004842
 //Maybe could do with just potentiometer init
 const val CLIMBER_ANGLE_OFFSET = 106.0
 const val MAX_CLIMBER_ANGLE_VALUE = 24750
@@ -117,10 +118,10 @@ val ENTRY_POSE_LEFT = Pose2d(-1.45, -1.3, Rotation2d.fromDegrees(80.0))
 
 val END_POSE_SINGLE_LEFT = Pose2d(-2.0, -1.8, Rotation2d.fromDegrees(20.0))
 
-val TO_PICKUP_ONE = Pose2d(-1.1, 0.7, Rotation2d.fromDegrees(220.0))
-val PICKUP_POSE_ONE_TRIPLE = Pose2d(-1.85, -0.8, Rotation2d.fromDegrees(200.0))
+val TO_PICKUP_ONE_TRIPLE = Pose2d(-1.1, 0.7, Rotation2d.fromDegrees(220.0))
+val PICKUP_POSE_ONE_TRIPLE = Pose2d(-1.85, -0.92, Rotation2d.fromDegrees(200.0))
 val ENTRY_POSE_LEFT_ONE_TRIPLE = Pose2d(-1.45, -1.15, Rotation2d.fromDegrees(80.0))
-val PICKUP_POSE_TWO_TRIPLE = Pose2d(-1.9, 1.8, Rotation2d.fromDegrees(80.0))
+val PICKUP_POSE_TWO_TRIPLE = Pose2d(-1.98, 1.8, Rotation2d.fromDegrees(80.0))
 val ENTRY_POSE_LEFT_TWO_TRIPLE = Pose2d(-2.1, 0.0, Rotation2d.fromDegrees(10.0))
 val END_POSE_TRIPLE = Pose2d(-0.2, 0.15, Rotation2d.fromDegrees(0.0))
 
@@ -157,8 +158,8 @@ enum class Sparks(val id: Int, val type: CANSparkMaxLowLevel.MotorType, val reve
 enum class SparkEncodersHall(val conversionFactor: Double) {
     //maybe fix ratio it is 8 to 9
     SHOOTER(1.0),
-    STATIC_CLIMBER(CLIMBER_HEIGHT_PER_ROTATION),
-    VARIABLE_CLIMBER(CLIMBER_HEIGHT_PER_ROTATION)
+    STATIC_CLIMBER(STATIC_HEIGHT_PER_ROTATION),
+    VARIABLE_CLIMBER(VARIABLE_HEIGHT_PER_ROTATION)
 }
 
 enum class SparkEncodersQuadrature(val encoderPulsesPerRev: Int, val conversionFactor: Double) {
