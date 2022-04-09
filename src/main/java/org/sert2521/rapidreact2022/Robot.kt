@@ -20,6 +20,7 @@ object Robot : TimedRobot() {
     override fun teleopInit() {
         Drivetrain.brakeMode()
         Input.onEnable()
+        Logging.onEnable()
         Climber.onEnable()
         Logging.onEnable()
     }

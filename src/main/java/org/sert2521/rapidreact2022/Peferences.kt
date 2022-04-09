@@ -71,6 +71,7 @@ object PracticePreferences : RobotPreferences() {
     override val shooterBackRPM = 4400.0
     override val shooterBackStability = 10.0
     override val shooterBackRPMTolerance = 100.0
+    //Goes down to like 3750
     override val shooterBackExitRPMDrop = 200.0
 
     override val shooterAveragePoints = 5

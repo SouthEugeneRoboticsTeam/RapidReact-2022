@@ -42,8 +42,8 @@ const val REACH_MID = 0.64
 const val PAST_HIGH_ANGLE = 6.5
 const val ABOVE_HIGH = 0.66
 const val HIT_HIGH = 0.57
-const val PULL_IN_HIGH = 0.46
-const val LET_GO_MID = 0.52
+const val PULL_IN_HIGH = 0.45
+const val LET_GO_MID = 0.59
 const val GO_UNDER_HIGH = 0.3
 const val PAST_CURRENT_ANGLE = 50.0
 const val ABOVE_CURRENT = 0.62
@@ -61,7 +61,7 @@ const val DEFAULT_TOLERANCE = 0.02
 const val DEFAULT_TOLERANCE_ANGLE = 3.0
 
 const val CLIMBER_MAINTAIN = -0.15
-const val PULL_SPEED = -0.4
+const val PULL_SPEED = -0.385
 const val CLIMBER_HIT_SPEED = 0.35
 const val CLIMBER_RESET_SPEED = -0.6
 
