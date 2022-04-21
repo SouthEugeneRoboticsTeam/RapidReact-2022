@@ -79,7 +79,7 @@ const val UNSTICK_SPEED_DOWN = 0.0//-0.05
 const val UNSTICK_SPEED_CLIMB = 0.0//-0.25
 
 const val INTAKE_SPEED = 0.8
-const val INDEXER_SPEED = 0.8
+const val INDEXER_SPEED = 0.6
 
 const val AUTO_TRIPLE_SPEED = 2.7
 const val AUTO_TRIPLE_ACCELERATION = 2.2
