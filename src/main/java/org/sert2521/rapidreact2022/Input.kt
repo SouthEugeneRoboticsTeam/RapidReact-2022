@@ -57,6 +57,8 @@ object Input {
         SmartDashboard.putData(autoChooser)
 
         SmartDashboard.putNumber("Auto Delay", 0.0)
+        SmartDashboard.putBoolean("Slow Mode", true)
+        SmartDashboard.putNumber("Shooter Power", 50.0)
     }
 
     fun onEnable() {
@@ -74,12 +76,17 @@ object Input {
     }
 
     fun getSlowMode(): Boolean {
-        return slowMode || Climber.climbing
+        return slowMode || Climber.climbing || SmartDashboard.getBoolean("Slow Mode", true)
     }
 
     fun forceShoot(): Boolean {
         return controlPreferences.forceShoot .get()
     }
+
+    fun getShootPower(): Double {
+        return SmartDashboard.getNumber("Shooter Power", 0.0).coerceIn(0.0, 100.0) / 100.0
+    }
+
 
     fun getClimbNext(): Boolean {
         val currPress = controlPreferences.climbNext.get()

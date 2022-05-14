@@ -50,7 +50,7 @@ class JoystickDrive : CommandBase() {
     //Basically just used ramsete drive code, but with user input
     override fun execute() {
         val maxSpeed = if (!Input.getSlowMode()) {
-            MAX_SPEED + MAX_SPEED_ADDON * Input.speedIncrease()
+            MAX_SPEED
         } else {
             MAX_SLOW_SPEED
         }

@@ -45,11 +45,11 @@ object Shooter : SubsystemBase() {
     }
 
     private fun getFrontSpeed(): Double {
-        return motorFrontFeedForward.calculate(motorFrontGoal) + motorFrontPID.calculate(wheelSpeedFront, motorFrontGoal)
+        return (motorFrontFeedForward.calculate(motorFrontGoal) + motorFrontPID.calculate(wheelSpeedFront, motorFrontGoal)) * Input.getShootPower()
     }
 
     private fun getBackSpeed(): Double {
-        return motorBackFeedForward.calculate(motorBackGoal) + motorBackPID.calculate(wheelSpeedBack, motorBackGoal)
+        return (motorBackFeedForward.calculate(motorBackGoal) + motorBackPID.calculate(wheelSpeedBack, motorBackGoal)) * Input.getShootPower()
     }
 
     override fun periodic() {

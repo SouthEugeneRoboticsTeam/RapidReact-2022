@@ -81,24 +81,24 @@ const val UNSTICK_SPEED_CLIMB = 0.0//-0.25
 const val INTAKE_SPEED = 0.8
 const val INDEXER_SPEED = 0.6
 
-const val AUTO_TRIPLE_SPEED = 2.7
-const val AUTO_TRIPLE_ACCELERATION = 2.2
+const val AUTO_TRIPLE_SPEED = 0.5
+const val AUTO_TRIPLE_ACCELERATION = 0.5
 
-const val AUTO_TRIPLE_TURN_SPEED = 1.2
-const val AUTO_TRIPLE_TURN_ACCELERATION = 1.5
+const val AUTO_TRIPLE_TURN_SPEED = 0.8
+const val AUTO_TRIPLE_TURN_ACCELERATION = 0.8
 
-const val END_SPEED_TRIPLE = 0.5
+const val END_SPEED_TRIPLE = 0.0
 
-const val AUTO_SPEED = 1.2
-const val AUTO_ACCELERATION = 1.2
+const val AUTO_SPEED = 0.5
+const val AUTO_ACCELERATION = 0.5
 
-const val AUTO_TURN_SPEED = 0.7
-const val AUTO_TURN_ACCELERATION = 0.7
+const val AUTO_TURN_SPEED = 0.5
+const val AUTO_TURN_ACCELERATION = 0.5
 
-const val AUTO_EXIT_SPEED = 1.5
-const val AUTO_EXIT_ACCELERATION = 1.5
+const val AUTO_EXIT_SPEED = 0.5
+const val AUTO_EXIT_ACCELERATION = 0.5
 
-const val END_SPEED = 0.4
+const val END_SPEED = 0.0
 
 const val SHOOT_TIME = 1.4
 const val SHOOT_BETWEEN_DELAY = 0.5
