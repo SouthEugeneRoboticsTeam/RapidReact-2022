@@ -87,7 +87,6 @@ object Input {
         return SmartDashboard.getNumber("Shooter Power", 0.0).coerceIn(0.0, 100.0) / 100.0
     }
 
-
     fun getClimbNext(): Boolean {
         val currPress = controlPreferences.climbNext.get()
         return if (!climbNext) {

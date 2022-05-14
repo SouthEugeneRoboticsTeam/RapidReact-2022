@@ -44,12 +44,12 @@ object Shooter : SubsystemBase() {
         motorBackEncoder.positionConversionFactor = SparkEncodersQuadrature.SHOOTER_BACK.conversionFactor
     }
 
-    private fun getFrontSpeed(): Double {
-        return (motorFrontFeedForward.calculate(motorFrontGoal) + motorFrontPID.calculate(wheelSpeedFront, motorFrontGoal)) * Input.getShootPower()
+    private fun getFrontSpeed(power: Double): Double {
+        return motorFrontFeedForward.calculate(motorFrontGoal * power) + motorFrontPID.calculate(wheelSpeedFront, motorFrontGoal * power)
     }
 
-    private fun getBackSpeed(): Double {
-        return (motorBackFeedForward.calculate(motorBackGoal) + motorBackPID.calculate(wheelSpeedBack, motorBackGoal)) * Input.getShootPower()
+    private fun getBackSpeed(power: Double): Double {
+        return motorBackFeedForward.calculate(motorBackGoal * power) + motorBackPID.calculate(wheelSpeedBack, motorBackGoal * power)
     }
 
     override fun periodic() {
@@ -64,12 +64,13 @@ object Shooter : SubsystemBase() {
         prevSpeedFront = wheelSpeedFront
         prevSpeedBack = wheelSpeedBack
 
+        val power = Input.getShootPower()
         if(!motorFrontStopped) {
-            motorFront.setVoltage(getFrontSpeed())
+            motorFront.setVoltage(getFrontSpeed(power))
         }
 
         if(!motorBackStopped) {
-            motorBack.setVoltage(getBackSpeed())
+            motorBack.setVoltage(getBackSpeed(power))
         }
     }
 
