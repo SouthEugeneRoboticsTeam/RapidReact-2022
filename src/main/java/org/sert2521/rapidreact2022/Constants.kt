@@ -21,9 +21,9 @@ const val TRACK_WIDTH = 0.5816473
 const val MAX_SPEED_ADDON = 1.0
 const val MAX_SPEED = 1.5
 const val MAX_TURN_SPEED = 1.45
-const val MAX_SLOW_SPEED = 0.5
+const val MAX_SLOW_SPEED = 0.7
 const val MAX_SLOW_TURN_SPEED = 0.8
-const val SLEW_RATE = 5.0
+const val SLEW_RATE = 10.0
 const val DEADBAND = 0.1
 
 const val STATIC_HEIGHT_PER_ROTATION = 0.005

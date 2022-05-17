@@ -32,7 +32,7 @@ class ShootBalls(private val stable: Boolean = false) : CommandBase() {
     }
 
     private fun inTolerance(): Boolean {
-        return robotPreferences.shooterFrontRPM - Shooter.wheelSpeedFront in -robotPreferences.shooterRPMTolerance..robotPreferences.shooterRPMTolerance && robotPreferences.shooterBackRPM - Shooter.wheelSpeedBack in -robotPreferences.shooterBackRPMTolerance..robotPreferences.shooterBackRPMTolerance
+        return robotPreferences.shooterFrontRPM - Shooter.wheelSpeedFront / Input.getShootPower() in -robotPreferences.shooterRPMTolerance..robotPreferences.shooterRPMTolerance && robotPreferences.shooterBackRPM - Shooter.wheelSpeedBack / Input.getShootPower() in -robotPreferences.shooterBackRPMTolerance..robotPreferences.shooterBackRPMTolerance
     }
 
     override fun execute() {
@@ -40,7 +40,7 @@ class ShootBalls(private val stable: Boolean = false) : CommandBase() {
             shooting = true
         }
 
-        if(robotPreferences.shooterBackRPM - robotPreferences.shooterBackExitRPMDrop >= Shooter.wheelSpeedBack) {
+        if(robotPreferences.shooterBackRPM - robotPreferences.shooterBackExitRPMDrop >= Shooter.wheelSpeedBack / Input.getShootPower()) {
             if(shouldShoot()) {
                 lastShot = currentTimeMillis()
                 ballsShot += 1

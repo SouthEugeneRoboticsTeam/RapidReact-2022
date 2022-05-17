@@ -205,9 +205,9 @@ object Climber : SubsystemBase() {
             staticClimberMotor.set(0.0)
         } else {
             if(isStaticLocked() == LockStates.NEITHER || (staticGoal < 0.0 && isAtBottomStatic()) || (staticGoal > 0.0 && staticHeight >= MAX_CLIMBER_HEIGHT)) {
-                staticClimberMotor.set(unstick + maintain)
+                //staticClimberMotor.set(unstick + maintain)
             } else {
-                staticClimberMotor.set(staticGoal + maintain)
+                //staticClimberMotor.set(staticGoal + maintain)
             }
         }
     }
@@ -234,9 +234,9 @@ object Climber : SubsystemBase() {
             variableClimberMotor.set(0.0)
         } else {
             if(isVariableLocked() == LockStates.NEITHER || (variableGoal < 0.0 && isAtBottomVariable()) || (variableGoal > 0.0 && variableHeight >= MAX_CLIMBER_HEIGHT)) {
-                variableClimberMotor.set(unstick + maintain)
+                //variableClimberMotor.set(unstick + maintain)
             } else {
-                variableClimberMotor.set(variableGoal + maintain)
+                //variableClimberMotor.set(variableGoal + maintain)
             }
         }
     }
@@ -245,7 +245,7 @@ object Climber : SubsystemBase() {
         if(calibratedAngle && ((angleGoal < 0.0 && variableAngleMotor <= MIN_CLIMBER_ANGLE_VALUE) || (angleGoal > 0.0 && variableAngleMotor >= MAX_CLIMBER_ANGLE_VALUE))) {
             variableActuator.set(TalonSRXControlMode.PercentOutput, 0.0)
         } else {
-            variableActuator.set(TalonSRXControlMode.PercentOutput, angleGoal)
+            //variableActuator.set(TalonSRXControlMode.PercentOutput, angleGoal)
         }
     }
 

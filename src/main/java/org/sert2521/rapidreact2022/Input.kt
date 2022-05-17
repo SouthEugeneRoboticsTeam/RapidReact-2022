@@ -84,7 +84,7 @@ object Input {
     }
 
     fun getShootPower(): Double {
-        return SmartDashboard.getNumber("Shooter Power", 0.0).coerceIn(0.0, 100.0) / 100.0
+        return ((SmartDashboard.getNumber("Shooter Power", 0.0).coerceIn(0.0, 100.0) / 100.0) * 0.5) + 0.85
     }
 
     fun getClimbNext(): Boolean {

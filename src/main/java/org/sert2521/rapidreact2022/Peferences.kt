@@ -131,18 +131,18 @@ object SoftwarePreferences : ControlPreferences() {
 }
 
 object DriveteamPreferences : ControlPreferences() {
-    override val joystickX = { primaryController.rightX }
+    override val joystickX = { primaryController.leftX }
     override val joystickY = { -primaryController.leftY }
 
     override val speedIncrease = { primaryController.rightTriggerAxis }
     override val slowMode = JoystickButton(primaryController, 5)
 
-    override val intake = JoystickButton(secondaryController, 8)
+    override val intake = JoystickButton(primaryController, 2)
     override val overrideIndexer = JoystickButton(secondaryController, 10)
     override val runIndexer = JoystickButton(secondaryController, 9)
-    override val outtake = JoystickButton(secondaryController, 7)
+    override val outtake = JoystickButton(primaryController, 4)
 
-    override val shoot = JoystickButton(secondaryController, 14)
+    override val shoot = JoystickButton(primaryController, 1)
     override val rev = JoystickButton(secondaryController, 15)
     override val forceShoot = JoystickButton(secondaryController, 16)
 
