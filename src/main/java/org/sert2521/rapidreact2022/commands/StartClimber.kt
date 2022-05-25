@@ -28,7 +28,7 @@ class StartClimber : CommandBase() {
     }
 
     override fun isFinished(): Boolean {
-        return Climber.isAtBottomStatic() && Climber.isAtBottomVariable() && (Climber.variableAngleArm - DEFAULT_ANGLE) in -DEFAULT_TOLERANCE_ANGLE..DEFAULT_TOLERANCE_ANGLE
+        return Climber.isAtBottomStatic()
     }
 
     override fun end(interrupted: Boolean) {

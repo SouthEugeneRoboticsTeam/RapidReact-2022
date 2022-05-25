@@ -205,48 +205,19 @@ object Climber : SubsystemBase() {
             staticClimberMotor.set(0.0)
         } else {
             if(isStaticLocked() == LockStates.NEITHER || (staticGoal < 0.0 && isAtBottomStatic()) || (staticGoal > 0.0 && staticHeight >= MAX_CLIMBER_HEIGHT)) {
-                //staticClimberMotor.set(unstick + maintain)
+                staticClimberMotor.set(unstick + maintain)
             } else {
-                //staticClimberMotor.set(staticGoal + maintain)
+                staticClimberMotor.set(staticGoal + maintain)
             }
         }
     }
 
     private fun variableUpdate() {
-        var unstick = 0.0
-        if(isVariableLocked() == LockStates.NEITHER && variableLocked == LockStates.UNLOCKED) {
-            unstick += if(!climbing) {
-                UNSTICK_SPEED_DOWN
-            } else {
-                UNSTICK_SPEED_CLIMB
-            }
-        }
-
-        var maintain = 0.0
-        if (loadBearingArm == Arms.VARIABLE) {
-            maintain += CLIMBER_MAINTAIN
-        }
-        if (loadBearingArm == Arms.BOTH) {
-            maintain += CLIMBER_MAINTAIN / 2.0
-        }
-
-        if(isVariableLocked() == LockStates.LOCKED) {
-            variableClimberMotor.set(0.0)
-        } else {
-            if(isVariableLocked() == LockStates.NEITHER || (variableGoal < 0.0 && isAtBottomVariable()) || (variableGoal > 0.0 && variableHeight >= MAX_CLIMBER_HEIGHT)) {
-                //variableClimberMotor.set(unstick + maintain)
-            } else {
-                //variableClimberMotor.set(variableGoal + maintain)
-            }
-        }
+        variableClimberMotor.set(0.0)
     }
 
     private fun angleUpdate() {
-        if(calibratedAngle && ((angleGoal < 0.0 && variableAngleMotor <= MIN_CLIMBER_ANGLE_VALUE) || (angleGoal > 0.0 && variableAngleMotor >= MAX_CLIMBER_ANGLE_VALUE))) {
-            variableActuator.set(TalonSRXControlMode.PercentOutput, 0.0)
-        } else {
-            //variableActuator.set(TalonSRXControlMode.PercentOutput, angleGoal)
-        }
+        variableActuator.set(TalonSRXControlMode.PercentOutput, 0.0)
     }
 
     fun lock() {
