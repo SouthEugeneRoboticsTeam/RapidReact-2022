@@ -35,13 +35,13 @@ object Input {
         controlPreferences.intake.whileHeld(intakeBalls, false)
         controlPreferences.outtake.whileHeld(outtakeBalls)
         controlPreferences.shoot.whileHeld(shootBalls, false)
-        controlPreferences.rev.whileHeld(revShooter)
+        //controlPreferences.rev.whileHeld(revShooter)
 
         controlPreferences.climb.whenPressed(climb, false)
         //controlPreferences.lockOne.and(controlPreferences.lockTwo).whenActive(InstantCommand( { climbLocked = true } ))
 
         //controlPreferences.slowMode.whenPressed(InstantCommand( { slowMode = !slowMode } ))
-        controlPreferences.overrideIndexer.whenPressed(InstantCommand( { indexerOverride = !indexerOverride } ))
+        //controlPreferences.overrideIndexer.whenPressed(InstantCommand( { indexerOverride = !indexerOverride } ))
 
         controlPreferences.switchCameras.whenPressed(InstantCommand( { NetworkTableInstance.getDefault().getEntry(CAMERA_PATH).setString(CAMERAS[camera]); camera++; camera %= CAMERAS.size } ))
     }
