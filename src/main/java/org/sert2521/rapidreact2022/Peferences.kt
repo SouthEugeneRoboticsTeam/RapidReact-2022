@@ -41,12 +41,12 @@ object CompetitionPreferences : RobotPreferences() {
     override val ledLength = 16
 
     override val shooterFrontRPM = 2500.0
-    override val shooterFrontStability = 1200.0
-    override val shooterRPMTolerance = 200.0
+    override val shooterFrontStability = 1600.0
+    override val shooterRPMTolerance = 400.0
 
     override val shooterBackRPM = 4500.0
-    override val shooterBackStability = 1200.0
-    override val shooterBackRPMTolerance = 200.0
+    override val shooterBackStability = 1600.0
+    override val shooterBackRPMTolerance = 400.0
     override val shooterBackExitRPMDrop = 200.0
 
     override val shooterAveragePoints = 5
