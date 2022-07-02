@@ -39,6 +39,7 @@ const val MIN_CLIMBER_HEIGHT = 0.0
 const val DEFAULT_ANGLE = 30.0
 const val HANG_HEIGHT = 0.0
 const val REACH_MID = 0.64
+const val RAISE_HEIGHT = 0.4
 const val PAST_HIGH_ANGLE = 6.5
 const val ABOVE_HIGH = 0.66
 const val HIT_HIGH = 0.57

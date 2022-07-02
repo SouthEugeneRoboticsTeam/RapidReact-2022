@@ -28,7 +28,8 @@ class ShootBalls(private val stable: Boolean = false) : CommandBase() {
     }
 
     private fun shouldShoot(): Boolean {
-        return shooting && currentTimeMillis() - lastShot >= SHOOT_BETWEEN_DELAY * 1000
+        //shooting && currentTimeMillis() - lastShot >= SHOOT_BETWEEN_DELAY * 1000
+        return currentTimeMillis() - lastShot >= SHOOT_BETWEEN_DELAY * 1000
     }
 
     private fun inTolerance(): Boolean {

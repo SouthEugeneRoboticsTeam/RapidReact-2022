@@ -47,6 +47,7 @@ object CompetitionPreferences : RobotPreferences() {
     override val shooterBackRPM = 4500.0
     override val shooterBackStability = 1600.0
     override val shooterBackRPMTolerance = 400.0
+    //Increase this if the balls are hitting each other
     override val shooterBackExitRPMDrop = 200.0
 
     override val shooterAveragePoints = 5
