@@ -213,11 +213,40 @@ object Climber : SubsystemBase() {
     }
 
     private fun variableUpdate() {
-        variableClimberMotor.set(0.0)
+        var unstick = 0.0
+        if(isVariableLocked() == LockStates.NEITHER && variableLocked == LockStates.UNLOCKED) {
+            unstick += if(!climbing) {
+                UNSTICK_SPEED_DOWN
+            } else {
+                UNSTICK_SPEED_CLIMB
+            }
+        }
+
+        var maintain = 0.0
+        if (loadBearingArm == Arms.VARIABLE) {
+            maintain += CLIMBER_MAINTAIN
+        }
+        if (loadBearingArm == Arms.BOTH) {
+            maintain += CLIMBER_MAINTAIN / 2.0
+        }
+
+        if(isVariableLocked() == LockStates.LOCKED) {
+            variableClimberMotor.set(0.0)
+        } else {
+            if(isVariableLocked() == LockStates.NEITHER || (variableGoal < 0.0 && isAtBottomVariable()) || (variableGoal > 0.0 && variableHeight >= MAX_CLIMBER_HEIGHT)) {
+                variableClimberMotor.set(unstick + maintain)
+            } else {
+                variableClimberMotor.set(variableGoal + maintain)
+            }
+        }
     }
 
     private fun angleUpdate() {
-        variableActuator.set(TalonSRXControlMode.PercentOutput, 0.0)
+        if(calibratedAngle && ((angleGoal < 0.0 && variableAngleMotor <= MIN_CLIMBER_ANGLE_VALUE) || (angleGoal > 0.0 && variableAngleMotor >= MAX_CLIMBER_ANGLE_VALUE))) {
+            variableActuator.set(TalonSRXControlMode.PercentOutput, 0.0)
+        } else {
+            variableActuator.set(TalonSRXControlMode.PercentOutput, angleGoal)
+        }
     }
 
     fun lock() {
