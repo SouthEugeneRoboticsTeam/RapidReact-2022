@@ -17,6 +17,7 @@ object Input {
     private val revShooter = RevShooter()
 
     private val climb = Climb()
+    private val climbMid = ClimbMid()
 
     private var slowMode = false
 
@@ -37,8 +38,8 @@ object Input {
         controlPreferences.shoot.whileHeld(shootBalls, false)
         //controlPreferences.rev.whileHeld(revShooter)
 
-        controlPreferences.climb.whenPressed(climb, false)
-        //controlPreferences.lockOne.and(controlPreferences.lockTwo).whenActive(InstantCommand( { climbLocked = true } ))
+        controlPreferences.climb.whenPressed( InstantCommand( { if (slowMode) { climbMid } else { climb } } ), false)
+        controlPreferences.lockOne.and(controlPreferences.lockTwo).whenActive(InstantCommand( { climbLocked = true } ))
 
         //controlPreferences.slowMode.whenPressed(InstantCommand( { slowMode = !slowMode } ))
         //controlPreferences.overrideIndexer.whenPressed(InstantCommand( { indexerOverride = !indexerOverride } ))
