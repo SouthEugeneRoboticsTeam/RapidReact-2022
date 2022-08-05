@@ -38,7 +38,7 @@ object Input {
         controlPreferences.shoot.whileHeld(shootBalls, false)
         //controlPreferences.rev.whileHeld(revShooter)
 
-        controlPreferences.climb.whenPressed( InstantCommand( { if (slowMode) { climbMid } else { climb } } ), false)
+        controlPreferences.climb.whenPressed( InstantCommand( { if (getSlowMode()) { climbMid.schedule(false) } else { climb.schedule(false) } } ))
         controlPreferences.lockOne.and(controlPreferences.lockTwo).whenActive(InstantCommand( { climbLocked = true } ))
 
         //controlPreferences.slowMode.whenPressed(InstantCommand( { slowMode = !slowMode } ))

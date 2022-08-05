@@ -12,12 +12,12 @@ class ClimbMid : SequentialCommandGroup() {
     init {
         addCommands(
                 InstantCommand( { Climber.climbing = true } ),
-                SetClimber(REACH_MID, HANG_HEIGHT, DEFAULT_ANGLE) { Input.getClimbNext() },
+                SetClimber(REACH_MID, HANG_HEIGHT, PAST_HIGH_ANGLE) { Input.getClimbNext() },
+                InstantCommand( { Climber.committed = true } ),
                 InstantCommand( { Climber.loadBearingArm = Arms.STATIC } ),
-                SetClimber(RAISE_HEIGHT, HANG_HEIGHT, DEFAULT_ANGLE) { Input.getClimbNext() },
-                SetClimber(REACH_MID, HANG_HEIGHT, DEFAULT_ANGLE) { Input.getClimbNext() },
-                InstantCommand( { Climber.loadBearingArm = Arms.NEITHER } ),
-                InstantCommand( { Climber.climbing = false } )
+                SetClimber(HANG_HEIGHT, HANG_HEIGHT, PAST_HIGH_ANGLE),
+                InstantCommand( { Climber.lock() } ),
+                SetClimber(HANG_HEIGHT, HANG_HEIGHT, PAST_HIGH_ANGLE) { false }.withTimeout(150.0)
         )
     }
 
@@ -27,11 +27,6 @@ class ClimbMid : SequentialCommandGroup() {
             Climber.stop()
             return true
         }
-
-        /*if(Input.getClimbEnd() && !Climber.committed) {
-            Climber.reset()
-            return true
-        }*/
 
         return false
     }
