@@ -13,8 +13,6 @@ class ShootBalls(private val stable: Boolean = false) : CommandBase() {
     private var lastShot = 0L
     private var ballsShot = 0
 
-    private var preferences: RobotPreferences = ShooterDemoPreferences
-
     init {
         addRequirements(Intake, Shooter)
     }
@@ -38,12 +36,6 @@ class ShootBalls(private val stable: Boolean = false) : CommandBase() {
     }
 
     override fun execute() {
-        preferences = if (Input.isNormalShoot()) {
-            robotPreferences
-        } else {
-            ShooterDemoPreferences
-        }
-
         if(Input.forceShoot() || (inTolerance() && (stable || (Shooter.getAverageFrontSpeed() <= robotPreferences.shooterFrontStability && Shooter.getAverageSpeedBack() <= robotPreferences.shooterBackStability)))) {
             shooting = true
         }
