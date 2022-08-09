@@ -48,6 +48,32 @@ object CompetitionPreferences : RobotPreferences() {
     override val shooterBackStability = 1600.0
     override val shooterBackRPMTolerance = 400.0
     //Decrease this\/ if the balls are hitting each other
+    override val shooterBackExitRPMDrop = 100.0
+
+    override val shooterAveragePoints = 5
+}
+
+//Yes it's the same, but it could change
+object ShooterDemoPreferences : RobotPreferences() {
+    override val climberPID = arrayOf(4.2, 1.4, 0.0)
+    override val actuatorPID = arrayOf(0.06, 0.1, 0.0)
+    override val shooterPID = arrayOf(0.001117, 0.0, 0.0)
+    override val shooterFeedForward = arrayOf(0.15936, 0.00206466666, 0.00008552666)
+    override val shooterBackPID = arrayOf(0.0012681, 0.0, 0.0)
+    override val shooterBackFeedForward = arrayOf(0.659, 0.00134198333, 0.00006685)
+    override val drivePID = arrayOf(4.9479, 0.0, 0.0)
+    override val driveFeedForward = arrayOf(0.3455, 3.1133, 0.0)//9.9377
+
+    override val ledLength = 16
+
+    override val shooterFrontRPM = 2500.0
+    override val shooterFrontStability = 1600.0
+    override val shooterRPMTolerance = 400.0
+
+    override val shooterBackRPM = 4500.0
+    override val shooterBackStability = 1600.0
+    override val shooterBackRPMTolerance = 400.0
+    //Decrease this\/ if the balls are hitting each other
     override val shooterBackExitRPMDrop = 200.0
 
     override val shooterAveragePoints = 5
@@ -132,18 +158,18 @@ object SoftwarePreferences : ControlPreferences() {
 }
 
 object DriveteamPreferences : ControlPreferences() {
-    override val joystickX = { primaryController.leftX }
+    override val joystickX = { primaryController.rightX }
     override val joystickY = { -primaryController.leftY }
 
     override val speedIncrease = { primaryController.rightTriggerAxis }
-    override val slowMode = JoystickButton(primaryController, 5)
+    override val slowMode = JoystickButton(primaryController, 2)
 
-    override val intake = JoystickButton(primaryController, 2)
+    override val intake = JoystickButton(primaryController, 5)
     override val overrideIndexer = JoystickButton(secondaryController, 10)
     override val runIndexer = JoystickButton(secondaryController, 9)
     override val outtake = JoystickButton(primaryController, 4)
 
-    override val shoot = JoystickButton(primaryController, 1)
+    override val shoot = JoystickButton(primaryController, 6)
     override val rev = JoystickButton(secondaryController, 15)
     override val forceShoot = JoystickButton(secondaryController, 16)
 

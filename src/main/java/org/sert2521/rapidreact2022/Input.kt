@@ -38,10 +38,10 @@ object Input {
         controlPreferences.shoot.whileHeld(shootBalls, false)
         //controlPreferences.rev.whileHeld(revShooter)
 
-        controlPreferences.climb.whenPressed( InstantCommand( { if (getSlowMode()) { climbMid.schedule(false) } else { climb.schedule(false) } } ))
+        controlPreferences.climb.whenPressed( InstantCommand( { if (!isNormalClimb()) { climbMid.schedule(false) } else { climb.schedule(false) } } ))
         controlPreferences.lockOne.and(controlPreferences.lockTwo).whenActive(InstantCommand( { climbLocked = true } ))
 
-        //controlPreferences.slowMode.whenPressed(InstantCommand( { slowMode = !slowMode } ))
+        controlPreferences.slowMode.whenPressed(InstantCommand( { slowMode = !slowMode } ))
         //controlPreferences.overrideIndexer.whenPressed(InstantCommand( { indexerOverride = !indexerOverride } ))
 
         controlPreferences.switchCameras.whenPressed(InstantCommand( { NetworkTableInstance.getDefault().getEntry(CAMERA_PATH).setString(CAMERAS[camera]); camera++; camera %= CAMERAS.size } ))
@@ -59,7 +59,9 @@ object Input {
         SmartDashboard.putData(autoChooser)
 
         SmartDashboard.putNumber("Auto Delay", 0.0)
-        SmartDashboard.putBoolean("Slow Mode", true)
+        SmartDashboard.putBoolean("Normal Speed", false)
+        SmartDashboard.putBoolean("Normal Shoot", false)
+        SmartDashboard.putBoolean("Normal Climb", false)
         SmartDashboard.putNumber("Shooter Power", 50.0)
     }
 
@@ -78,8 +80,12 @@ object Input {
     }
 
     fun getSlowMode(): Boolean {
-        return slowMode || Climber.climbing || SmartDashboard.getBoolean("Slow Mode", true)
+        return slowMode || Climber.climbing// || !SmartDashboard.getBoolean("Normal Speed", false)
     }
+
+    fun isNormalClimb() = SmartDashboard.getBoolean("Normal Climb", false)
+
+    fun isNormalShoot() = SmartDashboard.getBoolean("Normal Shoot", false)
 
     fun forceShoot(): Boolean {
         return controlPreferences.forceShoot .get()

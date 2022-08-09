@@ -6,12 +6,14 @@ import org.sert2521.rapidreact2022.subsytems.Intake
 import org.sert2521.rapidreact2022.subsytems.Shooter
 import java.lang.System.currentTimeMillis
 
-//Remove ballsToShoot or fix because it doesn't always work
+//Make Normal Shoot actually do stuff
 class ShootBalls(private val stable: Boolean = false) : CommandBase() {
     private val danceLED = DanceLED()
     private var shooting = false
     private var lastShot = 0L
     private var ballsShot = 0
+
+    private var preferences: RobotPreferences = ShooterDemoPreferences
 
     init {
         addRequirements(Intake, Shooter)
@@ -36,6 +38,12 @@ class ShootBalls(private val stable: Boolean = false) : CommandBase() {
     }
 
     override fun execute() {
+        preferences = if (Input.isNormalShoot()) {
+            robotPreferences
+        } else {
+            ShooterDemoPreferences
+        }
+
         if(Input.forceShoot() || (inTolerance() && (stable || (Shooter.getAverageFrontSpeed() <= robotPreferences.shooterFrontStability && Shooter.getAverageSpeedBack() <= robotPreferences.shooterBackStability)))) {
             shooting = true
         }
