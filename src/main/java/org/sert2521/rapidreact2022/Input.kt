@@ -83,9 +83,13 @@ object Input {
         return slowMode || Climber.climbing// || !SmartDashboard.getBoolean("Normal Speed", false)
     }
 
-    fun isNormalClimb() = SmartDashboard.getBoolean("Normal Climb", false)
+    fun isNormalClimb(): Boolean {
+        return SmartDashboard.getBoolean("Normal Climb", false)
+    }
 
-    fun isNormalShoot() = SmartDashboard.getBoolean("Normal Shoot", false)
+    fun isNormalShoot(): Boolean {
+        return SmartDashboard.getBoolean("Normal Shoot", false)
+    }
 
     fun forceShoot(): Boolean {
         return controlPreferences.forceShoot.get()
