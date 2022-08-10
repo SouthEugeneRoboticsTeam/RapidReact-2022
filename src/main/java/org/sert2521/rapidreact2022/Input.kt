@@ -19,7 +19,7 @@ object Input {
     private val climb = Climb()
     private val climbMid = ClimbMid()
 
-    private var slowMode = false
+    private var slowMode = true
 
     private var indexerOverride = false
 
@@ -39,7 +39,7 @@ object Input {
         //controlPreferences.rev.whileHeld(revShooter)
 
         controlPreferences.climb.whenPressed( InstantCommand( { if (!isNormalClimb()) { climbMid.schedule(false) } else { climb.schedule(false) } } ))
-        controlPreferences.lockOne.and(controlPreferences.lockTwo).whenActive(InstantCommand( { climbLocked = true } ))
+        controlPreferences.lockOne.and(controlPreferences.lockTwo).whenActive(InstantCommand( { slowMode = !slowMode } ))//climbLocked = true } ))
 
         //controlPreferences.slowMode.whenPressed(InstantCommand( { slowMode = !slowMode } ))
         //controlPreferences.overrideIndexer.whenPressed(InstantCommand( { indexerOverride = !indexerOverride } ))
@@ -66,7 +66,7 @@ object Input {
     }
 
     fun onEnable() {
-        slowMode = false
+        slowMode = true
         indexerOverride = false
         climbLocked = false
     }
@@ -80,7 +80,7 @@ object Input {
     }
 
     fun getSlowMode(): Boolean {
-        return slowMode || Climber.climbing || !SmartDashboard.getBoolean("Normal Speed", false)
+        return slowMode || Climber.climbing// || !SmartDashboard.getBoolean("Normal Speed", false)
     }
 
     fun isNormalClimb() = SmartDashboard.getBoolean("Normal Climb", false)
